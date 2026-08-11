@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eliviz — live demos</title>
+<meta name="description" content="eliviz turns any data file into one beautiful, self-contained HTML page. Five designs, same data — click one and see.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent:#7c6cff; --accent2:#22d3ee; --accent3:#f472b6; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#0b0b14; color:#e6e6f0; font-family:Inter,system-ui,sans-serif;
+         -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1060px; margin:0 auto; padding:64px 24px 80px; }
+  h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 12px;
+       line-height:1.05; letter-spacing:-.02em; }
+  .grad { background:linear-gradient(100deg,var(--accent),var(--accent2) 55%,var(--accent3));
+          -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { color:rgba(230,230,240,.6); font-size:1.05rem; max-width:34rem; margin:0 0 10px; line-height:1.6; }
+  .hint { color:rgba(230,230,240,.4); font-size:.85rem; margin:0 0 40px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+  a.card { display:block; text-decoration:none; color:inherit; border-radius:18px; overflow:hidden;
+       background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
+       transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s, border-color .3s; }
+  a.card:hover { transform:translateY(-5px); border-color:rgba(124,108,255,.5);
+       box-shadow:0 18px 50px -18px rgba(124,108,255,.45); }
+  .card img { width:100%; display:block; aspect-ratio:16/10; object-fit:cover; }
+  .card .meta { padding:14px 16px 16px; }
+  .card b { font-family:'Space Grotesk',sans-serif; font-size:1rem; }
+  .card span { display:block; color:rgba(230,230,240,.55); font-size:.83rem; margin-top:3px; line-height:1.45; }
+  .foot { margin-top:52px; color:rgba(230,230,240,.45); font-size:.9rem; line-height:1.7; }
+  .foot a { color:var(--accent2); }
+  code { font-family:ui-monospace,monospace; font-size:.85em; background:rgba(124,108,255,.14);
+       border:1px solid rgba(124,108,255,.25); border-radius:6px; padding:.1em .4em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="grad">eliviz</span> live demos</h1>
+  <p class="sub">One sales file. Five completely different pages. Each demo below is a real eliviz output — click one and poke around: sort the table, search it, open a column card.</p>
+  <p class="hint">Every page is a single HTML file. No server behind any of this.</p>
+  <div class="grid">
+    <a class="card" href="demos/aurora.html">
+      <img src="shots/aurora.webp" alt="Aurora design — dark glass with a particle-wave hero" loading="lazy">
+      <div class="meta"><b>🌌 aurora</b><span>Dark glass, particle-wave hero. The default.</span></div>
+    </a>
+    <a class="card" href="demos/editorial.html">
+      <img src="shots/editorial.webp" alt="Editorial design — warm paper with serif type" loading="lazy">
+      <div class="meta"><b>📰 editorial</b><span>Warm paper, serif type. Made for reports.</span></div>
+    </a>
+    <a class="card" href="demos/brutalist.html">
+      <img src="shots/brutalist.webp" alt="Brutalist design — hard borders and offset shadows" loading="lazy">
+      <div class="meta"><b>⬛ brutalist</b><span>Hard borders, offset shadows. Loud on purpose.</span></div>
+    </a>
+    <a class="card" href="demos/terminal.html">
+      <img src="shots/terminal.webp" alt="Terminal design — phosphor CRT with code-rain hero" loading="lazy">
+      <div class="meta"><b>🖥️ terminal</b><span>Phosphor CRT, code-rain hero. Built for logs.</span></div>
+    </a>
+    <a class="card" href="demos/neon.html">
+      <img src="shots/neon.webp" alt="Neon design — cyberpunk glow with synthwave-grid hero" loading="lazy">
+      <div class="meta"><b>🌆 neon</b><span>Cyberpunk glow, synthwave-grid hero. The showpiece.</span></div>
+    </a>
+  </div>
+  <p class="foot">
+    Want this for your own files? Two commands in Claude Code:<br>
+    <code>/plugin marketplace add costiash/eliviz</code> · <code>/plugin install eliviz@eliviz</code><br>
+    Source, docs, and fully-offline demo downloads: <a href="https://github.com/costiash/eliviz">github.com/costiash/eliviz</a>
+  </p>
+</div>
+</body>
+</html>

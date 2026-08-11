@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Explorer</title>
+<script src="https://cdn.tailwindcss.com" data-vendor="tailwind.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" data-vendor="gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" data-vendor="ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" data-vendor="three.min.js"></script>
+<script>
+if (window.tailwind) tailwind.config = {
+  theme: { extend: {
+    fontFamily: {
+      sans: ['Inter','ui-sans-serif','system-ui','sans-serif'],
+      display: ['Space Grotesk','Inter','sans-serif'],
+      mono: ['JetBrains Mono','ui-monospace','monospace'],
+    },
+    colors: { ink: '#0b0b14', panel: '#12121f' },
+  }}
+};
+</script>
+<style>
+  :root { --accent:#7c6cff; --accent2:#22d3ee; --accent3:#f472b6; }
+  html { scroll-behavior:smooth; }
+  body { background:#0b0b14; color:#e6e6f0; font-family:Inter,ui-sans-serif,system-ui,sans-serif;
+         -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  ::selection { background:var(--accent); color:#fff; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#0b0b14; }
+  ::-webkit-scrollbar-thumb { background:#2a2a3f; border-radius:5px; }
+  ::-webkit-scrollbar-thumb:hover { background:#3d3d5c; }
+
+  .font-display { font-family:'Space Grotesk',Inter,sans-serif; }
+  .glass { background:rgba(255,255,255,.04); backdrop-filter:blur(14px);
+           -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.08); }
+  .glass-strong { background:rgba(18,18,31,.82); backdrop-filter:blur(20px);
+           -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.1); }
+  .grad-text { background:linear-gradient(100deg,var(--accent) 0%,var(--accent2) 55%,var(--accent3) 100%);
+           -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grad-line { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .card-hover { transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s; }
+  .card-hover:hover { transform:translateY(-5px);
+      box-shadow:0 18px 50px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+      border-color:color-mix(in srgb, var(--accent) 45%, transparent); }
+  .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.28rem .7rem; border-radius:9999px;
+          font-size:.72rem; font-weight:500; background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.1); }
+  .reveal { opacity:0; transform:translateY(26px); }
+  .no-js-reveal .reveal { opacity:1; transform:none; }
+
+  .prose-msg { font-size:.9rem; line-height:1.65; overflow-wrap:anywhere; }
+  .prose-msg p { margin:.45em 0; }
+  .prose-msg h1,.prose-msg h2,.prose-msg h3,.prose-msg h4 { font-weight:600; margin:.8em 0 .35em; color:#fff; }
+  .prose-msg h1{font-size:1.2em}.prose-msg h2{font-size:1.1em}.prose-msg h3{font-size:1.02em}
+  .prose-msg ul { list-style:disc; padding-left:1.3em; margin:.4em 0; }
+  .prose-msg ol { list-style:decimal; padding-left:1.3em; margin:.4em 0; }
+  .prose-msg li { margin:.18em 0; }
+  .prose-msg blockquote { border-left:3px solid var(--accent); padding-left:.8em; margin:.5em 0; color:#b6b6cc; }
+  .prose-msg code { font-family:'JetBrains Mono',monospace; font-size:.82em; background:rgba(124,108,255,.14);
+      border:1px solid rgba(124,108,255,.25); border-radius:5px; padding:.08em .35em; }
+  .prose-msg pre { background:#0d0d1a; border:1px solid rgba(255,255,255,.09); border-radius:10px;
+      padding:.85em 1em; overflow-x:auto; margin:.6em 0; }
+  .prose-msg pre code { background:none; border:none; padding:0; font-size:.8rem; line-height:1.55;
+      color:#c8d3f5; display:block; white-space:pre; }
+  .prose-msg a { color:var(--accent2); text-decoration:underline; text-underline-offset:2px; }
+  .prose-msg hr { border-color:rgba(255,255,255,.1); margin:.8em 0; }
+  .prose-msg .tbl-wrap { overflow-x:auto; margin:.8em 0; }
+  .prose-msg table { border-collapse:collapse; font-size:.85em; min-width:60%; }
+  .prose-msg th, .prose-msg td { border:1px solid var(--tbl-border, rgba(255,255,255,.13));
+      padding:.45em .7em; text-align:left; vertical-align:top; }
+  .prose-msg th { background:var(--tbl-th-bg, rgba(255,255,255,.05));
+      color:var(--donut-text,#fff); font-weight:600; white-space:nowrap; }
+  .prose-msg tbody tr:nth-child(even) td { background:var(--tbl-stripe, rgba(255,255,255,.025)); }
+
+  /* larger, article-like variant for the text/markdown reading view */
+  .prose-doc { font-size:1rem; line-height:1.78; }
+  .prose-doc h1 { font-size:1.7em; font-family:'Space Grotesk',Inter,sans-serif; }
+  .prose-doc h2 { font-size:1.35em; font-family:'Space Grotesk',Inter,sans-serif; margin-top:1.4em; }
+  .prose-doc h3 { font-size:1.12em; margin-top:1.2em; }
+  .prose-doc h1,.prose-doc h2 { padding-bottom:.25em; border-bottom:1px solid rgba(255,255,255,.08); }
+  .prose-doc h1,.prose-doc h2,.prose-doc h3,.prose-doc h4 { scroll-margin-top:5rem; }
+
+  details.block-fold > summary { cursor:pointer; list-style:none; user-select:none; }
+  details.block-fold > summary::-webkit-details-marker { display:none; }
+  details.block-fold > summary .fold-arrow { transition:transform .25s; display:inline-block; }
+  details.block-fold[open] > summary .fold-arrow { transform:rotate(90deg); }
+
+  .jtree { font-family:'JetBrains Mono',monospace; font-size:.8rem; line-height:1.7; }
+  .jtree details { padding-left:1.1rem; }
+  .jtree summary { cursor:pointer; list-style:none; margin-left:-1.1rem; }
+  .jtree summary::-webkit-details-marker { display:none; }
+  .jtree summary .tw { display:inline-block; width:1rem; color:#6b6b8a; transition:transform .2s; }
+  .jtree details[open] > summary .tw { transform:rotate(90deg); }
+  .jk { color:#9ecbff; } .js_ { color:#a5e3a1; } .jn { color:#f6c177; }
+  .jb { color:#f472b6; } .jz { color:#6b6b8a; font-style:italic; } .jm { color:#6b6b8a; }
+
+  /* data table */
+  .dtable { border-collapse:separate; border-spacing:0; }
+  .dtable th { position:sticky; top:0; background:#151527; cursor:pointer; user-select:none;
+      white-space:nowrap; transition:color .2s; z-index:1; }
+  .dtable th:hover { color:#fff; }
+  .dtable td { border-top:1px solid rgba(255,255,255,.05); white-space:nowrap;
+      max-width:320px; overflow:hidden; text-overflow:ellipsis; }
+  .dtable tbody tr { transition:background .15s; }
+  .dtable tbody tr:hover { background:rgba(255,255,255,.035); }
+  .cell-null { color:rgba(255,255,255,.22); font-style:italic; }
+  .cell-num { font-family:'JetBrains Mono',monospace; text-align:right; color:#f6c177; }
+  .cell-bool { font-family:'JetBrains Mono',monospace; }
+
+  /* log viewer */
+  .logline { display:flex; gap:.6rem; padding:.14rem .6rem; border-radius:6px;
+      font-family:'JetBrains Mono',monospace; font-size:.74rem; line-height:1.5; }
+  .logline:hover { background:rgba(255,255,255,.04); }
+  .loglvl { flex-shrink:0; width:3.6rem; text-align:center; border-radius:5px; font-size:.62rem;
+      font-weight:600; letter-spacing:.04em; padding:.05rem 0; margin-top:.1rem; }
+  .logtext { white-space:pre-wrap; overflow-wrap:anywhere; color:rgba(230,230,240,.75); }
+  .lvl-chip.active { background:rgba(255,255,255,.16); color:#fff;
+      border-color:color-mix(in srgb, var(--accent) 60%, transparent); }
+
+  #modal-thread { overscroll-behavior:contain; }
+  .bar-anim { transform-origin:bottom; }
+  .hbar-anim { transform-origin:left; }
+  @keyframes pulse-cue { 0%,100%{transform:translateY(0);opacity:.85} 50%{transform:translateY(8px);opacity:.35} }
+  .scroll-cue { animation:pulse-cue 2s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue { animation:none; }
+    html { scroll-behavior:auto; }
+  }
+  .tab-btn { position:relative; transition:color .25s; }
+  .tab-btn.active { color:#fff; }
+  .tab-btn.active::after { content:''; position:absolute; left:.4rem; right:.4rem; bottom:-7px; height:2px;
+      border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .searchbox:focus-within { border-color:color-mix(in srgb, var(--accent) 60%, transparent);
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<style id="design-css">/* ═══ Editorial Light — warm paper, serif display, hairline rules ═══ */
+:root {
+  --tbl-border: rgb(var(--tx) / .18); --tbl-th-bg: #f3efe6; --tbl-stripe: rgb(var(--tx) / .03);
+  --tx: 28 25 23;                    /* ink rgb triplet */
+  --hero-fog: #faf7f2;
+  --hero-static-bg:
+    radial-gradient(ellipse at 50% 28%, rgba(154,52,18,.07), transparent 62%),
+    repeating-linear-gradient(0deg, transparent 0 47px, rgba(28,25,23,.05) 47px 48px),
+    #faf7f2;
+  --ct-number: #b45309; --ct-string: #15803d; --muted: #78716c;
+  --track: rgb(var(--tx) / .09);
+  --donut-text: #1c1917; --donut-text-dim: rgb(var(--tx) / .5);
+  --lvl-error: #dc2626; --lvl-warn: #d97706; --lvl-info: #0369a1; --lvl-debug: #78716c;
+}
+body { background: #faf7f2 !important; color: #1c1917; }
+::selection { background: var(--accent); color: #fff; }
+::-webkit-scrollbar-track { background: #faf7f2; }
+::-webkit-scrollbar-thumb { background: #d6cec2; }
+::-webkit-scrollbar-thumb:hover { background: #bfb5a6; }
+
+/* ink mappings for white-alpha utilities */
+.text-white { color: rgb(var(--tx)) !important; }
+.text-white\/90 { color: rgb(var(--tx) / .92) !important; }
+.text-white\/80 { color: rgb(var(--tx) / .85) !important; }
+.text-white\/75 { color: rgb(var(--tx) / .8) !important; }
+.text-white\/70 { color: rgb(var(--tx) / .76) !important; }
+.text-white\/60 { color: rgb(var(--tx) / .68) !important; }
+.text-white\/55 { color: rgb(var(--tx) / .62) !important; }
+.text-white\/50 { color: rgb(var(--tx) / .58) !important; }
+.text-white\/45 { color: rgb(var(--tx) / .52) !important; }
+.text-white\/40 { color: rgb(var(--tx) / .48) !important; }
+.text-white\/35 { color: rgb(var(--tx) / .44) !important; }
+.text-white\/30 { color: rgb(var(--tx) / .4) !important; }
+.text-white\/25 { color: rgb(var(--tx) / .35) !important; }
+.hover\:text-white:hover { color: rgb(var(--tx)) !important; }
+.placeholder-white\/30::placeholder { color: rgb(var(--tx) / .4) !important; }
+.border-white\/10 { border-color: rgb(var(--tx) / .14) !important; }
+.border-white\/5 { border-color: rgb(var(--tx) / .09) !important; }
+.bg-white\/5 { background-color: rgb(var(--tx) / .06) !important; }
+.bg-white\/15 { background-color: rgb(var(--tx) / .1) !important; }
+.hover\:bg-white\/15:hover { background-color: rgb(var(--tx) / .1) !important; }
+.hover\:bg-white\/5:hover { background-color: rgb(var(--tx) / .06) !important; }
+
+/* surfaces: white cards, hairline borders, soft print shadow */
+.glass { background: #fffdf9 !important; border: 1px solid rgb(var(--tx) / .13) !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  box-shadow: 0 1px 2px rgb(var(--tx) / .05), 0 10px 28px -20px rgb(var(--tx) / .18); }
+.glass-strong { background: rgba(250,247,242,.94) !important;
+  border: 1px solid rgb(var(--tx) / .14) !important; }
+.chip { background: rgb(var(--tx) / .05); border-color: rgb(var(--tx) / .16); }
+
+/* serif display, italic accent title */
+.font-display { font-family: 'Fraunces', Georgia, 'Times New Roman', serif !important;
+  letter-spacing: 0; }
+.grad-text { background: none !important; -webkit-background-clip: initial !important;
+  background-clip: initial !important; color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent); font-style: italic; }
+
+/* hero: bare paper, no vignette */
+#hero > div[style*="radial-gradient"] { background: none !important; }
+
+/* tables */
+.dtable th { background: #f3efe6 !important; color: rgb(var(--tx) / .55); }
+.dtable td { border-top: 1px solid rgb(var(--tx) / .1) !important; }
+.dtable tbody tr:hover { background: rgb(var(--tx) / .04) !important; }
+.cell-null { color: rgb(var(--tx) / .3) !important; }
+.cell-num { color: #b45309 !important; }
+.tab-btn.active { color: rgb(var(--tx)) !important; }
+
+/* log viewer */
+.logtext { color: rgb(var(--tx) / .8) !important; }
+.logline:hover { background: rgb(var(--tx) / .05) !important; }
+.lvl-chip.active { background: rgb(var(--tx) / .09) !important; color: rgb(var(--tx)) !important; }
+
+/* prose — dark code blocks stay dark (print-style contrast) */
+.prose-msg h1, .prose-msg h2, .prose-msg h3, .prose-msg h4 { color: rgb(var(--tx)) !important; }
+.prose-msg blockquote { color: #57534e !important; }
+.prose-msg code { background: rgba(154,52,18,.08); border-color: rgba(154,52,18,.22); color: #9a3412; }
+.prose-msg pre code { color: #c8d3f5; background: none; border: none; }
+.prose-doc h1, .prose-doc h2 { border-bottom-color: rgb(var(--tx) / .16) !important; }
+
+/* JSON tree tokens for light ground */
+.jk { color: #1d4ed8; } .js_ { color: #15803d; } .jn { color: #b45309; }
+.jb { color: #be185d; } .jz, .jm { color: #78716c; }
+.jtree summary .tw { color: #a8a29e; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="absolute inset-0 pointer-events-none"
+       style="background:radial-gradient(ellipse at 50% 42%, transparent 0%, rgba(11,11,20,.55) 62%, #0b0b14 100%);"></div>
+  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+    <div id="hero-eyebrow" class="chip mb-6 opacity-0" style="animation:none;">
+      <span class="w-2 h-2 rounded-full grad-line inline-block"></span>
+      <span id="hero-eyebrow-text" class="tracking-widest uppercase text-[.68rem] text-white/80">Your data, made simple</span>
+    </div>
+    <h1 id="hero-title" class="font-display font-bold leading-[1.04] text-5xl md:text-7xl lg:text-8xl tracking-tight">
+      <span class="grad-text">Data</span> <span class="text-white">Explorer</span>
+    </h1>
+    <p id="hero-subtitle" class="mt-6 text-base md:text-xl text-white/60 max-w-2xl mx-auto font-light"></p>
+    <div id="hero-chips" class="mt-10 flex flex-wrap justify-center gap-3"></div>
+    <a href="#content-start" class="inline-block mt-14 text-white/50 hover:text-white transition-colors">
+      <div class="scroll-cue text-2xl">↓</div>
+      <div class="text-[.7rem] tracking-[.25em] uppercase mt-1">Scroll to explore</div>
+    </a>
+  </div>
+</header>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="topnav" class="sticky top-0 z-40 glass-strong border-x-0 border-t-0">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-4 h-14">
+    <div class="flex items-center gap-2.5 shrink-0">
+      <div class="w-3 h-3 rounded-full grad-line"></div>
+      <span id="nav-title" class="font-display font-600 font-semibold text-sm text-white/90 hidden sm:block">Data Explorer</span>
+    </div>
+    <div id="tabs" class="flex items-center gap-1 overflow-x-auto flex-1 min-w-0 pb-0.5"></div>
+    <label id="search-wrap" class="searchbox hidden md:flex items-center gap-2 glass rounded-full px-3.5 py-1.5 transition-all shrink-0 w-56">
+      <span class="text-white/40 text-sm">⌕</span>
+      <input id="search" type="text" placeholder="Search…"
+             class="bg-transparent outline-none text-sm w-full placeholder-white/30">
+    </label>
+  </div>
+</nav>
+
+<div id="content-start"></div>
+<main id="content" class="max-w-7xl mx-auto px-4 sm:px-6 pb-24"></main>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div id="modal" class="fixed inset-0 z-50 hidden">
+  <div id="modal-backdrop" class="absolute inset-0 bg-black/70" style="backdrop-filter:blur(6px)"></div>
+  <div id="modal-panel" class="absolute inset-x-0 bottom-0 top-8 md:inset-x-8 md:top-12 lg:inset-x-24
+       glass-strong rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden">
+    <div class="flex items-start justify-between gap-4 px-5 md:px-8 pt-5 pb-4 border-b border-white/10 shrink-0">
+      <div class="min-w-0">
+        <h2 id="modal-title" class="font-display font-semibold text-lg md:text-2xl text-white truncate"></h2>
+        <div id="modal-meta" class="flex flex-wrap gap-2 mt-2"></div>
+      </div>
+      <button id="modal-close" class="chip hover:bg-white/15 transition-colors text-sm shrink-0" aria-label="Close">✕ close</button>
+    </div>
+    <div id="modal-thread" class="flex-1 overflow-y-auto px-4 md:px-8 py-6"></div>
+  </div>
+</div>
+
+<footer class="border-t border-white/5 py-10 text-center text-white/35 text-xs">
+  <div id="footer-text">Generated with the eliviz skill</div>
+</footer>
+
+<script type="application/json" id="viz-data">{"meta": {"title": "Q1–Q3 Sales Pulse", "subtitle": "The same sales file, five looks. This one is editorial.", "accent": "#9a3412", "generated_at": "2026-08-11", "sources": ["sales_pulse.csv"], "design": {"id": "editorial", "name": "Editorial Light", "hero": "static", "accent2": "#0f766e", "accent3": "#9d174d"}}, "datasets": [{"type": "table", "label": "sales_pulse.csv", "stats": {"row_count": 1200, "col_count": 9, "cell_count": 10800, "null_cells": 494, "filled_pct": 95.4, "numeric_cols": 3, "text_cols": 4, "date_cols": 1, "bool_cols": 1, "source_format": "csv"}, "columns": [{"name": "order_id", "type": "string", "nulls": 0, "distinct": 1200, "top_values": [{"value": "ORD-1000", "count": 1}, {"value": "ORD-1001", "count": 1}, {"value": "ORD-1002", "count": 1}, {"value": "ORD-1003", "count": 1}, {"value": "ORD-1004", "count": 1}, {"value": "ORD-1005", "count": 1}, {"value": "ORD-1006", "count": 1}, {"value": "ORD-1007", "count": 1}, {"value": "ORD-1008", "count": 1}, {"value": "ORD-1009", "count": 1}], "avg_len": 8.0}, {"name": "date", "type": "date", "nulls": 0, "distinct": 250, "min": "2026-01-01T00:00:00", "max": "2026-09-28T00:00:00"}, {"name": "product", "type": "string", "nulls": 0, "distinct": 5, "top_values": [{"value": "Gizmos", "count": 250}, {"value": "Sprockets", "count": 248}, {"value": "Doohickeys", "count": 241}, {"value": "Gadgets", "count": 238}, {"value": "Widgets", "count": 223}], "avg_len": 7.8}, {"name": "region", "type": "string", "nulls": 0, "distinct": 4, "top_values": [{"value": "APAC", "count": 320}, {"value": "LATAM", "count": 307}, {"value": "EMEA", "count": 287}, {"value": "AMER", "count": 286}], "avg_len": 4.3}, {"name": "quantity", "type": "number", "nulls": 0, "distinct": 40, "min": 1.0, "max": 40.0, "mean": 20.5108, "median": 21.0, "histogram": [{"label": "1–2.95", "count": 63}, {"label": "2.95–4.9", "count": 57}, {"label": "4.9–6.85", "count": 56}, {"label": "6.85–8.8", "count": 62}, {"label": "8.8–10.75", "count": 68}, {"label": "10.75–12.7", "count": 54}, {"label": "12.7–14.65", "count": 56}, {"label": "14.65–16.6", "count": 56}, {"label": "16.6–18.55", "count": 46}, {"label": "18.55–20.5", "count": 63}, {"label": "20.5–22.45", "count": 70}, {"label": "22.45–24.4", "count": 65}, {"label": "24.4–26.35", "count": 71}, {"label": "26.35–28.3", "count": 63}, {"label": "28.3–30.25", "count": 60}, {"label": "30.25–32.2", "count": 67}, {"label": "32.2–34.15", "count": 43}, {"label": "34.15–36.1", "count": 68}, {"label": "36.1–38.05", "count": 53}, {"label": "38.05–40", "count": 59}]}, {"name": "unit_price", "type": "number", "nulls": 0, "distinct": 1134, "min": 3.08, "max": 120.0, "mean": 60.4728, "median": 60.185, "histogram": [{"label": "3.08–8.93", "count": 57}, {"label": "8.93–14.77", "count": 67}, {"label": "14.77–20.62", "count": 66}, {"label": "20.62–26.46", "count": 61}, {"label": "26.46–32.31", "count": 61}, {"label": "32.31–38.16", "count": 56}, {"label": "38.16–44", "count": 51}, {"label": "44–49.85", "count": 60}, {"label": "49.85–55.69", "count": 77}, {"label": "55.69–61.54", "count": 62}, {"label": "61.54–67.39", "count": 59}, {"label": "67.39–73.23", "count": 50}, {"label": "73.23–79.08", "count": 59}, {"label": "79.08–84.92", "count": 68}, {"label": "84.92–90.77", "count": 66}, {"label": "90.77–96.62", "count": 61}, {"label": "96.62–102.46", "count": 73}, {"label": "102.46–108.31", "count": 41}, {"label": "108.31–114.15", "count": 54}, {"label": "114.15–120", "count": 51}]}, {"name": "total", "type": "number", "nulls": 0, "distinct": 1191, "min": 8.63, "max": 4618.0, "mean": 1239.9057, "median": 965.545, "histogram": [{"label": "8.63–239.1", "count": 203}, {"label": "239.1–469.57", "count": 168}, {"label": "469.57–700.04", "count": 126}, {"label": "700.04–930.5", "count": 92}, {"label": "930.5–1.2k", "count": 89}, {"label": "1.2k–1.4k", "count": 81}, {"label": "1.4k–1.6k", "count": 62}, {"label": "1.6k–1.9k", "count": 74}, {"label": "1.9k–2.1k", "count": 51}, {"label": "2.1k–2.3k", "count": 42}, {"label": "2.3k–2.5k", "count": 40}, {"label": "2.5k–2.8k", "count": 39}, {"label": "2.8k–3k", "count": 33}, {"label": "3k–3.2k", "count": 26}, {"label": "3.2k–3.5k", "count": 32}, {"label": "3.5k–3.7k", "count": 13}, {"label": "3.7k–3.9k", "count": 13}, {"label": "3.9k–4.2k", "count": 8}, {"label": "4.2k–4.4k", "count": 5}, {"label": "4.4k–4.6k", "count": 3}]}, {"name": "returned", "type": "boolean", "nulls": 0, "distinct": 2, "true_count": 305, "false_count": 895}, {"name": "notes", "type": "string", "nulls": 494, "distinct": 4, "top_values": [{"value": "repeat customer", "count": 204}, {"value": "bulk discount", "count": 178}, {"value": "gift wrap", "count": 169}, {"value": "rush order", "count": 155}], "avg_len": 12.0}], "timeseries": {"column": "date", "unit": "month", "points": [{"label": "2026-01", "count": 131}, {"label": "2026-02", "count": 146}, {"label": "2026-03", "count": 138}, {"label": "2026-04", "count": 124}, {"label": "2026-05", "count": 121}, {"label": "2026-06", "count": 119}, {"label": "2026-07", "count": 153}, {"label": "2026-08", "count": 137}, {"label": "2026-09", "count": 131}]}, "rows": [["ORD-1000", "2026-02-01", "Gadgets", "EMEA", "18", "31.65", "569.7", "true", "gift wrap"], ["ORD-1001", "2026-07-02", "Gadgets", "EMEA", "2", "13.96", "27.92", "false", "bulk discount"], ["ORD-1002", "2026-09-14", "Doohickeys", "EMEA", "15", "55.56", "833.4", "false", "bulk discount"], ["ORD-1003", "2026-07-11", "Doohickeys", "EMEA", "18", "21.19", "381.42", "true", "rush order"], ["ORD-1004", "2026-02-12", "Widgets", "LATAM", "23", "73.64", "1693.72", "true", "rush order"], ["ORD-1005", "2026-02-18", "Sprockets", "AMER", "19", "100.04", "1900.76", "false", "bulk discount"], ["ORD-1006", "2026-02-02", "Widgets", "APAC", "15", "93.45", "1401.75", "true", "rush order"], ["ORD-1007", "2026-05-15", "Doohickeys", "APAC", "24", "22.03", "528.72", "false", "bulk discount"], ["ORD-1008", "2026-02-20", "Gadgets", "APAC", "11", "65.49", "720.39", "false", "rush order"], ["ORD-1009", "2026-05-21", "Doohickeys", "EMEA", "36", "28.69", "1032.84", "false", "repeat customer"], ["ORD-1010", "2026-01-26", "Widgets", "APAC", "21", "49.94", "1048.74", "false", null], ["ORD-1011", "2026-08-13", "Gadgets", "APAC", "30", "19.72", "591.6", "false", "bulk discount"], ["ORD-1012", "2026-07-19", "Gadgets", "LATAM", "26", "45.35", "1179.1", "true", "repeat customer"], ["ORD-1013", "2026-01-28", "Gadgets", "LATAM", "8", "20.88", "167.04", "true", "rush order"], ["ORD-1014", "2026-07-20", "Sprockets", "EMEA", "30", "64.91", "1947.3", "true", "bulk discount"], ["ORD-1015", "2026-09-25", "Doohickeys", "EMEA", "18", "92.93", "1672.74", "false", "rush order"], ["ORD-1016", "2026-03-15", "Doohickeys", "APAC", "1", "114.6", "114.6", "true", "repeat customer"], ["ORD-1017", "2026-05-27", "Gadgets", "AMER", "33", "74.25", "2450.25", "false", "gift wrap"], ["ORD-1018", "2026-09-01", "Widgets", "EMEA", "39", "40.93", "1596.27", "false", "repeat customer"], ["ORD-1019", "2026-05-08", "Sprockets", "EMEA", "4", "31.18", "124.72", "true", "bulk discount"], ["ORD-1020", "2026-08-27", "Sprockets", "APAC", "5", "117.42", "587.1", "false", "bulk discount"], ["ORD-1021", "2026-08-18", "Sprockets", "LATAM", "11", "34.01", "374.11", "false", "gift wrap"], ["ORD-1022", "2026-04-23", "Doohickeys", "LATAM", "20", "49.68", "993.6", "false", null], ["ORD-1023", "2026-04-08", "Sprockets", "APAC", "5", "42.56", "212.8", "false", null], ["ORD-1024", "2026-02-23", "Widgets", "AMER", "4", "29.79", "119.16", "true", "gift wrap"], ["ORD-1025", "2026-04-09", "Gadgets", "LATAM", "32", "28.07", "898.24", "false", "repeat customer"], ["ORD-1026", "2026-08-26", "Widgets", "LATAM", "27", "25.28", "682.56", "false", "rush order"], ["ORD-1027", "2026-07-15", "Widgets", "EMEA", "4", "81.78", "327.12", "false", "bulk discount"], ["ORD-1028", "2026-06-26", "Gadgets", "LATAM", "7", "32.09", "224.63", "false", "rush order"], ["ORD-1029", "2026-03-09", "Widgets", "LATAM", "30", "32.23", "966.9", "true", null], ["ORD-1030", "2026-09-27", "Gadgets", "APAC", "1", "116.37", "116.37", "false", "rush order"], ["ORD-1031", "2026-08-07", "Gadgets", "LATAM", "26", "108.59", "2823.34", "true", "rush order"], ["ORD-1032", "2026-05-26", "Sprockets", "LATAM", "30", "36.37", "1091.1", "false", null], ["ORD-1033", "2026-05-07", "Sprockets", "EMEA", "4", "70.76", "283.04", "false", null], ["ORD-1034", "2026-01-19", "Sprockets", "APAC", "31", "61.83", "1916.73", "true", "gift wrap"], ["ORD-1035", "2026-02-28", "Widgets", "APAC", "12", "11.02", "132.24", "false", null], ["ORD-1036", "2026-04-19", "Widgets", "LATAM", "39", "7.65", "298.35", "false", null], ["ORD-1037", "2026-04-22", "Gizmos", "APAC", "21", "30.93", "649.53", "false", "rush order"], ["ORD-1038", "2026-06-25", "Sprockets", "EMEA", "5", "4.09", "20.45", "true", "gift wrap"], ["ORD-1039", "2026-04-17", "Doohickeys", "EMEA", "17", "18.5", "314.5", "false", null], ["ORD-1040", "2026-05-06", "Doohickeys", "EMEA", "29", "100.55", "2915.95", "false", "bulk discount"], ["ORD-1041", "2026-02-05", "Widgets", "APAC", "17", "16.51", "280.67", "false", null], ["ORD-1042", "2026-04-23", "Doohickeys", "LATAM", "22", "26.82", "590.04", "false", "repeat customer"], ["ORD-1043", "2026-01-03", "Widgets", "EMEA", "28", "100.03", "2800.84", "false", "repeat customer"], ["ORD-1044", "2026-03-21", "Gizmos", "LATAM", "17", "21.91", "372.47", "true", null], ["ORD-1045", "2026-02-23", "Doohickeys", "APAC", "10", "66.83", "668.3", "false", null], ["ORD-1046", "2026-01-10", "Widgets", "AMER", "24", "108.18", "2596.32", "false", "bulk discount"], ["ORD-1047", "2026-04-22", "Sprockets", "LATAM", "7", "44.38", "310.66", "false", null], ["ORD-1048", "2026-03-26", "Widgets", "APAC", "12", "106.13", "1273.56", "false", "repeat customer"], ["ORD-1049", "2026-07-26", "Widgets", "LATAM", "16", "34.22", "547.52", "true", "repeat customer"], ["ORD-1050", "2026-08-08", "Gizmos", "AMER", "13", "98.54", "1281.02", "false", "repeat customer"], ["ORD-1051", "2026-04-08", "Gizmos", "AMER", "2", "80.22", "160.44", "false", "repeat customer"], ["ORD-1052", "2026-02-25", "Sprockets", "LATAM", "18", "44.08", "793.44", "false", null], ["ORD-1053", "2026-02-09", "Doohickeys", "EMEA", "12", "70.93", "851.16", "true", "gift wrap"], ["ORD-1054", "2026-07-12", "Sprockets", "EMEA", "21", "54.06", "1135.26", "false", "gift wrap"], ["ORD-1055", "2026-04-09", "Widgets", "APAC", "3", "85.93", "257.79", "false", "rush order"], ["ORD-1056", "2026-02-22", "Widgets", "AMER", "22", "75.91", "1670.02", "false", "bulk discount"], ["ORD-1057", "2026-07-11", "Sprockets", "APAC", "26", "84.57", "2198.82", "false", "rush order"], ["ORD-1058", "2026-07-22", "Doohickeys", "LATAM", "12", "75.02", "900.24", "true", null], ["ORD-1059", "2026-05-07", "Sprockets", "AMER", "28", "94.93", "2658.04", "false", "rush order"], ["ORD-1060", "2026-08-22", "Gadgets", "EMEA", "14", "62.81", "879.34", "false", "gift wrap"], ["ORD-1061", "2026-06-03", "Gadgets", "APAC", "16", "81.72", "1307.52", "false", null], ["ORD-1062", "2026-01-08", "Widgets", "LATAM", "31", "74.52", "2310.12", "false", "bulk discount"], ["ORD-1063", "2026-04-23", "Gadgets", "APAC", "25", "60.84", "1521.0", "true", "repeat customer"], ["ORD-1064", "2026-02-25", "Sprockets", "LATAM", "28", "28.6", "800.8", "true", "gift wrap"], ["ORD-1065", "2026-04-28", "Gizmos", "AMER", "8", "56.41", "451.28", "false", "gift wrap"], ["ORD-1066", "2026-09-14", "Gadgets", "LATAM", "36", "55.17", "1986.12", "false", null], ["ORD-1067", "2026-04-27", "Sprockets", "LATAM", "18", "92.6", "1666.8", "false", null], ["ORD-1068", "2026-08-03", "Doohickeys", "AMER", "19", "30.44", "578.36", "true", null], ["ORD-1069", "2026-03-08", "Gadgets", "EMEA", "25", "84.19", "2104.75", "false", "rush order"], ["ORD-1070", "2026-06-18", "Gadgets", "LATAM", "30", "51.65", "1549.5", "false", "repeat customer"], ["ORD-1071", "2026-01-28", "Widgets", "AMER", "37", "47.5", "1757.5", "false", "repeat customer"], ["ORD-1072", "2026-07-28", "Sprockets", "APAC", "27", "65.97", "1781.19", "false", null], ["ORD-1073", "2026-05-14", "Doohickeys", "LATAM", "32", "6.4", "204.8", "false", "repeat customer"], ["ORD-1074", "2026-08-05", "Gizmos", "EMEA", "40", "65.49", "2619.6", "true", "bulk discount"], ["ORD-1075", "2026-07-05", "Doohickeys", "LATAM", "30", "24.26", "727.8", "false", null], ["ORD-1076", "2026-08-11", "Gizmos", "AMER", "22", "92.06", "2025.32", "false", null], ["ORD-1077", "2026-02-16", "Widgets", "AMER", "2", "90.64", "181.28", "false", "bulk discount"], ["ORD-1078", "2026-02-25", "Gadgets", "APAC", "3", "91.25", "273.75", "true", "gift wrap"], ["ORD-1079", "2026-03-08", "Widgets", "APAC", "9", "58.41", "525.69", "false", "bulk discount"], ["ORD-1080", "2026-05-25", "Sprockets", "EMEA", "24", "22.63", "543.12", "false", null], ["ORD-1081", "2026-02-19", "Sprockets", "LATAM", "2", "111.68", "223.36", "false", "bulk discount"], ["ORD-1082", "2026-04-03", "Gadgets", "EMEA", "38", "83.8", "3184.4", "false", "repeat customer"], ["ORD-1083", "2026-02-26", "Doohickeys", "LATAM", "37", "94.57", "3499.09", "false", null], ["ORD-1084", "2026-09-21", "Gizmos", "LATAM", "22", "4.48", "98.56", "true", "rush order"], ["ORD-1085", "2026-06-21", "Gizmos", "APAC", "30", "85.76", "2572.8", "false", "gift wrap"], ["ORD-1086", "2026-09-25", "Sprockets", "AMER", "31", "57.39", "1779.09", "false", "repeat customer"], ["ORD-1087", "2026-04-27", "Gizmos", "APAC", "6", "35.63", "213.78", "false", "gift wrap"], ["ORD-1088", "2026-07-11", "Doohickeys", "APAC", "2", "60.83", "121.66", "false", null], ["ORD-1089", "2026-06-26", "Sprockets", "AMER", "17", "42.82", "727.94", "true", "gift wrap"], ["ORD-1090", "2026-04-03", "Gizmos", "APAC", "16", "87.25", "1396.0", "false", "bulk discount"], ["ORD-1091", "2026-08-15", "Gadgets", "LATAM", "2", "13.89", "27.78", "false", null], ["ORD-1092", "2026-06-16", "Gizmos", "AMER", "36", "65.12", "2344.32", "false", "bulk discount"], ["ORD-1093", "2026-08-09", "Widgets", "APAC", "20", "32.41", "648.2", "false", null], ["ORD-1094", "2026-09-25", "Gizmos", "AMER", "12", "25.41", "304.92", "false", null], ["ORD-1095", "2026-04-10", "Doohickeys", "EMEA", "15", "45.22", "678.3", "false", null], ["ORD-1096", "2026-01-02", "Gadgets", "LATAM", "36", "37.18", "1338.48", "true", "repeat customer"], ["ORD-1097", "2026-01-19", "Gizmos", "AMER", "19", "57.92", "1100.48", "false", null], ["ORD-1098", "2026-05-28", "Widgets", "LATAM", "31", "16.35", "506.85", "false", null], ["ORD-1099", "2026-01-05", "Doohickeys", "EMEA", "10", "97.9", "979.0", "false", null], ["ORD-1100", "2026-09-25", "Sprockets", "APAC", "27", "73.94", "1996.38", "false", "rush order"], ["ORD-1101", "2026-08-10", "Doohickeys", "EMEA", "38", "118.83", "4515.54", "true", "repeat customer"], ["ORD-1102", "2026-04-21", "Widgets", "APAC", "14", "33.96", "475.44", "false", null], ["ORD-1103", "2026-09-03", "Gizmos", "LATAM", "11", "3.31", "36.41", "false", null], ["ORD-1104", "2026-04-10", "Gizmos", "EMEA", "19", "85.25", "1619.75", "false", null], ["ORD-1105", "2026-04-14", "Gadgets", "AMER", "8", "66.71", "533.68", "false", null], ["ORD-1106", "2026-01-06", "Sprockets", "AMER", "20", "72.62", "1452.4", "false", null], ["ORD-1107", "2026-08-23", "Doohickeys", "LATAM", "20", "84.87", "1697.4", "false", null], ["ORD-1108", "2026-01-14", "Widgets", "EMEA", "21", "73.63", "1546.23", "false", "bulk discount"], ["ORD-1109", "2026-01-25", "Gadgets", "LATAM", "18", "70.42", "1267.56", "false", null], ["ORD-1110", "2026-03-19", "Gizmos", "EMEA", "28", "77.27", "2163.56", "false", null], ["ORD-1111", "2026-07-11", "Gadgets", "AMER", "21", "81.41", "1709.61", "false", "bulk discount"], ["ORD-1112", "2026-08-10", "Sprockets", "EMEA", "26", "98.19", "2552.94", "false", null], ["ORD-1113", "2026-06-09", "Gizmos", "EMEA", "21", "16.56", "347.76", "false", "rush order"], ["ORD-1114", "2026-01-07", "Gizmos", "LATAM", "34", "45.33", "1541.22", "true", null], ["ORD-1115", "2026-05-18", "Gizmos", "LATAM", "9", "111.54", "1003.86", "true", null], ["ORD-1116", "2026-04-23", "Widgets", "LATAM", "11", "39.36", "432.96", "true", null], ["ORD-1117", "2026-02-15", "Gadgets", "LATAM", "8", "78.78", "630.24", "false", "gift wrap"], ["ORD-1118", "2026-05-14", "Gadgets", "LATAM", "31", "117.69", "3648.39", "false", "rush order"], ["ORD-1119", "2026-04-20", "Gadgets", "EMEA", "33", "90.32", "2980.56", "false", "repeat customer"], ["ORD-1120", "2026-07-11", "Widgets", "AMER", "33", "34.26", "1130.58", "false", "repeat customer"], ["ORD-1121", "2026-08-28", "Gizmos", "AMER", "10", "55.25", "552.5", "false", "gift wrap"], ["ORD-1122", "2026-09-13", "Gadgets", "APAC", "30", "112.14", "3364.2", "false", null], ["ORD-1123", "2026-07-02", "Gizmos", "LATAM", "21", "90.13", "1892.73", "false", "rush order"], ["ORD-1124", "2026-01-05", "Doohickeys", "EMEA", "33", "115.95", "3826.35", "false", null], ["ORD-1125", "2026-09-15", "Gizmos", "APAC", "1", "87.53", "87.53", "true", "rush order"], ["ORD-1126", "2026-05-11", "Widgets", "AMER", "40", "84.05", "3362.0", "false", null], ["ORD-1127", "2026-08-28", "Widgets", "APAC", "35", "7.2", "252.0", "false", null], ["ORD-1128", "2026-02-14", "Widgets", "LATAM", "7", "91.96", "643.72", "false", "bulk discount"], ["ORD-1129", "2026-05-01", "Widgets", "AMER", "3", "40.95", "122.85", "false", null], ["ORD-1130", "2026-07-05", "Sprockets", "APAC", "16", "65.15", "1042.4", "false", null], ["ORD-1131", "2026-02-20", "Gadgets", "LATAM", "25", "75.51", "1887.75", "false", null], ["ORD-1132", "2026-08-21", "Widgets", "LATAM", "17", "56.77", "965.09", "false", "bulk discount"], ["ORD-1133", "2026-09-06", "Doohickeys", "AMER", "5", "54.68", "273.4", "false", "bulk discount"], ["ORD-1134", "2026-05-15", "Gizmos", "LATAM", "20", "26.31", "526.2", "true", null], ["ORD-1135", "2026-07-19", "Doohickeys", "EMEA", "23", "70.25", "1615.75", "false", null], ["ORD-1136", "2026-01-19", "Gizmos", "AMER", "4", "109.54", "438.16", "false", "gift wrap"], ["ORD-1137", "2026-06-08", "Gadgets", "EMEA", "13", "75.64", "983.32", "true", null], ["ORD-1138", "2026-08-02", "Gadgets", "EMEA", "38", "45.69", "1736.22", "false", null], ["ORD-1139", "2026-07-06", "Sprockets", "AMER", "13", "18.46", "239.98", "false", "repeat customer"], ["ORD-1140", "2026-03-09", "Doohickeys", "AMER", "31", "116.18", "3601.58", "true", "rush order"], ["ORD-1141", "2026-02-05", "Gizmos", "AMER", "15", "103.64", "1554.6", "true", "repeat customer"], ["ORD-1142", "2026-07-01", "Gizmos", "AMER", "17", "65.78", "1118.26", "false", "gift wrap"], ["ORD-1143", "2026-07-27", "Gadgets", "LATAM", "24", "15.68", "376.32", "true", "gift wrap"], ["ORD-1144", "2026-09-11", "Widgets", "LATAM", "40", "28.9", "1156.0", "false", "bulk discount"], ["ORD-1145", "2026-07-04", "Widgets", "AMER", "9", "8.31", "74.79", "false", null], ["ORD-1146", "2026-02-08", "Gizmos", "AMER", "35", "18.87", "660.45", "false", "gift wrap"], ["ORD-1147", "2026-03-14", "Sprockets", "LATAM", "7", "100.54", "703.78", "false", null], ["ORD-1148", "2026-06-07", "Gadgets", "AMER", "29", "55.03", "1595.87", "true", "bulk discount"], ["ORD-1149", "2026-06-18", "Doohickeys", "APAC", "23", "10.08", "231.84", "true", "repeat customer"], ["ORD-1150", "2026-08-03", "Sprockets", "EMEA", "14", "78.08", "1093.12", "true", "repeat customer"], ["ORD-1151", "2026-06-08", "Gadgets", "EMEA", "9", "95.08", "855.72", "false", "gift wrap"], ["ORD-1152", "2026-04-27", "Gadgets", "EMEA", "15", "41.44", "621.6", "false", "repeat customer"], ["ORD-1153", "2026-03-05", "Gadgets", "EMEA", "35", "32.33", "1131.55", "true", null], ["ORD-1154", "2026-01-12", "Widgets", "APAC", "16", "71.9", "1150.4", "false", null], ["ORD-1155", "2026-03-24", "Widgets", "LATAM", "27", "64.55", "1742.85", "false", "repeat customer"], ["ORD-1156", "2026-06-17", "Sprockets", "APAC", "38", "15.76", "598.88", "true", "bulk discount"], ["ORD-1157", "2026-09-10", "Widgets", "EMEA", "30", "78.27", "2348.1", "false", "repeat customer"], ["ORD-1158", "2026-07-14", "Gizmos", "EMEA", "7", "60.36", "422.52", "true", null], ["ORD-1159", "2026-03-03", "Sprockets", "AMER", "9", "35.18", "316.62", "false", "gift wrap"], ["ORD-1160", "2026-09-10", "Gizmos", "EMEA", "30", "62.15", "1864.5", "true", "repeat customer"], ["ORD-1161", "2026-09-24", "Gadgets", "LATAM", "14", "53.32", "746.48", "false", "repeat customer"], ["ORD-1162", "2026-08-13", "Doohickeys", "LATAM", "27", "88.36", "2385.72", "false", "bulk discount"], ["ORD-1163", "2026-05-12", "Gizmos", "EMEA", "10", "83.36", "833.6", "true", "repeat customer"], ["ORD-1164", "2026-02-03", "Doohickeys", "APAC", "28", "14.3", "400.4", "true", "gift wrap"], ["ORD-1165", "2026-09-18", "Gizmos", "AMER", "22", "81.39", "1790.58", "false", "repeat customer"], ["ORD-1166", "2026-01-10", "Widgets", "APAC", "39", "39.56", "1542.84", "false", "bulk discount"], ["ORD-1167", "2026-08-08", "Sprockets", "AMER", "7", "43.96", "307.72", "true", "repeat customer"], ["ORD-1168", "2026-05-19", "Sprockets", "EMEA", "15", "97.44", "1461.6", "false", null], ["ORD-1169", "2026-03-09", "Doohickeys", "EMEA", "20", "110.82", "2216.4", "false", "repeat customer"], ["ORD-1170", "2026-03-19", "Widgets", "EMEA", "26", "11.14", "289.64", "false", "rush order"], ["ORD-1171", "2026-07-15", "Doohickeys", "AMER", "22", "21.42", "471.24", "true", null], ["ORD-1172", "2026-03-06", "Widgets", "AMER", "40", "8.82", "352.8", "false", "bulk discount"], ["ORD-1173", "2026-07-16", "Doohickeys", "APAC", "39", "54.72", "2134.08", "true", null], ["ORD-1174", "2026-07-04", "Sprockets", "LATAM", "19", "82.35", "1564.65", "false", null], ["ORD-1175", "2026-04-13", "Gadgets", "AMER", "39", "9.41", "366.99", "false", "repeat customer"], ["ORD-1176", "2026-03-25", "Widgets", "EMEA", "17", "36.87", "626.79", "false", "bulk discount"], ["ORD-1177", "2026-07-06", "Gadgets", "AMER", "9", "47.48", "427.32", "true", "rush order"], ["ORD-1178", "2026-01-14", "Widgets", "AMER", "2", "56.79", "113.58", "false", "gift wrap"], ["ORD-1179", "2026-07-23", "Gizmos", "EMEA", "27", "36.87", "995.49", "false", null], ["ORD-1180", "2026-08-27", "Widgets", "APAC", "24", "13.31", "319.44", "false", "gift wrap"], ["ORD-1181", "2026-07-17", "Doohickeys", "AMER", "6", "49.3", "295.8", "false", null], ["ORD-1182", "2026-03-03", "Sprockets", "APAC", "33", "77.09", "2543.97", "false", null], ["ORD-1183", "2026-03-08", "Gadgets", "APAC", "7", "20.13", "140.91", "false", "repeat customer"], ["ORD-1184", "2026-02-06", "Sprockets", "LATAM", "32", "57.28", "1832.96", "false", "repeat customer"], ["ORD-1185", "2026-06-05", "Gizmos", "AMER", "29", "10.99", "318.71", "false", "gift wrap"], ["ORD-1186", "2026-01-12", "Gizmos", "LATAM", "33", "11.68", "385.44", "true", null], ["ORD-1187", "2026-06-27", "Widgets", "LATAM", "19", "11.98", "227.62", "false", "gift wrap"], ["ORD-1188", "2026-09-26", "Sprockets", "APAC", "3", "55.62", "166.86", "false", "gift wrap"], ["ORD-1189", "2026-08-17", "Gizmos", "EMEA", "10", "115.05", "1150.5", "false", "bulk discount"], ["ORD-1190", "2026-02-17", "Gizmos", "LATAM", "12", "7.58", "90.96", "false", null], ["ORD-1191", "2026-06-10", "Doohickeys", "EMEA", "25", "50.83", "1270.75", "false", null], ["ORD-1192", "2026-06-04", "Doohickeys", "AMER", "36", "82.37", "2965.32", "false", null], ["ORD-1193", "2026-02-19", "Doohickeys", "LATAM", "10", "110.26", "1102.6", "false", "gift wrap"], ["ORD-1194", "2026-02-10", "Doohickeys", "APAC", "36", "47.07", "1694.52", "true", "bulk discount"], ["ORD-1195", "2026-07-17", "Doohickeys", "APAC", "24", "5.13", "123.12", "false", null], ["ORD-1196", "2026-08-07", "Gadgets", "EMEA", "15", "120.0", "1800.0", "false", "repeat customer"], ["ORD-1197", "2026-02-17", "Sprockets", "EMEA", "35", "100.71", "3524.85", "false", "repeat customer"], ["ORD-1198", "2026-03-20", "Gadgets", "APAC", "25", "21.05", "526.25", "false", null], ["ORD-1199", "2026-07-12", "Sprockets", "AMER", "16", "116.44", "1863.04", "false", null], ["ORD-1200", "2026-09-08", "Gizmos", "APAC", "20", "115.97", "2319.4", "false", "bulk discount"], ["ORD-1201", "2026-08-15", "Sprockets", "LATAM", "19", "94.04", "1786.76", "false", "repeat customer"], ["ORD-1202", "2026-04-26", "Doohickeys", "EMEA", "39", "19.19", "748.41", "false", "repeat customer"], ["ORD-1203", "2026-06-18", "Sprockets", "EMEA", "7", "86.23", "603.61", "false", null], ["ORD-1204", "2026-03-09", "Gadgets", "LATAM", "29", "108.92", "3158.68", "true", null], ["ORD-1205", "2026-08-12", "Gizmos", "AMER", "2", "51.54", "103.08", "false", "rush order"], ["ORD-1206", "2026-02-12", "Widgets", "AMER", "15", "6.3", "94.5", "false", null], ["ORD-1207", "2026-01-10", "Gadgets", "LATAM", "31", "84.44", "2617.64", "false", "gift wrap"], ["ORD-1208", "2026-01-03", "Gadgets", "LATAM", "2", "32.94", "65.88", "true", "repeat customer"], ["ORD-1209", "2026-05-08", "Gadgets", "LATAM", "20", "17.26", "345.2", "false", null], ["ORD-1210", "2026-02-27", "Widgets", "APAC", "32", "72.82", "2330.24", "false", null], ["ORD-1211", "2026-07-01", "Sprockets", "LATAM", "40", "44.28", "1771.2", "false", "bulk discount"], ["ORD-1212", "2026-02-17", "Sprockets", "EMEA", "24", "10.92", "262.08", "false", "repeat customer"], ["ORD-1213", "2026-08-02", "Doohickeys", "EMEA", "25", "117.78", "2944.5", "false", "repeat customer"], ["ORD-1214", "2026-02-12", "Widgets", "AMER", "16", "88.75", "1420.0", "false", null], ["ORD-1215", "2026-06-18", "Gadgets", "LATAM", "22", "98.18", "2159.96", "false", "bulk discount"], ["ORD-1216", "2026-03-26", "Gizmos", "EMEA", "9", "10.38", "93.42", "false", null], ["ORD-1217", "2026-01-26", "Doohickeys", "AMER", "13", "106.64", "1386.32", "false", "repeat customer"], ["ORD-1218", "2026-09-16", "Gadgets", "AMER", "17", "7.28", "123.76", "false", "repeat customer"], ["ORD-1219", "2026-01-28", "Doohickeys", "LATAM", "22", "34.97", "769.34", "false", "bulk discount"], ["ORD-1220", "2026-08-13", "Gizmos", "LATAM", "22", "116.93", "2572.46", "false", "repeat customer"], ["ORD-1221", "2026-09-09", "Widgets", "LATAM", "6", "88.07", "528.42", "false", "gift wrap"], ["ORD-1222", "2026-05-11", "Doohickeys", "AMER", "7", "12.37", "86.59", "false", "gift wrap"], ["ORD-1223", "2026-07-06", "Widgets", "AMER", "29", "44.13", "1279.77", "false", null], ["ORD-1224", "2026-01-03", "Gadgets", "EMEA", "26", "45.51", "1183.26", "false", "repeat customer"], ["ORD-1225", "2026-08-02", "Doohickeys", "AMER", "9", "10.87", "97.83", "false", "gift wrap"], ["ORD-1226", "2026-01-20", "Doohickeys", "AMER", "10", "82.45", "824.5", "false", "repeat customer"], ["ORD-1227", "2026-02-19", "Gizmos", "AMER", "9", "64.95", "584.55", "false", null], ["ORD-1228", "2026-02-01", "Gizmos", "EMEA", "12", "61.39", "736.68", "false", "repeat customer"], ["ORD-1229", "2026-05-23", "Sprockets", "AMER", "29", "28.1", "814.9", "false", null], ["ORD-1230", "2026-02-05", "Gizmos", "EMEA", "5", "55.89", "279.45", "false", "bulk discount"], ["ORD-1231", "2026-06-23", "Doohickeys", "AMER", "5", "67.35", "336.75", "false", "bulk discount"], ["ORD-1232", "2026-03-26", "Widgets", "APAC", "24", "62.52", "1500.48", "false", null], ["ORD-1233", "2026-08-01", "Doohickeys", "LATAM", "24", "67.82", "1627.68", "false", "gift wrap"], ["ORD-1234", "2026-02-03", "Gizmos", "LATAM", "20", "49.58", "991.6", "false", "repeat customer"], ["ORD-1235", "2026-02-05", "Gizmos", "LATAM", "21", "78.15", "1641.15", "false", null], ["ORD-1236", "2026-09-21", "Gadgets", "LATAM", "38", "24.29", "923.02", "true", "repeat customer"], ["ORD-1237", "2026-02-17", "Gadgets", "AMER", "10", "38.58", "385.8", "false", null], ["ORD-1238", "2026-09-10", "Sprockets", "AMER", "6", "32.32", "193.92", "false", "bulk discount"], ["ORD-1239", "2026-05-20", "Gadgets", "APAC", "35", "13.93", "487.55", "false", "bulk discount"], ["ORD-1240", "2026-06-27", "Widgets", "EMEA", "37", "7.82", "289.34", "true", "bulk discount"], ["ORD-1241", "2026-05-21", "Gizmos", "EMEA", "14", "92.73", "1298.22", "false", "bulk discount"], ["ORD-1242", "2026-09-10", "Gizmos", "AMER", "20", "59.5", "1190.0", "false", null], ["ORD-1243", "2026-01-06", "Gizmos", "APAC", "29", "51.63", "1497.27", "false", "gift wrap"], ["ORD-1244", "2026-03-11", "Doohickeys", "LATAM", "21", "88.9", "1866.9", "false", "repeat customer"], ["ORD-1245", "2026-06-17", "Gadgets", "LATAM", "36", "15.42", "555.12", "true", null], ["ORD-1246", "2026-08-08", "Doohickeys", "LATAM", "10", "14.33", "143.3", "false", null], ["ORD-1247", "2026-03-27", "Doohickeys", "APAC", "21", "112.25", "2357.25", "false", "rush order"], ["ORD-1248", "2026-09-15", "Gizmos", "EMEA", "32", "105.85", "3387.2", "true", "rush order"], ["ORD-1249", "2026-09-15", "Doohickeys", "EMEA", "16", "28.17", "450.72", "true", null], ["ORD-1250", "2026-08-20", "Widgets", "EMEA", "31", "36.43", "1129.33", "false", null], ["ORD-1251", "2026-05-24", "Doohickeys", "EMEA", "24", "92.37", "2216.88", "false", null], ["ORD-1252", "2026-09-07", "Widgets", "LATAM", "24", "67.73", "1625.52", "false", "repeat customer"], ["ORD-1253", "2026-09-09", "Widgets", "APAC", "40", "82.61", "3304.4", "true", "rush order"], ["ORD-1254", "2026-06-26", "Doohickeys", "APAC", "22", "68.27", "1501.94", "false", "gift wrap"], ["ORD-1255", "2026-09-13", "Widgets", "APAC", "33", "7.71", "254.43", "false", "repeat customer"], ["ORD-1256", "2026-08-17", "Sprockets", "APAC", "30", "20.43", "612.9", "false", "gift wrap"], ["ORD-1257", "2026-06-06", "Doohickeys", "AMER", "26", "118.9", "3091.4", "false", "bulk discount"], ["ORD-1258", "2026-05-16", "Widgets", "LATAM", "2", "46.1", "92.2", "false", "repeat customer"], ["ORD-1259", "2026-01-20", "Sprockets", "APAC", "31", "34.07", "1056.17", "true", "gift wrap"], ["ORD-1260", "2026-08-06", "Sprockets", "LATAM", "34", "76.6", "2604.4", "false", "repeat customer"], ["ORD-1261", "2026-04-02", "Widgets", "APAC", "37", "113.94", "4215.78", "true", "rush order"], ["ORD-1262", "2026-06-14", "Gadgets", "LATAM", "10", "51.32", "513.2", "false", "repeat customer"], ["ORD-1263", "2026-01-23", "Sprockets", "AMER", "9", "63.69", "573.21", "false", "gift wrap"], ["ORD-1264", "2026-07-11", "Sprockets", "AMER", "12", "56.78", "681.36", "false", "bulk discount"], ["ORD-1265", "2026-05-20", "Gadgets", "AMER", "31", "25.49", "790.19", "false", null], ["ORD-1266", "2026-05-25", "Gizmos", "AMER", "19", "85.47", "1623.93", "false", null], ["ORD-1267", "2026-09-26", "Sprockets", "LATAM", "18", "36.67", "660.06", "false", "repeat customer"], ["ORD-1268", "2026-06-25", "Doohickeys", "EMEA", "10", "36.98", "369.8", "false", "rush order"], ["ORD-1269", "2026-05-24", "Sprockets", "AMER", "31", "28.04", "869.24", "false", null], ["ORD-1270", "2026-02-20", "Widgets", "APAC", "38", "31.0", "1178.0", "false", null], ["ORD-1271", "2026-02-14", "Widgets", "APAC", "22", "86.93", "1912.46", "true", "gift wrap"], ["ORD-1272", "2026-03-14", "Gadgets", "AMER", "31", "58.86", "1824.66", "false", null], ["ORD-1273", "2026-01-25", "Gadgets", "EMEA", "6", "79.32", "475.92", "false", "rush order"], ["ORD-1274", "2026-03-02", "Gadgets", "AMER", "26", "95.19", "2474.94", "true", null], ["ORD-1275", "2026-05-19", "Doohickeys", "AMER", "39", "15.55", "606.45", "false", "bulk discount"], ["ORD-1276", "2026-09-17", "Gadgets", "LATAM", "32", "107.04", "3425.28", "false", null], ["ORD-1277", "2026-02-11", "Doohickeys", "APAC", "11", "88.54", "973.94", "true", "bulk discount"], ["ORD-1278", "2026-06-26", "Gadgets", "APAC", "19", "69.43", "1319.17", "false", "repeat customer"], ["ORD-1279", "2026-07-17", "Widgets", "APAC", "21", "13.15", "276.15", "false", "rush order"], ["ORD-1280", "2026-06-08", "Gadgets", "LATAM", "1", "33.51", "33.51", "false", null], ["ORD-1281", "2026-05-19", "Doohickeys", "APAC", "37", "4.34", "160.58", "true", "bulk discount"], ["ORD-1282", "2026-02-15", "Sprockets", "AMER", "20", "21.69", "433.8", "true", "bulk discount"], ["ORD-1283", "2026-05-12", "Gadgets", "LATAM", "40", "28.84", "1153.6", "false", "rush order"], ["ORD-1284", "2026-06-14", "Sprockets", "APAC", "36", "109.8", "3952.8", "false", "bulk discount"], ["ORD-1285", "2026-02-17", "Doohickeys", "EMEA", "29", "64.8", "1879.2", "true", null], ["ORD-1286", "2026-09-17", "Gadgets", "APAC", "13", "70.01", "910.13", "false", "repeat customer"], ["ORD-1287", "2026-09-15", "Sprockets", "LATAM", "8", "82.59", "660.72", "true", "gift wrap"], ["ORD-1288", "2026-08-26", "Sprockets", "LATAM", "4", "56.05", "224.2", "false", "gift wrap"], ["ORD-1289", "2026-01-18", "Doohickeys", "EMEA", "30", "81.71", "2451.3", "false", null], ["ORD-1290", "2026-01-24", "Widgets", "LATAM", "14", "70.66", "989.24", "false", "bulk discount"], ["ORD-1291", "2026-02-18", "Widgets", "LATAM", "4", "112.35", "449.4", "true", null], ["ORD-1292", "2026-07-06", "Gizmos", "AMER", "9", "92.6", "833.4", "false", "rush order"], ["ORD-1293", "2026-07-13", "Sprockets", "APAC", "6", "82.88", "497.28", "false", null], ["ORD-1294", "2026-03-18", "Gadgets", "EMEA", "26", "64.87", "1686.62", "true", null], ["ORD-1295", "2026-08-22", "Gizmos", "APAC", "35", "52.62", "1841.7", "false", "rush order"], ["ORD-1296", "2026-06-05", "Widgets", "EMEA", "18", "25.05", "450.9", "false", "gift wrap"], ["ORD-1297", "2026-01-08", "Sprockets", "EMEA", "14", "10.87", "152.18", "false", "gift wrap"], ["ORD-1298", "2026-01-08", "Gadgets", "APAC", "3", "50.07", "150.21", "true", null], ["ORD-1299", "2026-09-10", "Sprockets", "AMER", "15", "98.45", "1476.75", "false", null], ["ORD-1300", "2026-05-05", "Doohickeys", "AMER", "34", "28.86", "981.24", "true", "gift wrap"], ["ORD-1301", "2026-03-21", "Widgets", "AMER", "28", "68.03", "1904.84", "false", "repeat customer"], ["ORD-1302", "2026-09-11", "Doohickeys", "LATAM", "27", "50.77", "1370.79", "false", "repeat customer"], ["ORD-1303", "2026-09-16", "Doohickeys", "APAC", "16", "102.37", "1637.92", "false", null], ["ORD-1304", "2026-09-14", "Gadgets", "LATAM", "27", "68.2", "1841.4", "false", null], ["ORD-1305", "2026-04-11", "Doohickeys", "EMEA", "6", "110.9", "665.4", "false", null], ["ORD-1306", "2026-05-13", "Widgets", "APAC", "39", "73.54", "2868.06", "false", "rush order"], ["ORD-1307", "2026-04-28", "Widgets", "APAC", "22", "38.47", "846.34", "false", "bulk discount"], ["ORD-1308", "2026-02-24", "Sprockets", "APAC", "31", "109.99", "3409.69", "false", null], ["ORD-1309", "2026-09-11", "Sprockets", "AMER", "19", "47.54", "903.26", "false", null], ["ORD-1310", "2026-06-17", "Gizmos", "AMER", "32", "57.52", "1840.64", "false", null], ["ORD-1311", "2026-06-14", "Gadgets", "APAC", "3", "68.82", "206.46", "true", null], ["ORD-1312", "2026-09-19", "Doohickeys", "APAC", "38", "87.24", "3315.12", "false", null], ["ORD-1313", "2026-04-13", "Gizmos", "AMER", "37", "100.5", "3718.5", "false", "repeat customer"], ["ORD-1314", "2026-08-24", "Doohickeys", "APAC", "32", "56.92", "1821.44", "false", "bulk discount"], ["ORD-1315", "2026-09-16", "Sprockets", "EMEA", "12", "110.28", "1323.36", "true", "repeat customer"], ["ORD-1316", "2026-02-27", "Gizmos", "APAC", "4", "92.43", "369.72", "false", null], ["ORD-1317", "2026-03-01", "Doohickeys", "EMEA", "14", "62.17", "870.38", "false", "bulk discount"], ["ORD-1318", "2026-08-01", "Gizmos", "EMEA", "1", "65.27", "65.27", "true", "gift wrap"], ["ORD-1319", "2026-05-18", "Gizmos", "APAC", "19", "5.01", "95.19", "true", null], ["ORD-1320", "2026-09-05", "Sprockets", "AMER", "16", "25.46", "407.36", "false", null], ["ORD-1321", "2026-07-03", "Gizmos", "APAC", "24", "115.24", "2765.76", "false", null], ["ORD-1322", "2026-02-21", "Gizmos", "LATAM", "3", "13.94", "41.82", "false", null], ["ORD-1323", "2026-01-23", "Gizmos", "AMER", "11", "12.67", "139.37", "true", "gift wrap"], ["ORD-1324", "2026-01-08", "Sprockets", "LATAM", "14", "108.45", "1518.3", "false", null], ["ORD-1325", "2026-02-22", "Sprockets", "EMEA", "18", "108.22", "1947.96", "false", "repeat customer"], ["ORD-1326", "2026-06-01", "Gizmos", "EMEA", "14", "71.68", "1003.52", "false", null], ["ORD-1327", "2026-04-19", "Sprockets", "AMER", "25", "82.21", "2055.25", "false", "repeat customer"], ["ORD-1328", "2026-03-26", "Doohickeys", "EMEA", "6", "61.59", "369.54", "true", "rush order"], ["ORD-1329", "2026-04-27", "Sprockets", "LATAM", "5", "42.85", "214.25", "false", null], ["ORD-1330", "2026-05-26", "Doohickeys", "LATAM", "29", "60.4", "1751.6", "false", null], ["ORD-1331", "2026-07-03", "Gadgets", "EMEA", "40", "37.56", "1502.4", "true", null], ["ORD-1332", "2026-03-13", "Doohickeys", "AMER", "10", "89.54", "895.4", "true", null], ["ORD-1333", "2026-01-10", "Doohickeys", "EMEA", "29", "45.11", "1308.19", "false", null], ["ORD-1334", "2026-03-14", "Sprockets", "LATAM", "29", "68.17", "1976.93", "true", null], ["ORD-1335", "2026-02-12", "Sprockets", "AMER", "36", "13.89", "500.04", "false", null], ["ORD-1336", "2026-05-14", "Sprockets", "APAC", "25", "94.16", "2354.0", "false", "bulk discount"], ["ORD-1337", "2026-07-06", "Doohickeys", "LATAM", "9", "34.46", "310.14", "false", null], ["ORD-1338", "2026-03-14", "Gizmos", "EMEA", "18", "52.27", "940.86", "false", null], ["ORD-1339", "2026-04-24", "Gadgets", "LATAM", "32", "72.48", "2319.36", "true", null], ["ORD-1340", "2026-05-01", "Sprockets", "LATAM", "26", "41.87", "1088.62", "false", "rush order"], ["ORD-1341", "2026-06-14", "Doohickeys", "APAC", "39", "18.93", "738.27", "false", null], ["ORD-1342", "2026-03-13", "Gizmos", "APAC", "21", "37.1", "779.1", "false", "rush order"], ["ORD-1343", "2026-05-27", "Sprockets", "APAC", "26", "45.71", "1188.46", "false", "bulk discount"], ["ORD-1344", "2026-09-01", "Gadgets", "LATAM", "30", "113.33", "3399.9", "false", "repeat customer"], ["ORD-1345", "2026-02-27", "Gadgets", "AMER", "27", "81.74", "2206.98", "false", null], ["ORD-1346", "2026-03-23", "Widgets", "LATAM", "28", "95.32", "2668.96", "false", "gift wrap"], ["ORD-1347", "2026-07-18", "Gizmos", "EMEA", "33", "111.05", "3664.65", "false", "bulk discount"], ["ORD-1348", "2026-09-20", "Gadgets", "AMER", "6", "15.8", "94.8", "false", "bulk discount"], ["ORD-1349", "2026-01-19", "Doohickeys", "LATAM", "26", "116.12", "3019.12", "true", null], ["ORD-1350", "2026-02-09", "Sprockets", "APAC", "15", "62.75", "941.25", "false", null], ["ORD-1351", "2026-07-15", "Gadgets", "AMER", "38", "83.78", "3183.64", "true", "rush order"], ["ORD-1352", "2026-02-10", "Widgets", "EMEA", "27", "110.7", "2988.9", "false", null], ["ORD-1353", "2026-05-11", "Sprockets", "LATAM", "30", "94.76", "2842.8", "false", "rush order"], ["ORD-1354", "2026-02-15", "Doohickeys", "EMEA", "29", "40.31", "1168.99", "true", null], ["ORD-1355", "2026-06-21", "Gadgets", "APAC", "7", "82.23", "575.61", "false", "gift wrap"], ["ORD-1356", "2026-03-11", "Gizmos", "APAC", "36", "52.89", "1904.04", "false", "bulk discount"], ["ORD-1357", "2026-03-06", "Sprockets", "APAC", "28", "49.28", "1379.84", "false", "gift wrap"], ["ORD-1358", "2026-07-13", "Gadgets", "AMER", "1", "85.45", "85.45", "true", "gift wrap"], ["ORD-1359", "2026-02-26", "Doohickeys", "APAC", "35", "24.87", "870.45", "false", null], ["ORD-1360", "2026-05-22", "Doohickeys", "LATAM", "32", "64.74", "2071.68", "false", "gift wrap"], ["ORD-1361", "2026-02-12", "Sprockets", "APAC", "23", "101.93", "2344.39", "false", "gift wrap"], ["ORD-1362", "2026-02-22", "Gadgets", "AMER", "9", "39.64", "356.76", "true", null], ["ORD-1363", "2026-06-23", "Gizmos", "APAC", "10", "62.77", "627.7", "false", "rush order"], ["ORD-1364", "2026-03-16", "Gadgets", "APAC", "35", "84.13", "2944.55", "false", null], ["ORD-1365", "2026-03-06", "Sprockets", "EMEA", "21", "101.51", "2131.71", "false", null], ["ORD-1366", "2026-08-05", "Sprockets", "LATAM", "13", "98.38", "1278.94", "false", "bulk discount"], ["ORD-1367", "2026-08-14", "Widgets", "EMEA", "29", "60.18", "1745.22", "false", null], ["ORD-1368", "2026-01-09", "Gadgets", "LATAM", "15", "65.9", "988.5", "false", "gift wrap"], ["ORD-1369", "2026-09-04", "Sprockets", "AMER", "37", "16.36", "605.32", "true", "repeat customer"], ["ORD-1370", "2026-08-18", "Widgets", "APAC", "14", "118.8", "1663.2", "false", "repeat customer"], ["ORD-1371", "2026-01-15", "Widgets", "LATAM", "17", "43.78", "744.26", "true", "repeat customer"], ["ORD-1372", "2026-04-07", "Sprockets", "LATAM", "38", "83.63", "3177.94", "false", "gift wrap"], ["ORD-1373", "2026-03-26", "Widgets", "AMER", "14", "98.18", "1374.52", "false", "gift wrap"], ["ORD-1374", "2026-09-06", "Doohickeys", "AMER", "21", "117.54", "2468.34", "false", "repeat customer"], ["ORD-1375", "2026-09-22", "Gizmos", "EMEA", "7", "18.86", "132.02", "false", "repeat customer"], ["ORD-1376", "2026-03-23", "Doohickeys", "APAC", "9", "32.21", "289.89", "false", "rush order"], ["ORD-1377", "2026-03-19", "Gizmos", "LATAM", "18", "76.45", "1376.1", "true", "bulk discount"], ["ORD-1378", "2026-02-13", "Doohickeys", "LATAM", "33", "90.73", "2994.09", "false", null], ["ORD-1379", "2026-01-28", "Gizmos", "AMER", "6", "88.52", "531.12", "true", "repeat customer"], ["ORD-1380", "2026-09-13", "Gadgets", "LATAM", "14", "116.27", "1627.78", "false", null], ["ORD-1381", "2026-05-11", "Sprockets", "LATAM", "36", "70.62", "2542.32", "false", "bulk discount"], ["ORD-1382", "2026-01-02", "Gizmos", "EMEA", "7", "76.26", "533.82", "true", "repeat customer"], ["ORD-1383", "2026-03-15", "Gizmos", "APAC", "30", "3.08", "92.4", "false", "bulk discount"], ["ORD-1384", "2026-05-06", "Doohickeys", "AMER", "18", "13.92", "250.56", "true", null], ["ORD-1385", "2026-03-02", "Gadgets", "LATAM", "26", "76.2", "1981.2", "true", "bulk discount"], ["ORD-1386", "2026-02-01", "Gadgets", "APAC", "14", "58.79", "823.06", "false", null], ["ORD-1387", "2026-01-23", "Gizmos", "APAC", "22", "98.6", "2169.2", "false", null], ["ORD-1388", "2026-04-13", "Widgets", "EMEA", "6", "88.5", "531.0", "false", null], ["ORD-1389", "2026-05-05", "Gadgets", "APAC", "25", "93.49", "2337.25", "true", "gift wrap"], ["ORD-1390", "2026-01-20", "Gadgets", "APAC", "11", "54.49", "599.39", "false", "gift wrap"], ["ORD-1391", "2026-08-28", "Widgets", "APAC", "14", "13.14", "183.96", "true", "gift wrap"], ["ORD-1392", "2026-07-12", "Gadgets", "APAC", "28", "39.8", "1114.4", "false", "bulk discount"], ["ORD-1393", "2026-02-08", "Sprockets", "AMER", "36", "73.32", "2639.52", "true", "repeat customer"], ["ORD-1394", "2026-05-07", "Gadgets", "LATAM", "34", "74.01", "2516.34", "false", "bulk discount"], ["ORD-1395", "2026-01-26", "Widgets", "APAC", "16", "60.9", "974.4", "false", "bulk discount"], ["ORD-1396", "2026-02-17", "Doohickeys", "APAC", "1", "118.47", "118.47", "false", "repeat customer"], ["ORD-1397", "2026-07-12", "Gizmos", "EMEA", "35", "82.9", "2901.5", "true", "gift wrap"], ["ORD-1398", "2026-02-01", "Widgets", "LATAM", "17", "28.24", "480.08", "false", "bulk discount"], ["ORD-1399", "2026-09-25", "Gizmos", "EMEA", "27", "52.56", "1419.12", "false", null], ["ORD-1400", "2026-02-10", "Gadgets", "APAC", "6", "62.82", "376.92", "false", "rush order"], ["ORD-1401", "2026-02-10", "Gadgets", "EMEA", "28", "88.41", "2475.48", "false", null], ["ORD-1402", "2026-07-04", "Widgets", "AMER", "30", "74.64", "2239.2", "false", null], ["ORD-1403", "2026-01-23", "Gadgets", "LATAM", "9", "85.08", "765.72", "false", "gift wrap"], ["ORD-1404", "2026-09-26", "Gadgets", "AMER", "17", "22.53", "383.01", "true", "repeat customer"], ["ORD-1405", "2026-01-11", "Widgets", "AMER", "28", "34.82", "974.96", "true", "rush order"], ["ORD-1406", "2026-08-17", "Sprockets", "APAC", "24", "9.49", "227.76", "false", null], ["ORD-1407", "2026-05-25", "Widgets", "APAC", "7", "107.63", "753.41", "true", null], ["ORD-1408", "2026-01-08", "Gizmos", "APAC", "3", "58.2", "174.6", "false", "repeat customer"], ["ORD-1409", "2026-01-18", "Gadgets", "LATAM", "27", "29.27", "790.29", "false", null], ["ORD-1410", "2026-02-19", "Widgets", "APAC", "24", "16.97", "407.28", "false", "repeat customer"], ["ORD-1411", "2026-09-02", "Gizmos", "AMER", "26", "11.06", "287.56", "false", null], ["ORD-1412", "2026-02-18", "Gadgets", "AMER", "30", "3.93", "117.9", "false", "bulk discount"], ["ORD-1413", "2026-04-15", "Gizmos", "APAC", "24", "72.23", "1733.52", "false", null], ["ORD-1414", "2026-01-14", "Doohickeys", "EMEA", "2", "30.26", "60.52", "false", null], ["ORD-1415", "2026-07-28", "Sprockets", "APAC", "20", "15.16", "303.2", "false", "rush order"], ["ORD-1416", "2026-01-05", "Gadgets", "LATAM", "18", "13.88", "249.84", "false", "rush order"], ["ORD-1417", "2026-02-19", "Gizmos", "EMEA", "7", "62.14", "434.98", "true", "rush order"], ["ORD-1418", "2026-03-08", "Doohickeys", "LATAM", "19", "33.54", "637.26", "false", null], ["ORD-1419", "2026-08-09", "Gadgets", "APAC", "15", "11.74", "176.1", "true", null], ["ORD-1420", "2026-02-06", "Gizmos", "EMEA", "29", "57.53", "1668.37", "false", "repeat customer"], ["ORD-1421", "2026-04-15", "Widgets", "EMEA", "20", "57.21", "1144.2", "false", "repeat customer"], ["ORD-1422", "2026-05-27", "Doohickeys", "APAC", "39", "7.72", "301.08", "true", "bulk discount"], ["ORD-1423", "2026-04-12", "Doohickeys", "AMER", "26", "63.07", "1639.82", "false", null], ["ORD-1424", "2026-07-28", "Sprockets", "APAC", "29", "68.05", "1973.45", "true", "rush order"], ["ORD-1425", "2026-02-26", "Widgets", "APAC", "9", "17.21", "154.89", "false", null], ["ORD-1426", "2026-07-12", "Doohickeys", "EMEA", "6", "71.13", "426.78", "true", null], ["ORD-1427", "2026-04-21", "Widgets", "AMER", "29", "97.69", "2833.01", "true", null], ["ORD-1428", "2026-08-02", "Gizmos", "LATAM", "11", "111.12", "1222.32", "false", null], ["ORD-1429", "2026-07-22", "Gadgets", "APAC", "28", "23.22", "650.16", "false", null], ["ORD-1430", "2026-08-05", "Sprockets", "APAC", "3", "74.85", "224.55", "false", "rush order"], ["ORD-1431", "2026-07-18", "Doohickeys", "LATAM", "31", "10.13", "314.03", "false", "rush order"], ["ORD-1432", "2026-04-21", "Sprockets", "EMEA", "34", "32.15", "1093.1", "false", "repeat customer"], ["ORD-1433", "2026-06-16", "Doohickeys", "AMER", "35", "94.43", "3305.05", "false", null], ["ORD-1434", "2026-03-01", "Widgets", "AMER", "21", "72.86", "1530.06", "true", "repeat customer"], ["ORD-1435", "2026-08-17", "Gadgets", "APAC", "23", "92.72", "2132.56", "true", null], ["ORD-1436", "2026-04-09", "Widgets", "APAC", "35", "98.51", "3447.85", "false", null], ["ORD-1437", "2026-03-06", "Doohickeys", "EMEA", "16", "72.32", "1157.12", "false", "gift wrap"], ["ORD-1438", "2026-03-19", "Gizmos", "AMER", "13", "100.89", "1311.57", "false", "rush order"], ["ORD-1439", "2026-01-03", "Gadgets", "EMEA", "4", "30.22", "120.88", "false", null], ["ORD-1440", "2026-06-20", "Doohickeys", "APAC", "13", "97.35", "1265.55", "false", null], ["ORD-1441", "2026-01-05", "Gadgets", "EMEA", "38", "85.45", "3247.1", "false", null], ["ORD-1442", "2026-06-23", "Doohickeys", "AMER", "26", "71.56", "1860.56", "false", null], ["ORD-1443", "2026-03-24", "Gizmos", "AMER", "28", "95.65", "2678.2", "false", "bulk discount"], ["ORD-1444", "2026-09-23", "Gadgets", "APAC", "40", "95.08", "3803.2", "false", null], ["ORD-1445", "2026-05-05", "Sprockets", "LATAM", "12", "88.27", "1059.24", "true", null], ["ORD-1446", "2026-06-26", "Sprockets", "EMEA", "40", "28.84", "1153.6", "false", null], ["ORD-1447", "2026-06-24", "Doohickeys", "APAC", "5", "30.85", "154.25", "true", "repeat customer"], ["ORD-1448", "2026-06-15", "Gadgets", "EMEA", "1", "34.03", "34.03", "false", null], ["ORD-1449", "2026-02-24", "Gizmos", "LATAM", "1", "8.63", "8.63", "false", "rush order"], ["ORD-1450", "2026-08-13", "Widgets", "LATAM", "23", "66.88", "1538.24", "false", null], ["ORD-1451", "2026-08-03", "Doohickeys", "AMER", "3", "37.5", "112.5", "true", null], ["ORD-1452", "2026-06-06", "Widgets", "EMEA", "25", "21.83", "545.75", "false", "gift wrap"], ["ORD-1453", "2026-08-23", "Gadgets", "LATAM", "2", "53.46", "106.92", "false", null], ["ORD-1454", "2026-02-11", "Gizmos", "AMER", "14", "117.0", "1638.0", "false", null], ["ORD-1455", "2026-04-04", "Sprockets", "LATAM", "4", "48.97", "195.88", "false", null], ["ORD-1456", "2026-06-01", "Sprockets", "LATAM", "28", "13.25", "371.0", "false", null], ["ORD-1457", "2026-01-07", "Widgets", "LATAM", "11", "77.67", "854.37", "true", null], ["ORD-1458", "2026-07-16", "Doohickeys", "EMEA", "32", "107.7", "3446.4", "false", null], ["ORD-1459", "2026-06-13", "Widgets", "AMER", "24", "24.83", "595.92", "false", "rush order"], ["ORD-1460", "2026-05-08", "Gadgets", "EMEA", "18", "69.02", "1242.36", "true", "bulk discount"], ["ORD-1461", "2026-06-26", "Sprockets", "APAC", "35", "51.44", "1800.4", "true", "repeat customer"], ["ORD-1462", "2026-07-27", "Sprockets", "LATAM", "34", "51.98", "1767.32", "false", "rush order"], ["ORD-1463", "2026-05-03", "Widgets", "APAC", "26", "108.62", "2824.12", "true", "repeat customer"], ["ORD-1464", "2026-08-06", "Gadgets", "APAC", "11", "116.74", "1284.14", "true", "rush order"], ["ORD-1465", "2026-02-22", "Gadgets", "AMER", "28", "26.62", "745.36", "false", "bulk discount"], ["ORD-1466", "2026-02-03", "Sprockets", "AMER", "25", "68.09", "1702.25", "false", "gift wrap"], ["ORD-1467", "2026-08-28", "Sprockets", "LATAM", "1", "95.03", "95.03", "true", "rush order"], ["ORD-1468", "2026-03-05", "Widgets", "EMEA", "37", "71.79", "2656.23", "true", "repeat customer"], ["ORD-1469", "2026-05-28", "Gizmos", "AMER", "35", "105.98", "3709.3", "false", "bulk discount"], ["ORD-1470", "2026-08-19", "Gadgets", "AMER", "39", "58.35", "2275.65", "false", null], ["ORD-1471", "2026-07-02", "Doohickeys", "APAC", "26", "107.08", "2784.08", "true", "bulk discount"], ["ORD-1472", "2026-08-09", "Doohickeys", "AMER", "24", "5.37", "128.88", "false", "repeat customer"], ["ORD-1473", "2026-08-28", "Gadgets", "APAC", "7", "116.78", "817.46", "false", "bulk discount"], ["ORD-1474", "2026-08-25", "Gizmos", "EMEA", "21", "34.52", "724.92", "false", "rush order"], ["ORD-1475", "2026-04-27", "Sprockets", "AMER", "27", "89.69", "2421.63", "true", "gift wrap"], ["ORD-1476", "2026-03-03", "Gizmos", "APAC", "20", "86.02", "1720.4", "true", null], ["ORD-1477", "2026-04-27", "Gadgets", "EMEA", "13", "100.93", "1312.09", "false", null], ["ORD-1478", "2026-06-23", "Gizmos", "LATAM", "13", "35.06", "455.78", "true", "bulk discount"], ["ORD-1479", "2026-01-08", "Gizmos", "APAC", "24", "60.19", "1444.56", "false", "gift wrap"], ["ORD-1480", "2026-09-12", "Doohickeys", "EMEA", "23", "22.13", "508.99", "false", null], ["ORD-1481", "2026-07-02", "Gadgets", "APAC", "11", "102.9", "1131.9", "false", "bulk discount"], ["ORD-1482", "2026-04-09", "Widgets", "LATAM", "27", "63.05", "1702.35", "false", "bulk discount"], ["ORD-1483", "2026-03-20", "Sprockets", "AMER", "1", "29.18", "29.18", "false", "rush order"], ["ORD-1484", "2026-07-28", "Gadgets", "LATAM", "23", "56.7", "1304.1", "false", "bulk discount"], ["ORD-1485", "2026-09-27", "Widgets", "EMEA", "40", "49.47", "1978.8", "false", "gift wrap"], ["ORD-1486", "2026-05-10", "Doohickeys", "AMER", "7", "59.36", "415.52", "false", "repeat customer"], ["ORD-1487", "2026-05-09", "Sprockets", "APAC", "20", "25.04", "500.8", "true", "repeat customer"], ["ORD-1488", "2026-07-22", "Widgets", "LATAM", "21", "82.65", "1735.65", "false", null], ["ORD-1489", "2026-07-13", "Sprockets", "APAC", "25", "89.2", "2230.0", "false", "bulk discount"], ["ORD-1490", "2026-04-22", "Gizmos", "AMER", "35", "77.68", "2718.8", "false", "repeat customer"], ["ORD-1491", "2026-03-27", "Widgets", "LATAM", "36", "24.19", "870.84", "false", "bulk discount"], ["ORD-1492", "2026-05-24", "Gadgets", "AMER", "36", "92.26", "3321.36", "true", null], ["ORD-1493", "2026-06-08", "Doohickeys", "AMER", "20", "52.2", "1044.0", "false", "gift wrap"], ["ORD-1494", "2026-05-15", "Sprockets", "EMEA", "8", "58.05", "464.4", "false", null], ["ORD-1495", "2026-09-04", "Gizmos", "EMEA", "25", "64.99", "1624.75", "false", null], ["ORD-1496", "2026-04-11", "Gizmos", "APAC", "27", "118.5", "3199.5", "false", "repeat customer"], ["ORD-1497", "2026-03-25", "Gadgets", "AMER", "6", "60.05", "360.3", "true", null], ["ORD-1498", "2026-08-09", "Gadgets", "APAC", "14", "92.06", "1288.84", "false", "repeat customer"], ["ORD-1499", "2026-02-05", "Gizmos", "LATAM", "40", "53.74", "2149.6", "false", "rush order"], ["ORD-1500", "2026-07-01", "Doohickeys", "EMEA", "3", "65.45", "196.35", "false", "repeat customer"], ["ORD-1501", "2026-09-07", "Gadgets", "APAC", "2", "82.18", "164.36", "false", null], ["ORD-1502", "2026-03-04", "Doohickeys", "APAC", "25", "61.89", "1547.25", "true", "repeat customer"], ["ORD-1503", "2026-01-10", "Sprockets", "AMER", "19", "56.34", "1070.46", "false", "bulk discount"], ["ORD-1504", "2026-03-11", "Gadgets", "APAC", "32", "45.03", "1440.96", "false", null], ["ORD-1505", "2026-04-08", "Widgets", "APAC", "9", "27.71", "249.39", "true", null], ["ORD-1506", "2026-01-13", "Sprockets", "EMEA", "17", "93.24", "1585.08", "true", "bulk discount"], ["ORD-1507", "2026-02-21", "Widgets", "LATAM", "2", "8.64", "17.28", "false", "rush order"], ["ORD-1508", "2026-02-18", "Gadgets", "APAC", "17", "58.5", "994.5", "true", null], ["ORD-1509", "2026-07-22", "Doohickeys", "APAC", "7", "80.51", "563.57", "false", "repeat customer"], ["ORD-1510", "2026-02-17", "Widgets", "EMEA", "40", "16.77", "670.8", "false", null], ["ORD-1511", "2026-04-25", "Gadgets", "AMER", "17", "100.29", "1704.93", "false", null], ["ORD-1512", "2026-03-02", "Gadgets", "LATAM", "36", "61.07", "2198.52", "false", null], ["ORD-1513", "2026-01-01", "Sprockets", "LATAM", "6", "109.1", "654.6", "false", null], ["ORD-1514", "2026-09-03", "Gadgets", "LATAM", "7", "108.86", "762.02", "false", null], ["ORD-1515", "2026-08-02", "Widgets", "AMER", "7", "98.14", "686.98", "false", "repeat customer"], ["ORD-1516", "2026-06-14", "Widgets", "EMEA", "8", "14.11", "112.88", "false", "bulk discount"], ["ORD-1517", "2026-03-11", "Sprockets", "AMER", "23", "107.66", "2476.18", "true", null], ["ORD-1518", "2026-06-06", "Gizmos", "AMER", "8", "49.89", "399.12", "false", "bulk discount"], ["ORD-1519", "2026-08-26", "Gadgets", "EMEA", "27", "78.92", "2130.84", "false", "bulk discount"], ["ORD-1520", "2026-01-28", "Sprockets", "LATAM", "11", "15.13", "166.43", "false", null], ["ORD-1521", "2026-07-25", "Gadgets", "LATAM", "23", "74.53", "1714.19", "false", null], ["ORD-1522", "2026-07-15", "Doohickeys", "EMEA", "3", "10.41", "31.23", "false", "bulk discount"], ["ORD-1523", "2026-06-17", "Sprockets", "EMEA", "34", "83.52", "2839.68", "false", "bulk discount"], ["ORD-1524", "2026-04-16", "Gizmos", "APAC", "23", "80.65", "1854.95", "true", null], ["ORD-1525", "2026-03-17", "Gadgets", "EMEA", "31", "102.67", "3182.77", "false", null], ["ORD-1526", "2026-04-11", "Gadgets", "LATAM", "18", "8.89", "160.02", "false", "repeat customer"], ["ORD-1527", "2026-04-03", "Sprockets", "LATAM", "30", "54.97", "1649.1", "true", "repeat customer"], ["ORD-1528", "2026-08-15", "Gizmos", "EMEA", "21", "16.89", "354.69", "true", "rush order"], ["ORD-1529", "2026-07-02", "Widgets", "AMER", "36", "67.24", "2420.64", "false", "bulk discount"], ["ORD-1530", "2026-08-11", "Gadgets", "LATAM", "24", "99.56", "2389.44", "false", "gift wrap"], ["ORD-1531", "2026-08-23", "Widgets", "EMEA", "24", "86.76", "2082.24", "false", null], ["ORD-1532", "2026-06-12", "Doohickeys", "EMEA", "19", "67.08", "1274.52", "true", null], ["ORD-1533", "2026-08-05", "Sprockets", "APAC", "27", "15.51", "418.77", "false", null], ["ORD-1534", "2026-07-07", "Gadgets", "AMER", "30", "99.47", "2984.1", "true", "repeat customer"], ["ORD-1535", "2026-07-02", "Gizmos", "LATAM", "38", "17.42", "661.96", "false", "rush order"], ["ORD-1536", "2026-01-17", "Gizmos", "LATAM", "4", "67.73", "270.92", "false", "bulk discount"], ["ORD-1537", "2026-03-24", "Sprockets", "AMER", "9", "15.12", "136.08", "false", "rush order"], ["ORD-1538", "2026-04-09", "Doohickeys", "LATAM", "26", "115.74", "3009.24", "false", null], ["ORD-1539", "2026-07-20", "Sprockets", "AMER", "33", "37.97", "1253.01", "false", null], ["ORD-1540", "2026-04-20", "Gadgets", "APAC", "19", "83.33", "1583.27", "false", "bulk discount"], ["ORD-1541", "2026-02-25", "Sprockets", "LATAM", "23", "68.79", "1582.17", "false", "repeat customer"], ["ORD-1542", "2026-07-26", "Widgets", "LATAM", "1", "64.16", "64.16", "false", null], ["ORD-1543", "2026-01-07", "Gadgets", "AMER", "18", "90.77", "1633.86", "false", null], ["ORD-1544", "2026-01-23", "Sprockets", "EMEA", "19", "26.87", "510.53", "false", "repeat customer"], ["ORD-1545", "2026-08-04", "Sprockets", "APAC", "40", "104.56", "4182.4", "false", null], ["ORD-1546", "2026-09-26", "Widgets", "LATAM", "19", "84.07", "1597.33", "false", "rush order"], ["ORD-1547", "2026-06-18", "Doohickeys", "APAC", "4", "4.52", "18.08", "false", "repeat customer"], ["ORD-1548", "2026-04-21", "Sprockets", "APAC", "24", "91.35", "2192.4", "false", null], ["ORD-1549", "2026-08-06", "Gadgets", "EMEA", "5", "24.88", "124.4", "false", null], ["ORD-1550", "2026-07-09", "Gadgets", "AMER", "36", "33.92", "1221.12", "true", null], ["ORD-1551", "2026-08-23", "Doohickeys", "EMEA", "10", "7.67", "76.7", "false", "rush order"], ["ORD-1552", "2026-09-12", "Doohickeys", "APAC", "5", "94.73", "473.65", "false", "gift wrap"], ["ORD-1553", "2026-02-26", "Sprockets", "LATAM", "33", "21.65", "714.45", "true", null], ["ORD-1554", "2026-04-07", "Doohickeys", "APAC", "22", "41.73", "918.06", "false", "gift wrap"], ["ORD-1555", "2026-01-04", "Sprockets", "APAC", "23", "55.14", "1268.22", "true", "bulk discount"], ["ORD-1556", "2026-06-13", "Sprockets", "AMER", "8", "48.15", "385.2", "true", "gift wrap"], ["ORD-1557", "2026-06-17", "Widgets", "AMER", "33", "55.13", "1819.29", "false", null], ["ORD-1558", "2026-09-03", "Sprockets", "EMEA", "7", "22.59", "158.13", "true", null], ["ORD-1559", "2026-04-28", "Gadgets", "LATAM", "28", "100.77", "2821.56", "true", "bulk discount"], ["ORD-1560", "2026-03-01", "Widgets", "EMEA", "30", "86.87", "2606.1", "true", null], ["ORD-1561", "2026-03-26", "Sprockets", "APAC", "17", "68.3", "1161.1", "false", "rush order"], ["ORD-1562", "2026-07-15", "Widgets", "LATAM", "26", "53.66", "1395.16", "true", "gift wrap"], ["ORD-1563", "2026-01-21", "Sprockets", "EMEA", "40", "10.4", "416.0", "true", null], ["ORD-1564", "2026-09-04", "Doohickeys", "EMEA", "19", "95.07", "1806.33", "false", "repeat customer"], ["ORD-1565", "2026-08-13", "Widgets", "LATAM", "26", "99.19", "2578.94", "false", "gift wrap"], ["ORD-1566", "2026-04-05", "Sprockets", "AMER", "26", "96.22", "2501.72", "false", null], ["ORD-1567", "2026-06-01", "Gadgets", "EMEA", "36", "105.35", "3792.6", "true", null], ["ORD-1568", "2026-07-18", "Doohickeys", "APAC", "36", "113.8", "4096.8", "false", null], ["ORD-1569", "2026-07-21", "Gadgets", "APAC", "33", "19.67", "649.11", "false", null], ["ORD-1570", "2026-02-06", "Sprockets", "LATAM", "37", "102.71", "3800.27", "true", null], ["ORD-1571", "2026-02-09", "Sprockets", "LATAM", "7", "26.1", "182.7", "false", null], ["ORD-1572", "2026-03-22", "Sprockets", "EMEA", "16", "14.71", "235.36", "false", null], ["ORD-1573", "2026-08-15", "Doohickeys", "APAC", "22", "75.11", "1652.42", "false", "repeat customer"], ["ORD-1574", "2026-06-14", "Gadgets", "APAC", "11", "3.57", "39.27", "false", null], ["ORD-1575", "2026-06-05", "Gizmos", "LATAM", "22", "105.71", "2325.62", "false", "repeat customer"], ["ORD-1576", "2026-05-16", "Sprockets", "EMEA", "36", "15.73", "566.28", "false", "repeat customer"], ["ORD-1577", "2026-03-18", "Widgets", "EMEA", "13", "33.8", "439.4", "true", "repeat customer"], ["ORD-1578", "2026-09-21", "Sprockets", "LATAM", "2", "98.08", "196.16", "false", null], ["ORD-1579", "2026-09-09", "Sprockets", "LATAM", "35", "107.6", "3766.0", "false", null], ["ORD-1580", "2026-07-08", "Doohickeys", "APAC", "38", "88.79", "3374.02", "false", "gift wrap"], ["ORD-1581", "2026-09-03", "Widgets", "APAC", "26", "45.57", "1184.82", "false", "repeat customer"], ["ORD-1582", "2026-09-05", "Sprockets", "APAC", "29", "21.63", "627.27", "false", null], ["ORD-1583", "2026-01-08", "Doohickeys", "AMER", "32", "30.11", "963.52", "false", null], ["ORD-1584", "2026-04-17", "Gizmos", "EMEA", "24", "48.41", "1161.84", "true", "bulk discount"], ["ORD-1585", "2026-06-04", "Doohickeys", "AMER", "34", "77.13", "2622.42", "false", "rush order"], ["ORD-1586", "2026-07-12", "Widgets", "AMER", "38", "79.44", "3018.72", "false", null], ["ORD-1587", "2026-09-13", "Doohickeys", "LATAM", "23", "98.62", "2268.26", "false", "gift wrap"], ["ORD-1588", "2026-01-17", "Gadgets", "EMEA", "9", "54.47", "490.23", "false", null], ["ORD-1589", "2026-03-06", "Widgets", "APAC", "11", "45.38", "499.18", "false", "repeat customer"], ["ORD-1590", "2026-06-24", "Gizmos", "LATAM", "8", "59.34", "474.72", "false", "gift wrap"], ["ORD-1591", "2026-03-21", "Widgets", "APAC", "27", "5.63", "152.01", "false", null], ["ORD-1592", "2026-09-02", "Gadgets", "AMER", "37", "20.18", "746.66", "false", "gift wrap"], ["ORD-1593", "2026-07-20", "Doohickeys", "EMEA", "37", "77.6", "2871.2", "false", "rush order"], ["ORD-1594", "2026-08-28", "Gizmos", "APAC", "31", "22.96", "711.76", "false", "gift wrap"], ["ORD-1595", "2026-09-09", "Doohickeys", "LATAM", "11", "87.73", "965.03", "true", null], ["ORD-1596", "2026-07-13", "Gadgets", "LATAM", "9", "15.7", "141.3", "false", "gift wrap"], ["ORD-1597", "2026-02-06", "Sprockets", "EMEA", "31", "108.49", "3363.19", "true", null], ["ORD-1598", "2026-08-22", "Sprockets", "EMEA", "9", "108.53", "976.77", "false", "gift wrap"], ["ORD-1599", "2026-07-12", "Gizmos", "APAC", "3", "84.62", "253.86", "false", "repeat customer"], ["ORD-1600", "2026-07-12", "Sprockets", "EMEA", "38", "97.14", "3691.32", "false", null], ["ORD-1601", "2026-05-16", "Widgets", "AMER", "15", "109.48", "1642.2", "false", null], ["ORD-1602", "2026-04-01", "Widgets", "EMEA", "1", "70.62", "70.62", "false", "bulk discount"], ["ORD-1603", "2026-04-23", "Widgets", "APAC", "21", "50.83", "1067.43", "false", "bulk discount"], ["ORD-1604", "2026-05-09", "Doohickeys", "AMER", "35", "52.56", "1839.6", "false", "repeat customer"], ["ORD-1605", "2026-04-14", "Gizmos", "APAC", "36", "94.7", "3409.2", "false", "gift wrap"], ["ORD-1606", "2026-09-16", "Sprockets", "AMER", "17", "118.66", "2017.22", "false", "bulk discount"], ["ORD-1607", "2026-03-28", "Gizmos", "APAC", "8", "90.49", "723.92", "true", null], ["ORD-1608", "2026-09-13", "Sprockets", "EMEA", "22", "96.7", "2127.4", "false", "rush order"], ["ORD-1609", "2026-01-26", "Gizmos", "LATAM", "6", "99.32", "595.92", "true", null], ["ORD-1610", "2026-05-08", "Widgets", "LATAM", "24", "12.36", "296.64", "false", "gift wrap"], ["ORD-1611", "2026-09-10", "Gadgets", "LATAM", "39", "9.72", "379.08", "false", null], ["ORD-1612", "2026-04-28", "Widgets", "APAC", "34", "36.46", "1239.64", "false", "bulk discount"], ["ORD-1613", "2026-01-12", "Gadgets", "EMEA", "16", "79.64", "1274.24", "false", "repeat customer"], ["ORD-1614", "2026-07-12", "Gadgets", "EMEA", "26", "50.44", "1311.44", "true", null], ["ORD-1615", "2026-09-10", "Doohickeys", "AMER", "36", "110.06", "3962.16", "false", null], ["ORD-1616", "2026-04-15", "Doohickeys", "APAC", "26", "70.26", "1826.76", "false", "gift wrap"], ["ORD-1617", "2026-02-18", "Doohickeys", "EMEA", "5", "61.87", "309.35", "false", "gift wrap"], ["ORD-1618", "2026-05-23", "Sprockets", "LATAM", "29", "116.03", "3364.87", "false", "repeat customer"], ["ORD-1619", "2026-06-25", "Sprockets", "EMEA", "30", "82.75", "2482.5", "false", null], ["ORD-1620", "2026-05-03", "Gadgets", "APAC", "25", "77.14", "1928.5", "false", "rush order"], ["ORD-1621", "2026-06-17", "Doohickeys", "APAC", "35", "4.14", "144.9", "false", null], ["ORD-1622", "2026-07-22", "Gadgets", "LATAM", "22", "11.9", "261.8", "false", null], ["ORD-1623", "2026-04-19", "Gadgets", "LATAM", "18", "24.39", "439.02", "false", null], ["ORD-1624", "2026-04-28", "Gadgets", "APAC", "17", "27.19", "462.23", "false", null], ["ORD-1625", "2026-02-04", "Gizmos", "EMEA", "6", "82.07", "492.42", "true", "repeat customer"], ["ORD-1626", "2026-08-12", "Sprockets", "AMER", "40", "39.9", "1596.0", "false", null], ["ORD-1627", "2026-09-09", "Sprockets", "APAC", "26", "28.98", "753.48", "true", "gift wrap"], ["ORD-1628", "2026-07-16", "Doohickeys", "LATAM", "35", "6.81", "238.35", "false", "rush order"], ["ORD-1629", "2026-02-23", "Widgets", "EMEA", "34", "56.83", "1932.22", "false", "rush order"], ["ORD-1630", "2026-02-11", "Doohickeys", "APAC", "24", "74.7", "1792.8", "false", null], ["ORD-1631", "2026-05-16", "Gadgets", "LATAM", "40", "43.14", "1725.6", "false", null], ["ORD-1632", "2026-07-23", "Gizmos", "AMER", "24", "45.71", "1097.04", "false", null], ["ORD-1633", "2026-03-19", "Doohickeys", "APAC", "15", "98.26", "1473.9", "false", "repeat customer"], ["ORD-1634", "2026-07-07", "Gadgets", "LATAM", "10", "96.6", "966.0", "true", null], ["ORD-1635", "2026-07-16", "Sprockets", "AMER", "9", "119.48", "1075.32", "false", null], ["ORD-1636", "2026-05-18", "Widgets", "APAC", "37", "8.58", "317.46", "true", null], ["ORD-1637", "2026-05-16", "Doohickeys", "AMER", "7", "55.63", "389.41", "false", null], ["ORD-1638", "2026-09-18", "Gizmos", "EMEA", "17", "43.26", "735.42", "false", "repeat customer"], ["ORD-1639", "2026-04-19", "Sprockets", "APAC", "37", "79.03", "2924.11", "false", null], ["ORD-1640", "2026-06-22", "Gizmos", "EMEA", "33", "60.04", "1981.32", "false", "gift wrap"], ["ORD-1641", "2026-05-15", "Doohickeys", "LATAM", "10", "104.59", "1045.9", "false", "repeat customer"], ["ORD-1642", "2026-02-03", "Doohickeys", "AMER", "11", "43.2", "475.2", "false", "bulk discount"], ["ORD-1643", "2026-05-20", "Gizmos", "AMER", "26", "34.74", "903.24", "false", "rush order"], ["ORD-1644", "2026-03-06", "Gadgets", "AMER", "2", "17.63", "35.26", "true", null], ["ORD-1645", "2026-03-13", "Gizmos", "EMEA", "7", "14.18", "99.26", "true", "repeat customer"], ["ORD-1646", "2026-07-17", "Sprockets", "APAC", "6", "15.16", "90.96", "true", "bulk discount"], ["ORD-1647", "2026-07-10", "Doohickeys", "LATAM", "15", "31.95", "479.25", "false", null], ["ORD-1648", "2026-09-27", "Doohickeys", "AMER", "11", "6.34", "69.74", "false", "rush order"], ["ORD-1649", "2026-09-09", "Sprockets", "APAC", "36", "55.05", "1981.8", "false", "bulk discount"], ["ORD-1650", "2026-07-17", "Doohickeys", "LATAM", "35", "39.23", "1373.05", "false", "repeat customer"], ["ORD-1651", "2026-02-15", "Doohickeys", "APAC", "20", "45.8", "916.0", "false", null], ["ORD-1652", "2026-01-17", "Gizmos", "EMEA", "9", "43.23", "389.07", "false", "repeat customer"], ["ORD-1653", "2026-08-10", "Doohickeys", "APAC", "1", "92.61", "92.61", "true", "gift wrap"], ["ORD-1654", "2026-06-07", "Gizmos", "LATAM", "27", "106.21", "2867.67", "false", null], ["ORD-1655", "2026-07-27", "Widgets", "LATAM", "25", "28.81", "720.25", "false", "gift wrap"], ["ORD-1656", "2026-05-10", "Gizmos", "APAC", "35", "97.63", "3417.05", "true", null], ["ORD-1657", "2026-03-10", "Sprockets", "LATAM", "8", "77.52", "620.16", "false", "bulk discount"], ["ORD-1658", "2026-08-07", "Widgets", "EMEA", "21", "5.27", "110.67", "false", null], ["ORD-1659", "2026-05-09", "Widgets", "APAC", "9", "86.68", "780.12", "true", null], ["ORD-1660", "2026-01-16", "Doohickeys", "LATAM", "14", "43.0", "602.0", "false", "rush order"], ["ORD-1661", "2026-01-11", "Gadgets", "EMEA", "6", "101.69", "610.14", "false", "repeat customer"], ["ORD-1662", "2026-07-03", "Gadgets", "AMER", "35", "58.01", "2030.35", "false", "repeat customer"], ["ORD-1663", "2026-01-04", "Gizmos", "APAC", "16", "48.02", "768.32", "true", null], ["ORD-1664", "2026-08-24", "Gadgets", "LATAM", "7", "63.97", "447.79", "false", "bulk discount"], ["ORD-1665", "2026-05-11", "Widgets", "EMEA", "11", "76.61", "842.71", "false", "rush order"], ["ORD-1666", "2026-05-07", "Gadgets", "EMEA", "24", "106.84", "2564.16", "false", "bulk discount"], ["ORD-1667", "2026-07-11", "Doohickeys", "EMEA", "1", "22.58", "22.58", "false", "repeat customer"], ["ORD-1668", "2026-04-01", "Gizmos", "APAC", "3", "70.99", "212.97", "false", "repeat customer"], ["ORD-1669", "2026-02-08", "Sprockets", "AMER", "11", "61.49", "676.39", "true", null], ["ORD-1670", "2026-06-21", "Widgets", "APAC", "10", "85.06", "850.6", "false", null], ["ORD-1671", "2026-06-18", "Gizmos", "APAC", "23", "97.25", "2236.75", "true", "bulk discount"], ["ORD-1672", "2026-07-12", "Widgets", "LATAM", "9", "32.33", "290.97", "false", "gift wrap"], ["ORD-1673", "2026-05-18", "Gadgets", "AMER", "32", "25.2", "806.4", "false", "bulk discount"], ["ORD-1674", "2026-08-09", "Sprockets", "APAC", "39", "109.99", "4289.61", "true", "gift wrap"], ["ORD-1675", "2026-03-15", "Sprockets", "AMER", "19", "98.87", "1878.53", "false", null], ["ORD-1676", "2026-09-13", "Sprockets", "AMER", "12", "106.3", "1275.6", "false", null], ["ORD-1677", "2026-02-22", "Gadgets", "LATAM", "35", "98.83", "3459.05", "false", "gift wrap"], ["ORD-1678", "2026-05-11", "Widgets", "EMEA", "27", "77.99", "2105.73", "true", null], ["ORD-1679", "2026-03-06", "Gizmos", "APAC", "3", "26.64", "79.92", "true", null], ["ORD-1680", "2026-07-22", "Sprockets", "AMER", "32", "64.52", "2064.64", "true", null], ["ORD-1681", "2026-04-20", "Gadgets", "LATAM", "5", "4.53", "22.65", "true", "rush order"], ["ORD-1682", "2026-01-12", "Gizmos", "AMER", "36", "89.99", "3239.64", "true", "repeat customer"], ["ORD-1683", "2026-05-17", "Doohickeys", "EMEA", "3", "88.91", "266.73", "false", "gift wrap"], ["ORD-1684", "2026-02-04", "Gadgets", "APAC", "15", "65.2", "978.0", "false", "gift wrap"], ["ORD-1685", "2026-03-18", "Widgets", "AMER", "36", "51.58", "1856.88", "false", "bulk discount"], ["ORD-1686", "2026-07-04", "Sprockets", "LATAM", "11", "95.72", "1052.92", "false", "bulk discount"], ["ORD-1687", "2026-03-18", "Doohickeys", "AMER", "39", "54.83", "2138.37", "false", "repeat customer"], ["ORD-1688", "2026-06-14", "Doohickeys", "APAC", "28", "99.66", "2790.48", "false", "rush order"], ["ORD-1689", "2026-09-24", "Gizmos", "LATAM", "17", "45.12", "767.04", "false", null], ["ORD-1690", "2026-01-10", "Gadgets", "AMER", "39", "4.91", "191.49", "true", null], ["ORD-1691", "2026-04-07", "Doohickeys", "APAC", "21", "5.54", "116.34", "true", null], ["ORD-1692", "2026-08-12", "Doohickeys", "APAC", "10", "19.19", "191.9", "false", null], ["ORD-1693", "2026-05-03", "Gadgets", "EMEA", "37", "49.78", "1841.86", "false", "repeat customer"], ["ORD-1694", "2026-08-06", "Sprockets", "EMEA", "32", "99.61", "3187.52", "false", null], ["ORD-1695", "2026-07-03", "Doohickeys", "AMER", "4", "110.86", "443.44", "false", "rush order"], ["ORD-1696", "2026-02-28", "Sprockets", "EMEA", "15", "90.48", "1357.2", "false", null], ["ORD-1697", "2026-05-17", "Sprockets", "APAC", "3", "40.36", "121.08", "false", "gift wrap"], ["ORD-1698", "2026-04-05", "Gizmos", "LATAM", "4", "81.82", "327.28", "true", null], ["ORD-1699", "2026-07-10", "Doohickeys", "EMEA", "26", "20.32", "528.32", "false", "gift wrap"], ["ORD-1700", "2026-01-18", "Gizmos", "LATAM", "26", "33.72", "876.72", "false", "repeat customer"], ["ORD-1701", "2026-03-16", "Gizmos", "APAC", "36", "26.18", "942.48", "false", null], ["ORD-1702", "2026-02-09", "Sprockets", "EMEA", "28", "40.84", "1143.52", "true", "bulk discount"], ["ORD-1703", "2026-07-14", "Doohickeys", "AMER", "24", "43.75", "1050.0", "true", "repeat customer"], ["ORD-1704", "2026-05-06", "Gizmos", "APAC", "23", "75.1", "1727.3", "false", null], ["ORD-1705", "2026-04-07", "Widgets", "EMEA", "24", "21.25", "510.0", "true", null], ["ORD-1706", "2026-03-28", "Widgets", "AMER", "19", "4.61", "87.59", "false", "rush order"], ["ORD-1707", "2026-01-11", "Gadgets", "APAC", "14", "89.58", "1254.12", "false", "gift wrap"], ["ORD-1708", "2026-08-20", "Widgets", "LATAM", "10", "84.32", "843.2", "true", null], ["ORD-1709", "2026-03-02", "Sprockets", "AMER", "19", "26.48", "503.12", "true", "rush order"], ["ORD-1710", "2026-01-03", "Doohickeys", "EMEA", "25", "80.26", "2006.5", "true", null], ["ORD-1711", "2026-07-08", "Widgets", "AMER", "25", "62.5", "1562.5", "false", "repeat customer"], ["ORD-1712", "2026-09-03", "Gizmos", "EMEA", "12", "26.27", "315.24", "true", null], ["ORD-1713", "2026-09-10", "Gadgets", "EMEA", "22", "60.32", "1327.04", "false", "bulk discount"], ["ORD-1714", "2026-06-12", "Sprockets", "AMER", "20", "30.64", "612.8", "true", "bulk discount"], ["ORD-1715", "2026-05-13", "Doohickeys", "APAC", "2", "113.46", "226.92", "false", null], ["ORD-1716", "2026-07-22", "Gizmos", "APAC", "9", "13.27", "119.43", "false", null], ["ORD-1717", "2026-03-14", "Doohickeys", "LATAM", "20", "109.44", "2188.8", "false", null], ["ORD-1718", "2026-03-19", "Gadgets", "APAC", "35", "83.03", "2906.05", "false", "bulk discount"], ["ORD-1719", "2026-09-05", "Gadgets", "APAC", "28", "119.5", "3346.0", "false", null], ["ORD-1720", "2026-09-18", "Gadgets", "EMEA", "8", "24.54", "196.32", "false", "rush order"], ["ORD-1721", "2026-07-10", "Doohickeys", "APAC", "29", "90.24", "2616.96", "false", null], ["ORD-1722", "2026-03-06", "Sprockets", "AMER", "2", "92.21", "184.42", "false", "gift wrap"], ["ORD-1723", "2026-04-08", "Gizmos", "APAC", "2", "45.03", "90.06", "false", "bulk discount"], ["ORD-1724", "2026-06-06", "Gadgets", "APAC", "25", "60.5", "1512.5", "false", null], ["ORD-1725", "2026-01-14", "Gizmos", "APAC", "1", "111.28", "111.28", "false", "repeat customer"], ["ORD-1726", "2026-04-03", "Gizmos", "LATAM", "12", "111.47", "1337.64", "false", "repeat customer"], ["ORD-1727", "2026-08-08", "Widgets", "LATAM", "28", "50.37", "1410.36", "false", "rush order"], ["ORD-1728", "2026-09-17", "Gizmos", "LATAM", "3", "63.92", "191.76", "true", null], ["ORD-1729", "2026-09-18", "Widgets", "LATAM", "26", "118.11", "3070.86", "true", null], ["ORD-1730", "2026-05-15", "Doohickeys", "LATAM", "26", "106.47", "2768.22", "false", "rush order"], ["ORD-1731", "2026-05-20", "Gadgets", "LATAM", "4", "83.72", "334.88", "false", null], ["ORD-1732", "2026-09-04", "Sprockets", "APAC", "12", "94.11", "1129.32", "false", "rush order"], ["ORD-1733", "2026-06-15", "Sprockets", "APAC", "2", "23.93", "47.86", "false", null], ["ORD-1734", "2026-05-11", "Widgets", "EMEA", "11", "87.05", "957.55", "true", "bulk discount"], ["ORD-1735", "2026-08-21", "Gizmos", "APAC", "24", "12.98", "311.52", "false", "gift wrap"], ["ORD-1736", "2026-07-02", "Sprockets", "APAC", "11", "109.73", "1207.03", "false", "repeat customer"], ["ORD-1737", "2026-03-06", "Doohickeys", "LATAM", "4", "52.09", "208.36", "false", "bulk discount"], ["ORD-1738", "2026-03-04", "Widgets", "AMER", "9", "115.37", "1038.33", "true", "rush order"], ["ORD-1739", "2026-08-28", "Widgets", "LATAM", "32", "66.59", "2130.88", "false", null], ["ORD-1740", "2026-08-15", "Sprockets", "EMEA", "27", "54.7", "1476.9", "false", "gift wrap"], ["ORD-1741", "2026-05-20", "Gadgets", "EMEA", "36", "98.95", "3562.2", "false", null], ["ORD-1742", "2026-01-21", "Widgets", "AMER", "23", "7.3", "167.9", "false", null], ["ORD-1743", "2026-01-04", "Gadgets", "AMER", "27", "119.27", "3220.29", "false", "rush order"], ["ORD-1744", "2026-06-02", "Doohickeys", "AMER", "6", "92.92", "557.52", "false", "repeat customer"], ["ORD-1745", "2026-02-25", "Widgets", "AMER", "28", "101.67", "2846.76", "false", null], ["ORD-1746", "2026-02-23", "Gizmos", "APAC", "18", "41.52", "747.36", "false", "gift wrap"], ["ORD-1747", "2026-01-04", "Sprockets", "EMEA", "37", "88.38", "3270.06", "false", "bulk discount"], ["ORD-1748", "2026-05-14", "Doohickeys", "AMER", "39", "102.19", "3985.41", "false", "gift wrap"], ["ORD-1749", "2026-08-17", "Gadgets", "APAC", "32", "60.62", "1939.84", "false", null], ["ORD-1750", "2026-01-04", "Widgets", "APAC", "2", "57.39", "114.78", "false", "rush order"], ["ORD-1751", "2026-01-11", "Gadgets", "EMEA", "23", "68.57", "1577.11", "false", "bulk discount"], ["ORD-1752", "2026-05-09", "Sprockets", "AMER", "5", "39.01", "195.05", "true", null], ["ORD-1753", "2026-06-11", "Sprockets", "EMEA", "26", "87.75", "2281.5", "false", null], ["ORD-1754", "2026-06-27", "Gizmos", "LATAM", "22", "110.91", "2440.02", "true", "bulk discount"], ["ORD-1755", "2026-03-16", "Sprockets", "AMER", "10", "76.38", "763.8", "false", "repeat customer"], ["ORD-1756", "2026-07-24", "Doohickeys", "AMER", "4", "100.71", "402.84", "true", null], ["ORD-1757", "2026-06-26", "Gadgets", "AMER", "23", "10.75", "247.25", "true", null], ["ORD-1758", "2026-07-21", "Sprockets", "LATAM", "35", "101.56", "3554.6", "false", "gift wrap"], ["ORD-1759", "2026-02-28", "Doohickeys", "EMEA", "20", "85.52", "1710.4", "false", "rush order"], ["ORD-1760", "2026-02-16", "Doohickeys", "APAC", "16", "46.48", "743.68", "false", null], ["ORD-1761", "2026-02-12", "Widgets", "LATAM", "3", "94.0", "282.0", "true", "repeat customer"], ["ORD-1762", "2026-08-17", "Gizmos", "AMER", "10", "25.25", "252.5", "false", null], ["ORD-1763", "2026-02-27", "Gadgets", "APAC", "34", "82.18", "2794.12", "true", "rush order"], ["ORD-1764", "2026-07-23", "Doohickeys", "EMEA", "34", "16.55", "562.7", "true", null], ["ORD-1765", "2026-08-02", "Doohickeys", "EMEA", "7", "63.91", "447.37", "false", "bulk discount"], ["ORD-1766", "2026-04-11", "Doohickeys", "AMER", "13", "25.53", "331.89", "false", "bulk discount"], ["ORD-1767", "2026-02-09", "Widgets", "EMEA", "10", "21.43", "214.3", "true", null], ["ORD-1768", "2026-09-12", "Gadgets", "AMER", "36", "40.26", "1449.36", "false", null], ["ORD-1769", "2026-02-10", "Sprockets", "LATAM", "40", "107.39", "4295.6", "true", null], ["ORD-1770", "2026-01-16", "Widgets", "EMEA", "4", "15.39", "61.56", "false", "rush order"], ["ORD-1771", "2026-03-23", "Gizmos", "AMER", "39", "107.28", "4183.92", "false", null], ["ORD-1772", "2026-04-23", "Gizmos", "APAC", "35", "12.19", "426.65", "true", "repeat customer"], ["ORD-1773", "2026-08-04", "Gizmos", "LATAM", "30", "39.32", "1179.6", "false", null], ["ORD-1774", "2026-03-28", "Doohickeys", "LATAM", "40", "33.19", "1327.6", "false", "bulk discount"], ["ORD-1775", "2026-06-26", "Widgets", "EMEA", "21", "56.03", "1176.63", "false", null], ["ORD-1776", "2026-06-16", "Doohickeys", "AMER", "30", "101.95", "3058.5", "false", "gift wrap"], ["ORD-1777", "2026-02-13", "Widgets", "AMER", "7", "41.13", "287.91", "false", "rush order"], ["ORD-1778", "2026-07-08", "Gadgets", "LATAM", "40", "31.51", "1260.4", "false", null], ["ORD-1779", "2026-06-07", "Gizmos", "AMER", "38", "53.44", "2030.72", "false", null], ["ORD-1780", "2026-02-24", "Widgets", "LATAM", "37", "100.9", "3733.3", "false", "gift wrap"], ["ORD-1781", "2026-02-27", "Gizmos", "EMEA", "29", "23.61", "684.69", "true", "bulk discount"], ["ORD-1782", "2026-07-11", "Widgets", "EMEA", "32", "78.46", "2510.72", "false", "repeat customer"], ["ORD-1783", "2026-03-19", "Gadgets", "LATAM", "1", "91.58", "91.58", "false", "rush order"], ["ORD-1784", "2026-08-07", "Doohickeys", "AMER", "14", "82.74", "1158.36", "false", "rush order"], ["ORD-1785", "2026-06-03", "Sprockets", "LATAM", "38", "3.95", "150.1", "false", "repeat customer"], ["ORD-1786", "2026-05-02", "Widgets", "EMEA", "24", "108.43", "2602.32", "false", null], ["ORD-1787", "2026-05-28", "Sprockets", "LATAM", "2", "30.52", "61.04", "false", "bulk discount"], ["ORD-1788", "2026-07-13", "Gadgets", "APAC", "25", "53.92", "1348.0", "false", null], ["ORD-1789", "2026-04-18", "Doohickeys", "LATAM", "25", "101.67", "2541.75", "false", null], ["ORD-1790", "2026-03-05", "Widgets", "APAC", "1", "11.39", "11.39", "false", "bulk discount"], ["ORD-1791", "2026-07-05", "Gizmos", "LATAM", "6", "19.05", "114.3", "false", "gift wrap"], ["ORD-1792", "2026-03-15", "Gizmos", "LATAM", "33", "52.62", "1736.46", "false", null], ["ORD-1793", "2026-03-14", "Gizmos", "APAC", "39", "3.87", "150.93", "false", "rush order"], ["ORD-1794", "2026-09-19", "Widgets", "LATAM", "24", "6.92", "166.08", "false", null], ["ORD-1795", "2026-08-23", "Sprockets", "AMER", "6", "19.62", "117.72", "false", "gift wrap"], ["ORD-1796", "2026-02-17", "Gizmos", "EMEA", "40", "13.35", "534.0", "false", "gift wrap"], ["ORD-1797", "2026-01-11", "Gizmos", "LATAM", "35", "94.09", "3293.15", "false", "gift wrap"], ["ORD-1798", "2026-06-14", "Doohickeys", "AMER", "23", "115.39", "2653.97", "false", null], ["ORD-1799", "2026-05-24", "Gizmos", "APAC", "37", "33.47", "1238.39", "true", "bulk discount"], ["ORD-1800", "2026-05-26", "Gizmos", "EMEA", "40", "6.19", "247.6", "false", "gift wrap"], ["ORD-1801", "2026-02-28", "Sprockets", "AMER", "18", "32.49", "584.82", "false", "repeat customer"], ["ORD-1802", "2026-05-01", "Sprockets", "APAC", "8", "73.65", "589.2", "false", null], ["ORD-1803", "2026-03-09", "Sprockets", "EMEA", "16", "59.74", "955.84", "false", null], ["ORD-1804", "2026-03-20", "Gizmos", "LATAM", "10", "101.0", "1010.0", "false", "bulk discount"], ["ORD-1805", "2026-08-24", "Doohickeys", "EMEA", "11", "27.67", "304.37", "false", "repeat customer"], ["ORD-1806", "2026-02-02", "Gizmos", "AMER", "11", "57.29", "630.19", "false", "bulk discount"], ["ORD-1807", "2026-09-08", "Gizmos", "LATAM", "25", "82.97", "2074.25", "false", null], ["ORD-1808", "2026-09-28", "Gizmos", "LATAM", "28", "4.39", "122.92", "false", "gift wrap"], ["ORD-1809", "2026-01-04", "Gizmos", "AMER", "35", "77.58", "2715.3", "false", null], ["ORD-1810", "2026-05-26", "Sprockets", "LATAM", "7", "32.88", "230.16", "false", "repeat customer"], ["ORD-1811", "2026-04-24", "Sprockets", "AMER", "38", "93.15", "3539.7", "false", null], ["ORD-1812", "2026-09-01", "Widgets", "LATAM", "1", "100.31", "100.31", "true", "gift wrap"], ["ORD-1813", "2026-02-22", "Doohickeys", "AMER", "29", "44.13", "1279.77", "false", null], ["ORD-1814", "2026-01-20", "Sprockets", "APAC", "6", "9.66", "57.96", "true", "bulk discount"], ["ORD-1815", "2026-02-03", "Sprockets", "APAC", "39", "18.2", "709.8", "true", "bulk discount"], ["ORD-1816", "2026-03-09", "Widgets", "LATAM", "19", "57.63", "1094.97", "false", "repeat customer"], ["ORD-1817", "2026-07-23", "Widgets", "AMER", "21", "33.11", "695.31", "true", "rush order"], ["ORD-1818", "2026-07-11", "Doohickeys", "APAC", "4", "33.21", "132.84", "false", null], ["ORD-1819", "2026-08-07", "Gizmos", "EMEA", "40", "48.94", "1957.6", "false", "gift wrap"], ["ORD-1820", "2026-07-07", "Gizmos", "AMER", "40", "78.27", "3130.8", "true", null], ["ORD-1821", "2026-02-03", "Gizmos", "EMEA", "37", "88.12", "3260.44", "false", null], ["ORD-1822", "2026-01-02", "Doohickeys", "LATAM", "25", "34.17", "854.25", "true", "gift wrap"], ["ORD-1823", "2026-08-16", "Widgets", "APAC", "28", "50.26", "1407.28", "true", "rush order"], ["ORD-1824", "2026-08-04", "Doohickeys", "AMER", "37", "65.63", "2428.31", "false", "rush order"], ["ORD-1825", "2026-01-21", "Doohickeys", "EMEA", "6", "45.75", "274.5", "false", "repeat customer"], ["ORD-1826", "2026-05-21", "Widgets", "LATAM", "13", "23.66", "307.58", "false", null], ["ORD-1827", "2026-07-04", "Gizmos", "APAC", "23", "59.92", "1378.16", "false", null], ["ORD-1828", "2026-04-01", "Gizmos", "EMEA", "38", "30.9", "1174.2", "false", "rush order"], ["ORD-1829", "2026-09-27", "Widgets", "EMEA", "29", "116.09", "3366.61", "false", null], ["ORD-1830", "2026-06-26", "Gadgets", "LATAM", "3", "50.44", "151.32", "false", "bulk discount"], ["ORD-1831", "2026-04-03", "Gizmos", "EMEA", "3", "89.05", "267.15", "false", "gift wrap"], ["ORD-1832", "2026-01-08", "Widgets", "AMER", "9", "4.68", "42.12", "true", "rush order"], ["ORD-1833", "2026-03-27", "Widgets", "EMEA", "38", "10.48", "398.24", "false", "gift wrap"], ["ORD-1834", "2026-04-03", "Gizmos", "AMER", "13", "52.87", "687.31", "true", "bulk discount"], ["ORD-1835", "2026-09-05", "Gadgets", "EMEA", "21", "100.86", "2118.06", "false", null], ["ORD-1836", "2026-02-04", "Gizmos", "APAC", "18", "19.52", "351.36", "false", "gift wrap"], ["ORD-1837", "2026-03-15", "Widgets", "APAC", "16", "111.3", "1780.8", "true", "repeat customer"], ["ORD-1838", "2026-07-25", "Gizmos", "EMEA", "11", "4.83", "53.13", "true", null], ["ORD-1839", "2026-03-03", "Gizmos", "LATAM", "38", "106.77", "4057.26", "false", null], ["ORD-1840", "2026-03-21", "Gizmos", "APAC", "18", "64.2", "1155.6", "false", "gift wrap"], ["ORD-1841", "2026-01-20", "Sprockets", "EMEA", "12", "86.91", "1042.92", "false", null], ["ORD-1842", "2026-07-01", "Widgets", "EMEA", "36", "30.57", "1100.52", "false", "repeat customer"], ["ORD-1843", "2026-09-17", "Gadgets", "AMER", "15", "57.31", "859.65", "true", null], ["ORD-1844", "2026-02-26", "Gizmos", "LATAM", "10", "83.17", "831.7", "false", null], ["ORD-1845", "2026-01-02", "Gizmos", "AMER", "24", "36.35", "872.4", "false", "gift wrap"], ["ORD-1846", "2026-08-02", "Sprockets", "APAC", "7", "89.63", "627.41", "false", "repeat customer"], ["ORD-1847", "2026-01-16", "Gadgets", "LATAM", "33", "16.58", "547.14", "false", "rush order"], ["ORD-1848", "2026-04-24", "Widgets", "AMER", "21", "29.92", "628.32", "false", null], ["ORD-1849", "2026-04-24", "Gizmos", "APAC", "27", "104.78", "2829.06", "true", "rush order"], ["ORD-1850", "2026-08-02", "Sprockets", "LATAM", "28", "19.96", "558.88", "false", "rush order"], ["ORD-1851", "2026-06-05", "Doohickeys", "AMER", "30", "87.22", "2616.6", "false", null], ["ORD-1852", "2026-03-02", "Gadgets", "EMEA", "37", "9.98", "369.26", "false", "rush order"], ["ORD-1853", "2026-07-06", "Doohickeys", "APAC", "22", "28.72", "631.84", "false", "gift wrap"], ["ORD-1854", "2026-09-28", "Sprockets", "LATAM", "15", "13.12", "196.8", "false", "gift wrap"], ["ORD-1855", "2026-08-27", "Gizmos", "APAC", "30", "35.66", "1069.8", "false", null], ["ORD-1856", "2026-07-19", "Sprockets", "APAC", "15", "107.34", "1610.1", "true", "rush order"], ["ORD-1857", "2026-01-02", "Sprockets", "EMEA", "31", "88.82", "2753.42", "false", "gift wrap"], ["ORD-1858", "2026-07-16", "Gadgets", "EMEA", "7", "55.94", "391.58", "true", "bulk discount"], ["ORD-1859", "2026-07-07", "Gadgets", "EMEA", "9", "44.93", "404.37", "true", "rush order"], ["ORD-1860", "2026-05-06", "Sprockets", "EMEA", "30", "103.38", "3101.4", "false", "rush order"], ["ORD-1861", "2026-03-28", "Doohickeys", "LATAM", "26", "24.64", "640.64", "true", "repeat customer"], ["ORD-1862", "2026-02-13", "Doohickeys", "LATAM", "22", "65.12", "1432.64", "false", "bulk discount"], ["ORD-1863", "2026-09-19", "Widgets", "AMER", "14", "95.16", "1332.24", "true", "gift wrap"], ["ORD-1864", "2026-06-02", "Gizmos", "EMEA", "8", "47.81", "382.48", "false", null], ["ORD-1865", "2026-03-21", "Sprockets", "APAC", "36", "85.47", "3076.92", "false", null], ["ORD-1866", "2026-04-18", "Sprockets", "APAC", "8", "78.94", "631.52", "false", null], ["ORD-1867", "2026-06-09", "Doohickeys", "EMEA", "33", "82.59", "2725.47", "true", null], ["ORD-1868", "2026-06-15", "Widgets", "LATAM", "32", "61.67", "1973.44", "false", "rush order"], ["ORD-1869", "2026-06-26", "Gizmos", "EMEA", "5", "25.04", "125.2", "true", "rush order"], ["ORD-1870", "2026-03-10", "Doohickeys", "EMEA", "5", "15.8", "79.0", "false", "rush order"], ["ORD-1871", "2026-03-28", "Widgets", "AMER", "14", "63.92", "894.88", "false", "bulk discount"], ["ORD-1872", "2026-09-05", "Gizmos", "EMEA", "31", "43.56", "1350.36", "false", null], ["ORD-1873", "2026-02-01", "Sprockets", "AMER", "15", "100.69", "1510.35", "false", "gift wrap"], ["ORD-1874", "2026-06-21", "Sprockets", "LATAM", "21", "59.88", "1257.48", "false", null], ["ORD-1875", "2026-03-26", "Doohickeys", "APAC", "20", "23.09", "461.8", "false", null], ["ORD-1876", "2026-05-25", "Doohickeys", "LATAM", "4", "20.36", "81.44", "false", "gift wrap"], ["ORD-1877", "2026-03-23", "Gadgets", "APAC", "35", "36.37", "1272.95", "false", null], ["ORD-1878", "2026-02-02", "Gizmos", "AMER", "21", "70.22", "1474.62", "false", null], ["ORD-1879", "2026-04-18", "Doohickeys", "APAC", "3", "80.87", "242.61", "false", "rush order"], ["ORD-1880", "2026-09-06", "Widgets", "LATAM", "35", "38.28", "1339.8", "false", "repeat customer"], ["ORD-1881", "2026-03-15", "Sprockets", "AMER", "21", "21.26", "446.46", "false", "rush order"], ["ORD-1882", "2026-05-25", "Sprockets", "LATAM", "37", "81.03", "2998.11", "false", "bulk discount"], ["ORD-1883", "2026-02-24", "Gadgets", "EMEA", "31", "108.32", "3357.92", "false", null], ["ORD-1884", "2026-07-20", "Widgets", "AMER", "15", "55.18", "827.7", "true", "gift wrap"], ["ORD-1885", "2026-04-19", "Doohickeys", "APAC", "34", "28.99", "985.66", "true", null], ["ORD-1886", "2026-09-28", "Widgets", "LATAM", "29", "82.22", "2384.38", "false", "rush order"], ["ORD-1887", "2026-06-20", "Widgets", "AMER", "39", "62.85", "2451.15", "false", null], ["ORD-1888", "2026-07-12", "Doohickeys", "AMER", "25", "46.62", "1165.5", "false", null], ["ORD-1889", "2026-08-28", "Gizmos", "LATAM", "36", "13.25", "477.0", "false", null], ["ORD-1890", "2026-03-26", "Gizmos", "APAC", "28", "88.25", "2471.0", "true", null], ["ORD-1891", "2026-04-10", "Sprockets", "AMER", "31", "118.64", "3677.84", "true", "gift wrap"], ["ORD-1892", "2026-07-03", "Doohickeys", "LATAM", "1", "50.91", "50.91", "false", "gift wrap"], ["ORD-1893", "2026-08-23", "Gadgets", "APAC", "37", "91.36", "3380.32", "false", "repeat customer"], ["ORD-1894", "2026-07-10", "Doohickeys", "AMER", "36", "60.4", "2174.4", "false", "gift wrap"], ["ORD-1895", "2026-08-08", "Gadgets", "AMER", "2", "95.57", "191.14", "false", "bulk discount"], ["ORD-1896", "2026-08-04", "Gizmos", "APAC", "19", "51.81", "984.39", "true", null], ["ORD-1897", "2026-05-16", "Doohickeys", "LATAM", "5", "73.07", "365.35", "false", "repeat customer"], ["ORD-1898", "2026-05-21", "Widgets", "AMER", "31", "116.99", "3626.69", "true", "repeat customer"], ["ORD-1899", "2026-05-06", "Doohickeys", "LATAM", "38", "9.85", "374.3", "false", null], ["ORD-1900", "2026-03-02", "Doohickeys", "EMEA", "18", "45.26", "814.68", "false", null], ["ORD-1901", "2026-09-21", "Gadgets", "EMEA", "5", "63.12", "315.6", "false", "gift wrap"], ["ORD-1902", "2026-06-28", "Doohickeys", "AMER", "21", "99.74", "2094.54", "false", null], ["ORD-1903", "2026-09-19", "Widgets", "APAC", "23", "99.33", "2284.59", "false", null], ["ORD-1904", "2026-08-14", "Gadgets", "EMEA", "22", "110.75", "2436.5", "false", null], ["ORD-1905", "2026-09-08", "Sprockets", "EMEA", "13", "96.03", "1248.39", "false", "rush order"], ["ORD-1906", "2026-02-04", "Gizmos", "AMER", "9", "111.04", "999.36", "false", "bulk discount"], ["ORD-1907", "2026-06-05", "Sprockets", "AMER", "29", "107.1", "3105.9", "false", "bulk discount"], ["ORD-1908", "2026-05-01", "Gadgets", "APAC", "8", "29.02", "232.16", "false", null], ["ORD-1909", "2026-04-05", "Widgets", "EMEA", "6", "52.7", "316.2", "true", "repeat customer"], ["ORD-1910", "2026-08-25", "Widgets", "EMEA", "28", "7.97", "223.16", "true", "rush order"], ["ORD-1911", "2026-02-09", "Widgets", "EMEA", "3", "10.75", "32.25", "true", "gift wrap"], ["ORD-1912", "2026-04-19", "Doohickeys", "EMEA", "13", "24.62", "320.06", "true", null], ["ORD-1913", "2026-05-19", "Sprockets", "APAC", "23", "44.21", "1016.83", "true", null], ["ORD-1914", "2026-01-17", "Doohickeys", "APAC", "14", "86.75", "1214.5", "true", "bulk discount"], ["ORD-1915", "2026-02-07", "Gizmos", "AMER", "33", "102.6", "3385.8", "false", "rush order"], ["ORD-1916", "2026-02-06", "Gizmos", "APAC", "23", "117.81", "2709.63", "false", "rush order"], ["ORD-1917", "2026-02-25", "Widgets", "APAC", "21", "17.46", "366.66", "false", "repeat customer"], ["ORD-1918", "2026-06-23", "Widgets", "EMEA", "19", "68.18", "1295.42", "false", "rush order"], ["ORD-1919", "2026-02-13", "Doohickeys", "LATAM", "19", "56.46", "1072.74", "false", "gift wrap"], ["ORD-1920", "2026-07-10", "Widgets", "LATAM", "28", "25.09", "702.52", "false", null], ["ORD-1921", "2026-01-22", "Gizmos", "LATAM", "32", "81.64", "2612.48", "true", null], ["ORD-1922", "2026-03-13", "Widgets", "APAC", "26", "84.32", "2192.32", "true", null], ["ORD-1923", "2026-04-11", "Gizmos", "EMEA", "13", "72.61", "943.93", "false", "repeat customer"], ["ORD-1924", "2026-07-24", "Sprockets", "AMER", "32", "35.59", "1138.88", "false", null], ["ORD-1925", "2026-08-22", "Gizmos", "AMER", "39", "114.17", "4452.63", "false", "repeat customer"], ["ORD-1926", "2026-08-04", "Gizmos", "APAC", "8", "32.33", "258.64", "false", null], ["ORD-1927", "2026-02-24", "Gizmos", "EMEA", "4", "100.15", "400.6", "false", "rush order"], ["ORD-1928", "2026-06-05", "Widgets", "EMEA", "20", "75.77", "1515.4", "false", "repeat customer"], ["ORD-1929", "2026-08-07", "Gizmos", "AMER", "19", "80.46", "1528.74", "false", "repeat customer"], ["ORD-1930", "2026-09-18", "Widgets", "LATAM", "2", "114.45", "228.9", "true", "rush order"], ["ORD-1931", "2026-08-11", "Widgets", "EMEA", "25", "54.78", "1369.5", "false", "gift wrap"], ["ORD-1932", "2026-05-23", "Gadgets", "AMER", "11", "60.5", "665.5", "false", "rush order"], ["ORD-1933", "2026-02-19", "Sprockets", "LATAM", "32", "80.23", "2567.36", "false", "gift wrap"], ["ORD-1934", "2026-03-17", "Gizmos", "LATAM", "4", "48.79", "195.16", "false", "repeat customer"], ["ORD-1935", "2026-05-11", "Widgets", "APAC", "4", "6.29", "25.16", "false", null], ["ORD-1936", "2026-01-25", "Gizmos", "AMER", "22", "47.53", "1045.66", "false", "rush order"], ["ORD-1937", "2026-06-02", "Doohickeys", "EMEA", "16", "31.97", "511.52", "true", "repeat customer"], ["ORD-1938", "2026-05-04", "Sprockets", "AMER", "22", "22.86", "502.92", "true", "rush order"], ["ORD-1939", "2026-07-19", "Doohickeys", "EMEA", "33", "108.46", "3579.18", "false", "gift wrap"], ["ORD-1940", "2026-01-11", "Doohickeys", "EMEA", "25", "69.73", "1743.25", "false", null], ["ORD-1941", "2026-04-11", "Doohickeys", "APAC", "32", "61.82", "1978.24", "false", null], ["ORD-1942", "2026-07-07", "Widgets", "APAC", "32", "77.35", "2475.2", "false", null], ["ORD-1943", "2026-01-10", "Gadgets", "EMEA", "37", "50.04", "1851.48", "true", "gift wrap"], ["ORD-1944", "2026-06-09", "Sprockets", "LATAM", "5", "69.27", "346.35", "false", null], ["ORD-1945", "2026-06-26", "Doohickeys", "AMER", "5", "79.23", "396.15", "false", "bulk discount"], ["ORD-1946", "2026-09-11", "Doohickeys", "LATAM", "13", "51.47", "669.11", "false", null], ["ORD-1947", "2026-09-28", "Gadgets", "LATAM", "12", "70.49", "845.88", "false", "bulk discount"], ["ORD-1948", "2026-09-26", "Gizmos", "EMEA", "40", "102.77", "4110.8", "false", null], ["ORD-1949", "2026-08-05", "Doohickeys", "LATAM", "16", "20.61", "329.76", "false", null], ["ORD-1950", "2026-02-21", "Doohickeys", "AMER", "14", "101.98", "1427.72", "false", null], ["ORD-1951", "2026-04-13", "Gadgets", "EMEA", "16", "16.29", "260.64", "false", "repeat customer"], ["ORD-1952", "2026-05-15", "Gizmos", "LATAM", "32", "68.5", "2192.0", "true", null], ["ORD-1953", "2026-03-09", "Doohickeys", "APAC", "9", "6.41", "57.69", "true", "bulk discount"], ["ORD-1954", "2026-08-26", "Widgets", "AMER", "2", "9.47", "18.94", "false", "repeat customer"], ["ORD-1955", "2026-02-14", "Widgets", "LATAM", "24", "81.59", "1958.16", "false", null], ["ORD-1956", "2026-02-19", "Sprockets", "AMER", "33", "112.15", "3700.95", "false", null], ["ORD-1957", "2026-04-20", "Doohickeys", "AMER", "8", "93.46", "747.68", "false", "repeat customer"], ["ORD-1958", "2026-04-14", "Gadgets", "APAC", "14", "19.88", "278.32", "false", "rush order"], ["ORD-1959", "2026-07-09", "Sprockets", "AMER", "38", "9.54", "362.52", "true", null], ["ORD-1960", "2026-09-14", "Doohickeys", "APAC", "31", "82.88", "2569.28", "false", "rush order"], ["ORD-1961", "2026-06-27", "Sprockets", "EMEA", "20", "5.47", "109.4", "true", "bulk discount"], ["ORD-1962", "2026-04-09", "Doohickeys", "EMEA", "36", "48.01", "1728.36", "false", "repeat customer"], ["ORD-1963", "2026-08-13", "Gizmos", "AMER", "1", "109.45", "109.45", "false", null], ["ORD-1964", "2026-04-10", "Gadgets", "LATAM", "14", "103.55", "1449.7", "false", "repeat customer"], ["ORD-1965", "2026-07-26", "Widgets", "LATAM", "3", "35.06", "105.18", "false", "bulk discount"], ["ORD-1966", "2026-07-27", "Widgets", "APAC", "22", "86.93", "1912.46", "false", "gift wrap"], ["ORD-1967", "2026-02-12", "Sprockets", "AMER", "27", "73.45", "1983.15", "false", "bulk discount"], ["ORD-1968", "2026-01-25", "Gadgets", "LATAM", "4", "78.04", "312.16", "false", null], ["ORD-1969", "2026-07-07", "Widgets", "EMEA", "20", "39.71", "794.2", "false", null], ["ORD-1970", "2026-09-23", "Gizmos", "AMER", "9", "102.09", "918.81", "false", "rush order"], ["ORD-1971", "2026-03-09", "Doohickeys", "AMER", "12", "83.43", "1001.16", "false", null], ["ORD-1972", "2026-07-12", "Gizmos", "APAC", "12", "49.04", "588.48", "true", null], ["ORD-1973", "2026-09-21", "Widgets", "LATAM", "40", "76.32", "3052.8", "false", null], ["ORD-1974", "2026-03-02", "Sprockets", "AMER", "26", "75.31", "1958.06", "false", null], ["ORD-1975", "2026-06-06", "Sprockets", "LATAM", "37", "16.73", "619.01", "false", "repeat customer"], ["ORD-1976", "2026-08-04", "Gadgets", "AMER", "15", "86.49", "1297.35", "false", "bulk discount"], ["ORD-1977", "2026-08-13", "Gadgets", "APAC", "9", "53.46", "481.14", "false", "bulk discount"], ["ORD-1978", "2026-04-14", "Gadgets", "EMEA", "12", "50.8", "609.6", "false", null], ["ORD-1979", "2026-04-20", "Doohickeys", "LATAM", "29", "109.16", "3165.64", "true", null], ["ORD-1980", "2026-08-05", "Gizmos", "APAC", "21", "117.0", "2457.0", "false", "bulk discount"], ["ORD-1981", "2026-07-24", "Widgets", "EMEA", "39", "32.98", "1286.22", "true", null], ["ORD-1982", "2026-04-16", "Sprockets", "EMEA", "23", "119.62", "2751.26", "true", null], ["ORD-1983", "2026-09-20", "Gizmos", "AMER", "25", "38.39", "959.75", "false", "gift wrap"], ["ORD-1984", "2026-01-19", "Sprockets", "LATAM", "12", "33.45", "401.4", "false", "rush order"], ["ORD-1985", "2026-03-03", "Gizmos", "APAC", "21", "86.1", "1808.1", "false", null], ["ORD-1986", "2026-06-02", "Doohickeys", "AMER", "9", "61.41", "552.69", "false", null], ["ORD-1987", "2026-05-20", "Gizmos", "APAC", "17", "63.49", "1079.33", "false", "bulk discount"], ["ORD-1988", "2026-08-25", "Gizmos", "EMEA", "10", "68.01", "680.1", "false", null], ["ORD-1989", "2026-01-08", "Doohickeys", "APAC", "12", "7.2", "86.4", "false", "rush order"], ["ORD-1990", "2026-02-16", "Sprockets", "LATAM", "3", "54.66", "163.98", "false", "rush order"], ["ORD-1991", "2026-02-28", "Widgets", "APAC", "10", "17.47", "174.7", "false", null], ["ORD-1992", "2026-03-24", "Sprockets", "APAC", "33", "99.24", "3274.92", "true", "gift wrap"], ["ORD-1993", "2026-03-14", "Gizmos", "EMEA", "5", "31.8", "159.0", "false", null], ["ORD-1994", "2026-05-22", "Sprockets", "EMEA", "8", "49.12", "392.96", "false", null], ["ORD-1995", "2026-01-03", "Gizmos", "LATAM", "30", "100.19", "3005.7", "false", "gift wrap"], ["ORD-1996", "2026-01-11", "Gizmos", "AMER", "3", "79.77", "239.31", "false", null], ["ORD-1997", "2026-01-26", "Widgets", "EMEA", "19", "40.81", "775.39", "false", null], ["ORD-1998", "2026-07-09", "Gizmos", "EMEA", "12", "31.09", "373.08", "true", "repeat customer"], ["ORD-1999", "2026-04-06", "Doohickeys", "APAC", "25", "94.2", "2355.0", "true", null], ["ORD-2000", "2026-08-26", "Doohickeys", "APAC", "28", "89.1", "2494.8", "false", "bulk discount"], ["ORD-2001", "2026-02-27", "Gizmos", "LATAM", "24", "62.98", "1511.52", "false", "rush order"], ["ORD-2002", "2026-05-19", "Gizmos", "AMER", "39", "52.5", "2047.5", "false", "rush order"], ["ORD-2003", "2026-07-03", "Gizmos", "APAC", "3", "63.06", "189.18", "false", "rush order"], ["ORD-2004", "2026-09-21", "Gizmos", "LATAM", "34", "12.82", "435.88", "true", "repeat customer"], ["ORD-2005", "2026-08-10", "Doohickeys", "APAC", "10", "118.15", "1181.5", "false", null], ["ORD-2006", "2026-01-18", "Sprockets", "EMEA", "5", "110.32", "551.6", "false", "rush order"], ["ORD-2007", "2026-02-15", "Doohickeys", "AMER", "37", "98.1", "3629.7", "true", "repeat customer"], ["ORD-2008", "2026-09-01", "Gizmos", "APAC", "8", "89.64", "717.12", "false", "repeat customer"], ["ORD-2009", "2026-07-02", "Doohickeys", "AMER", "6", "51.7", "310.2", "false", "repeat customer"], ["ORD-2010", "2026-08-20", "Gadgets", "APAC", "17", "42.94", "729.98", "false", null], ["ORD-2011", "2026-05-28", "Widgets", "EMEA", "7", "53.75", "376.25", "false", null], ["ORD-2012", "2026-01-06", "Gizmos", "LATAM", "31", "56.84", "1762.04", "false", "gift wrap"], ["ORD-2013", "2026-06-23", "Widgets", "APAC", "26", "97.14", "2525.64", "false", null], ["ORD-2014", "2026-04-04", "Gadgets", "EMEA", "2", "84.44", "168.88", "false", "rush order"], ["ORD-2015", "2026-03-21", "Sprockets", "APAC", "16", "53.99", "863.84", "true", null], ["ORD-2016", "2026-08-05", "Widgets", "APAC", "31", "52.36", "1623.16", "false", "bulk discount"], ["ORD-2017", "2026-08-16", "Gizmos", "APAC", "31", "5.3", "164.3", "false", null], ["ORD-2018", "2026-07-02", "Gizmos", "LATAM", "22", "3.92", "86.24", "false", "bulk discount"], ["ORD-2019", "2026-09-10", "Gizmos", "LATAM", "3", "60.04", "180.12", "false", "bulk discount"], ["ORD-2020", "2026-01-17", "Doohickeys", "EMEA", "2", "52.37", "104.74", "false", "bulk discount"], ["ORD-2021", "2026-07-16", "Doohickeys", "LATAM", "8", "60.89", "487.12", "false", null], ["ORD-2022", "2026-03-10", "Gizmos", "APAC", "13", "57.9", "752.7", "false", "gift wrap"], ["ORD-2023", "2026-06-20", "Doohickeys", "LATAM", "30", "18.35", "550.5", "false", "repeat customer"], ["ORD-2024", "2026-06-26", "Gadgets", "APAC", "31", "96.57", "2993.67", "false", "bulk discount"], ["ORD-2025", "2026-02-22", "Gadgets", "APAC", "31", "18.1", "561.1", "false", null], ["ORD-2026", "2026-07-16", "Sprockets", "EMEA", "20", "30.46", "609.2", "true", null], ["ORD-2027", "2026-05-12", "Sprockets", "EMEA", "11", "23.44", "257.84", "true", null], ["ORD-2028", "2026-07-04", "Sprockets", "APAC", "40", "29.52", "1180.8", "false", null], ["ORD-2029", "2026-06-26", "Sprockets", "AMER", "23", "93.02", "2139.46", "false", "repeat customer"], ["ORD-2030", "2026-09-20", "Gizmos", "LATAM", "7", "85.65", "599.55", "true", null], ["ORD-2031", "2026-02-27", "Widgets", "APAC", "36", "7.91", "284.76", "true", "repeat customer"], ["ORD-2032", "2026-04-12", "Gizmos", "LATAM", "11", "88.22", "970.42", "true", null], ["ORD-2033", "2026-06-11", "Gadgets", "LATAM", "9", "17.39", "156.51", "false", "repeat customer"], ["ORD-2034", "2026-01-08", "Sprockets", "APAC", "31", "42.93", "1330.83", "true", null], ["ORD-2035", "2026-06-23", "Gadgets", "APAC", "27", "45.2", "1220.4", "false", "repeat customer"], ["ORD-2036", "2026-04-05", "Gizmos", "LATAM", "28", "51.37", "1438.36", "false", null], ["ORD-2037", "2026-08-05", "Sprockets", "EMEA", "1", "86.96", "86.96", "true", null], ["ORD-2038", "2026-06-13", "Gizmos", "EMEA", "11", "53.79", "591.69", "false", "gift wrap"], ["ORD-2039", "2026-01-21", "Gizmos", "LATAM", "34", "116.8", "3971.2", "false", "bulk discount"], ["ORD-2040", "2026-06-12", "Sprockets", "APAC", "1", "99.76", "99.76", "false", "rush order"], ["ORD-2041", "2026-04-18", "Gizmos", "AMER", "40", "95.24", "3809.6", "false", "repeat customer"], ["ORD-2042", "2026-04-10", "Doohickeys", "LATAM", "6", "7.33", "43.98", "false", "gift wrap"], ["ORD-2043", "2026-09-10", "Sprockets", "AMER", "14", "13.86", "194.04", "false", "repeat customer"], ["ORD-2044", "2026-03-01", "Sprockets", "AMER", "2", "107.17", "214.34", "false", "repeat customer"], ["ORD-2045", "2026-05-24", "Widgets", "EMEA", "28", "118.47", "3317.16", "false", null], ["ORD-2046", "2026-09-12", "Widgets", "LATAM", "8", "8.58", "68.64", "false", "gift wrap"], ["ORD-2047", "2026-01-15", "Sprockets", "APAC", "22", "118.01", "2596.22", "false", null], ["ORD-2048", "2026-05-22", "Gizmos", "APAC", "37", "81.67", "3021.79", "true", null], ["ORD-2049", "2026-09-19", "Doohickeys", "LATAM", "13", "99.27", "1290.51", "true", null], ["ORD-2050", "2026-07-27", "Widgets", "LATAM", "27", "12.59", "339.93", "false", "rush order"], ["ORD-2051", "2026-04-15", "Sprockets", "LATAM", "5", "46.21", "231.05", "false", "repeat customer"], ["ORD-2052", "2026-05-19", "Gizmos", "LATAM", "32", "77.47", "2479.04", "false", "repeat customer"], ["ORD-2053", "2026-03-05", "Gizmos", "APAC", "33", "17.87", "589.71", "true", "bulk discount"], ["ORD-2054", "2026-04-15", "Gadgets", "AMER", "31", "6.82", "211.42", "true", "gift wrap"], ["ORD-2055", "2026-07-04", "Doohickeys", "EMEA", "8", "46.24", "369.92", "false", null], ["ORD-2056", "2026-06-10", "Gizmos", "EMEA", "24", "38.48", "923.52", "false", null], ["ORD-2057", "2026-07-02", "Gadgets", "APAC", "20", "107.02", "2140.4", "false", null], ["ORD-2058", "2026-02-18", "Widgets", "LATAM", "23", "10.91", "250.93", "false", "gift wrap"], ["ORD-2059", "2026-05-19", "Gizmos", "LATAM", "29", "108.33", "3141.57", "false", "repeat customer"], ["ORD-2060", "2026-03-17", "Gizmos", "APAC", "30", "92.12", "2763.6", "false", null], ["ORD-2061", "2026-07-13", "Doohickeys", "EMEA", "15", "108.33", "1624.95", "false", "bulk discount"], ["ORD-2062", "2026-05-21", "Widgets", "AMER", "6", "104.32", "625.92", "true", "bulk discount"], ["ORD-2063", "2026-09-03", "Sprockets", "EMEA", "13", "114.75", "1491.75", "false", "repeat customer"], ["ORD-2064", "2026-08-17", "Sprockets", "APAC", "2", "17.07", "34.14", "true", null], ["ORD-2065", "2026-04-08", "Sprockets", "AMER", "38", "54.97", "2088.86", "false", "gift wrap"], ["ORD-2066", "2026-01-16", "Gadgets", "LATAM", "2", "42.77", "85.54", "true", "repeat customer"], ["ORD-2067", "2026-09-11", "Widgets", "EMEA", "25", "33.09", "827.25", "false", null], ["ORD-2068", "2026-03-06", "Gadgets", "AMER", "17", "92.89", "1579.13", "false", "bulk discount"], ["ORD-2069", "2026-03-02", "Gadgets", "EMEA", "40", "115.45", "4618.0", "true", null], ["ORD-2070", "2026-07-04", "Doohickeys", "AMER", "21", "19.67", "413.07", "false", "repeat customer"], ["ORD-2071", "2026-02-02", "Sprockets", "APAC", "13", "31.04", "403.52", "false", "gift wrap"], ["ORD-2072", "2026-09-13", "Doohickeys", "LATAM", "8", "34.51", "276.08", "false", null], ["ORD-2073", "2026-08-01", "Widgets", "AMER", "27", "77.12", "2082.24", "true", null], ["ORD-2074", "2026-09-21", "Gizmos", "LATAM", "9", "38.64", "347.76", "true", "repeat customer"], ["ORD-2075", "2026-09-07", "Gadgets", "APAC", "10", "46.68", "466.8", "false", "gift wrap"], ["ORD-2076", "2026-08-02", "Sprockets", "AMER", "1", "98.08", "98.08", "false", null], ["ORD-2077", "2026-01-16", "Gizmos", "AMER", "18", "72.95", "1313.1", "false", "gift wrap"], ["ORD-2078", "2026-09-10", "Sprockets", "EMEA", "3", "21.89", "65.67", "false", null], ["ORD-2079", "2026-07-23", "Sprockets", "AMER", "8", "100.17", "801.36", "false", null], ["ORD-2080", "2026-09-26", "Doohickeys", "AMER", "21", "106.42", "2234.82", "false", null], ["ORD-2081", "2026-04-22", "Gizmos", "AMER", "21", "42.97", "902.37", "true", "bulk discount"], ["ORD-2082", "2026-03-21", "Widgets", "EMEA", "1", "74.23", "74.23", "false", "rush order"], ["ORD-2083", "2026-09-23", "Sprockets", "EMEA", "32", "92.21", "2950.72", "true", "gift wrap"], ["ORD-2084", "2026-01-27", "Doohickeys", "LATAM", "29", "81.65", "2367.85", "false", "rush order"], ["ORD-2085", "2026-03-27", "Doohickeys", "APAC", "1", "17.6", "17.6", "false", null], ["ORD-2086", "2026-04-24", "Doohickeys", "APAC", "2", "91.74", "183.48", "true", "repeat customer"], ["ORD-2087", "2026-05-26", "Gizmos", "AMER", "15", "30.41", "456.15", "true", null], ["ORD-2088", "2026-08-23", "Gadgets", "LATAM", "39", "27.46", "1070.94", "true", "repeat customer"], ["ORD-2089", "2026-05-19", "Sprockets", "APAC", "33", "60.8", "2006.4", "false", null], ["ORD-2090", "2026-03-24", "Sprockets", "APAC", "5", "17.91", "89.55", "false", null], ["ORD-2091", "2026-01-23", "Sprockets", "LATAM", "35", "74.89", "2621.15", "true", "rush order"], ["ORD-2092", "2026-01-28", "Gizmos", "AMER", "21", "53.61", "1125.81", "true", "bulk discount"], ["ORD-2093", "2026-09-15", "Widgets", "APAC", "32", "45.29", "1449.28", "true", null], ["ORD-2094", "2026-07-18", "Gizmos", "APAC", "29", "40.0", "1160.0", "false", null], ["ORD-2095", "2026-01-24", "Gizmos", "EMEA", "15", "117.44", "1761.6", "false", null], ["ORD-2096", "2026-03-11", "Widgets", "EMEA", "20", "10.35", "207.0", "false", "rush order"], ["ORD-2097", "2026-01-19", "Gadgets", "EMEA", "22", "101.34", "2229.48", "false", null], ["ORD-2098", "2026-06-27", "Sprockets", "APAC", "4", "99.13", "396.52", "true", "repeat customer"], ["ORD-2099", "2026-08-25", "Sprockets", "EMEA", "7", "76.17", "533.19", "true", null], ["ORD-2100", "2026-01-13", "Widgets", "APAC", "21", "107.14", "2249.94", "true", "repeat customer"], ["ORD-2101", "2026-08-02", "Gizmos", "EMEA", "20", "74.46", "1489.2", "true", "bulk discount"], ["ORD-2102", "2026-01-18", "Gizmos", "LATAM", "4", "37.51", "150.04", "true", "gift wrap"], ["ORD-2103", "2026-07-08", "Sprockets", "EMEA", "39", "95.13", "3710.07", "false", "rush order"], ["ORD-2104", "2026-08-26", "Sprockets", "EMEA", "28", "105.95", "2966.6", "false", "bulk discount"], ["ORD-2105", "2026-01-15", "Gadgets", "EMEA", "34", "41.4", "1407.6", "true", null], ["ORD-2106", "2026-02-19", "Gadgets", "AMER", "13", "108.81", "1414.53", "false", "rush order"], ["ORD-2107", "2026-08-24", "Gadgets", "APAC", "40", "55.02", "2200.8", "true", null], ["ORD-2108", "2026-03-10", "Doohickeys", "AMER", "38", "53.99", "2051.62", "false", null], ["ORD-2109", "2026-08-10", "Doohickeys", "EMEA", "39", "43.12", "1681.68", "false", null], ["ORD-2110", "2026-04-17", "Gizmos", "AMER", "36", "103.47", "3724.92", "false", null], ["ORD-2111", "2026-04-26", "Gizmos", "LATAM", "5", "42.96", "214.8", "false", "repeat customer"], ["ORD-2112", "2026-06-20", "Gadgets", "EMEA", "20", "51.99", "1039.8", "false", "repeat customer"], ["ORD-2113", "2026-01-16", "Gadgets", "APAC", "15", "110.63", "1659.45", "false", "gift wrap"], ["ORD-2114", "2026-04-08", "Doohickeys", "LATAM", "31", "88.95", "2757.45", "false", "rush order"], ["ORD-2115", "2026-03-27", "Widgets", "AMER", "1", "45.45", "45.45", "true", "gift wrap"], ["ORD-2116", "2026-02-05", "Sprockets", "AMER", "19", "54.53", "1036.07", "true", null], ["ORD-2117", "2026-04-07", "Doohickeys", "APAC", "19", "23.38", "444.22", "false", "repeat customer"], ["ORD-2118", "2026-09-08", "Gadgets", "AMER", "12", "25.93", "311.16", "true", null], ["ORD-2119", "2026-03-13", "Gadgets", "AMER", "8", "42.59", "340.72", "false", null], ["ORD-2120", "2026-06-26", "Sprockets", "LATAM", "24", "80.33", "1927.92", "true", null], ["ORD-2121", "2026-03-05", "Gizmos", "AMER", "13", "25.43", "330.59", "false", "gift wrap"], ["ORD-2122", "2026-07-21", "Sprockets", "APAC", "16", "110.76", "1772.16", "false", "repeat customer"], ["ORD-2123", "2026-03-11", "Doohickeys", "APAC", "16", "9.23", "147.68", "false", null], ["ORD-2124", "2026-02-26", "Sprockets", "EMEA", "31", "95.55", "2962.05", "false", "gift wrap"], ["ORD-2125", "2026-07-25", "Sprockets", "LATAM", "33", "46.79", "1544.07", "false", null], ["ORD-2126", "2026-06-17", "Gizmos", "LATAM", "31", "86.73", "2688.63", "false", "gift wrap"], ["ORD-2127", "2026-07-21", "Gadgets", "APAC", "38", "79.02", "3002.76", "false", "rush order"], ["ORD-2128", "2026-04-13", "Gizmos", "APAC", "14", "38.8", "543.2", "false", null], ["ORD-2129", "2026-09-03", "Doohickeys", "LATAM", "9", "90.94", "818.46", "false", null], ["ORD-2130", "2026-01-15", "Gizmos", "LATAM", "33", "75.67", "2497.11", "false", "rush order"], ["ORD-2131", "2026-07-12", "Gizmos", "EMEA", "32", "40.09", "1282.88", "false", "rush order"], ["ORD-2132", "2026-04-09", "Widgets", "AMER", "5", "45.01", "225.05", "true", "repeat customer"], ["ORD-2133", "2026-05-08", "Doohickeys", "EMEA", "7", "16.87", "118.09", "false", null], ["ORD-2134", "2026-04-22", "Doohickeys", "APAC", "22", "32.25", "709.5", "false", "repeat customer"], ["ORD-2135", "2026-09-09", "Doohickeys", "AMER", "1", "93.1", "93.1", "false", "rush order"], ["ORD-2136", "2026-01-16", "Gadgets", "LATAM", "33", "118.75", "3918.75", "false", null], ["ORD-2137", "2026-04-16", "Sprockets", "LATAM", "15", "63.35", "950.25", "false", null], ["ORD-2138", "2026-02-11", "Gizmos", "APAC", "13", "53.17", "691.21", "false", "rush order"], ["ORD-2139", "2026-09-01", "Gadgets", "AMER", "24", "19.26", "462.24", "true", "rush order"], ["ORD-2140", "2026-06-11", "Gizmos", "AMER", "15", "52.04", "780.6", "false", "gift wrap"], ["ORD-2141", "2026-01-19", "Gadgets", "AMER", "3", "110.89", "332.67", "false", "rush order"], ["ORD-2142", "2026-04-13", "Gadgets", "LATAM", "5", "65.54", "327.7", "true", null], ["ORD-2143", "2026-08-21", "Widgets", "APAC", "20", "13.91", "278.2", "true", "repeat customer"], ["ORD-2144", "2026-08-01", "Gizmos", "AMER", "12", "26.28", "315.36", "false", null], ["ORD-2145", "2026-05-22", "Widgets", "AMER", "34", "11.19", "380.46", "true", null], ["ORD-2146", "2026-06-28", "Widgets", "APAC", "27", "48.76", "1316.52", "false", "rush order"], ["ORD-2147", "2026-02-13", "Gadgets", "AMER", "14", "18.2", "254.8", "false", "repeat customer"], ["ORD-2148", "2026-08-06", "Doohickeys", "APAC", "39", "70.29", "2741.31", "false", null], ["ORD-2149", "2026-04-01", "Gizmos", "APAC", "10", "55.15", "551.5", "false", "gift wrap"], ["ORD-2150", "2026-08-15", "Widgets", "AMER", "30", "70.41", "2112.3", "false", null], ["ORD-2151", "2026-05-13", "Gadgets", "LATAM", "40", "99.34", "3973.6", "false", null], ["ORD-2152", "2026-07-15", "Gadgets", "EMEA", "25", "109.57", "2739.25", "false", "bulk discount"], ["ORD-2153", "2026-01-08", "Sprockets", "AMER", "11", "35.03", "385.33", "true", "bulk discount"], ["ORD-2154", "2026-04-16", "Sprockets", "EMEA", "27", "119.11", "3215.97", "false", null], ["ORD-2155", "2026-02-17", "Gadgets", "AMER", "21", "50.98", "1070.58", "false", "gift wrap"], ["ORD-2156", "2026-01-15", "Gizmos", "LATAM", "2", "11.56", "23.12", "false", "bulk discount"], ["ORD-2157", "2026-07-28", "Widgets", "AMER", "13", "49.41", "642.33", "true", "bulk discount"], ["ORD-2158", "2026-03-11", "Widgets", "EMEA", "30", "59.72", "1791.6", "false", "bulk discount"], ["ORD-2159", "2026-08-05", "Gadgets", "APAC", "31", "98.99", "3068.69", "true", "gift wrap"], ["ORD-2160", "2026-02-06", "Gizmos", "APAC", "19", "17.53", "333.07", "true", "bulk discount"], ["ORD-2161", "2026-01-22", "Doohickeys", "APAC", "18", "20.96", "377.28", "false", "bulk discount"], ["ORD-2162", "2026-01-22", "Widgets", "EMEA", "35", "28.29", "990.15", "false", "bulk discount"], ["ORD-2163", "2026-05-15", "Widgets", "LATAM", "4", "72.99", "291.96", "false", null], ["ORD-2164", "2026-06-08", "Gizmos", "EMEA", "13", "13.69", "177.97", "true", null], ["ORD-2165", "2026-04-22", "Widgets", "APAC", "5", "28.81", "144.05", "false", null], ["ORD-2166", "2026-07-17", "Doohickeys", "APAC", "7", "98.43", "689.01", "false", "gift wrap"], ["ORD-2167", "2026-07-14", "Widgets", "AMER", "8", "30.19", "241.52", "false", null], ["ORD-2168", "2026-01-13", "Gadgets", "LATAM", "21", "4.4", "92.4", "false", null], ["ORD-2169", "2026-05-21", "Widgets", "APAC", "40", "46.17", "1846.8", "false", null], ["ORD-2170", "2026-08-04", "Sprockets", "APAC", "35", "95.58", "3345.3", "false", null], ["ORD-2171", "2026-06-21", "Gadgets", "AMER", "25", "82.31", "2057.75", "false", "bulk discount"], ["ORD-2172", "2026-06-28", "Widgets", "LATAM", "31", "10.9", "337.9", "false", "gift wrap"], ["ORD-2173", "2026-04-17", "Widgets", "APAC", "38", "85.44", "3246.72", "true", "gift wrap"], ["ORD-2174", "2026-02-10", "Gadgets", "EMEA", "16", "89.34", "1429.44", "true", null], ["ORD-2175", "2026-06-16", "Gizmos", "APAC", "19", "26.64", "506.16", "true", null], ["ORD-2176", "2026-08-24", "Doohickeys", "EMEA", "22", "18.71", "411.62", "false", "bulk discount"], ["ORD-2177", "2026-05-25", "Doohickeys", "AMER", "2", "29.79", "59.58", "false", null], ["ORD-2178", "2026-09-02", "Gadgets", "LATAM", "16", "96.77", "1548.32", "false", null], ["ORD-2179", "2026-08-21", "Gizmos", "EMEA", "1", "10.56", "10.56", "false", null], ["ORD-2180", "2026-03-07", "Sprockets", "APAC", "9", "13.74", "123.66", "false", "gift wrap"], ["ORD-2181", "2026-02-14", "Gadgets", "APAC", "30", "39.44", "1183.2", "false", null], ["ORD-2182", "2026-04-10", "Gadgets", "AMER", "19", "70.44", "1338.36", "false", null], ["ORD-2183", "2026-06-13", "Gizmos", "LATAM", "25", "22.63", "565.75", "false", "repeat customer"], ["ORD-2184", "2026-03-27", "Gizmos", "LATAM", "31", "5.32", "164.92", "true", "repeat customer"], ["ORD-2185", "2026-05-20", "Gadgets", "AMER", "35", "20.88", "730.8", "false", "rush order"], ["ORD-2186", "2026-05-15", "Sprockets", "LATAM", "19", "46.89", "890.91", "true", null], ["ORD-2187", "2026-03-23", "Gadgets", "EMEA", "31", "25.9", "802.9", "true", "repeat customer"], ["ORD-2188", "2026-09-24", "Gizmos", "LATAM", "24", "60.5", "1452.0", "false", "rush order"], ["ORD-2189", "2026-08-10", "Widgets", "EMEA", "38", "11.33", "430.54", "false", "gift wrap"], ["ORD-2190", "2026-03-07", "Doohickeys", "LATAM", "28", "114.98", "3219.44", "false", "bulk discount"], ["ORD-2191", "2026-01-21", "Gadgets", "APAC", "25", "111.4", "2785.0", "false", null], ["ORD-2192", "2026-06-21", "Gadgets", "AMER", "2", "84.6", "169.2", "false", "bulk discount"], ["ORD-2193", "2026-03-09", "Gadgets", "EMEA", "16", "73.45", "1175.2", "true", "repeat customer"], ["ORD-2194", "2026-02-21", "Sprockets", "EMEA", "25", "49.53", "1238.25", "false", "rush order"], ["ORD-2195", "2026-03-27", "Doohickeys", "LATAM", "28", "32.59", "912.52", "false", "bulk discount"], ["ORD-2196", "2026-07-25", "Sprockets", "AMER", "6", "15.79", "94.74", "false", null], ["ORD-2197", "2026-04-24", "Widgets", "APAC", "26", "84.78", "2204.28", "false", null], ["ORD-2198", "2026-02-03", "Doohickeys", "LATAM", "27", "64.42", "1739.34", "false", null], ["ORD-2199", "2026-06-06", "Gadgets", "EMEA", "9", "26.17", "235.53", "false", "gift wrap"]], "capped": false, "note": null, "id": "ds0"}]}</script>
+
+<script>
+/* ════════════════════════════════ BOOT ════════════════════════════════ */
+let DATA = null;
+try { DATA = JSON.parse(document.getElementById('viz-data').textContent); }
+catch (e) { /* placeholder not replaced */ }
+
+const $  = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const hasGsap  = typeof gsap  !== 'undefined';
+const hasThree = typeof THREE !== 'undefined';
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (hasGsap && !reducedMotion) { gsap.registerPlugin(ScrollTrigger); }
+else { document.documentElement.classList.add('no-js-reveal'); }
+
+/* ─────────────────────────────── helpers ─────────────────────────────── */
+const esc = s => String(s ?? '').replace(/[&<>"']/g,
+  c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtNum = n => (n ?? 0).toLocaleString('en-US');
+const fmtCompact = n => Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n ?? 0);
+function fmtDate(iso, withTime=false) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d)) return '';
+  const opts = { year:'numeric', month:'short', day:'numeric' };
+  if (withTime) Object.assign(opts, { hour:'2-digit', minute:'2-digit' });
+  return d.toLocaleString('en-US', opts);
+}
+const toNum = v => {
+  if (typeof v === 'number') return v;
+  if (typeof v === 'string') { const n = parseFloat(v.replace(/,/g,'')); return isNaN(n) ? null : n; }
+  return null;
+};
+
+/* Minimal markdown renderer (escape-first, no raw HTML passthrough) */
+function md(src) {
+  if (!src) return '';
+  const fences = [];
+  src = src.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    fences.push(`<pre><code data-lang="${esc(lang)}">${esc(code.replace(/\n$/,''))}</code></pre>`);
+    return ` F${fences.length-1} `;
+  });
+  let out = esc(src);
+  out = out.replace(/`([^`\n]+)`/g, (_, c) => `<code>${c}</code>`);
+  out = out.replace(/^#{4}\s+(.+)$/gm, '<h4>$1</h4>')
+           .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+           .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+           .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+  out = out.replace(/^\s*(?:---|\*\*\*)\s*$/gm, '<hr>');
+  out = out.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+           .replace(/(^|[\s(])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+  out = out.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  out = out.replace(/^&gt;\s?(.+)$/gm, '<blockquote>$1</blockquote>');
+  // lists
+  out = out.replace(/(^|\n)((?:[ \t]*[-*+][ \t]+.+(?:\n|$))+)/g, (_, pre, blk) => {
+    const items = blk.trim().split('\n').map(l => `<li>${l.replace(/^[ \t]*[-*+][ \t]+/,'')}</li>`).join('');
+    return `${pre}<ul>${items}</ul>\n`;
+  });
+  out = out.replace(/(^|\n)((?:[ \t]*\d+\.[ \t]+.+(?:\n|$))+)/g, (_, pre, blk) => {
+    const items = blk.trim().split('\n').map(l => `<li>${l.replace(/^[ \t]*\d+\.[ \t]+/,'')}</li>`).join('');
+    return `${pre}<ol>${items}</ol>\n`;
+  });
+  // tables (GFM: header row, |---| separator, body rows)
+  out = out.replace(/(^|\n)((?:[ \t]*\|.*\|[ \t]*(?:\n|$)){2,})/g, (m, pre, blk) => {
+    const lines = blk.trim().split('\n').map(l => l.trim());
+    if (lines.length < 2 || !/^\|?[\s:|-]+\|?$/.test(lines[1]) || !lines[1].includes('-')) return m;
+    const cells = l => l.replace(/^\|/,'').replace(/\|$/,'').split('|').map(c => c.trim());
+    const head = cells(lines[0]).map(c => `<th>${c}</th>`).join('');
+    const body = lines.slice(2).map(l =>
+      `<tr>${cells(l).map(c => `<td>${c}</td>`).join('')}</tr>`).join('');
+    return `${pre}<div class="tbl-wrap"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>\n`;
+  });
+  // paragraphs
+  out = out.split(/\n{2,}/).map(chunk => {
+    if (/^\s*<(h\d|ul|ol|pre|blockquote|hr|div)/.test(chunk)) return chunk;
+    return `<p>${chunk.replace(/\n/g,'<br>')}</p>`;
+  }).join('\n');
+  out = out.replace(/ F(\d+) /g, (_, i) => fences[+i]);
+  return out;
+}
+
+/* ═══════════════════════════ THREE.JS HERO ═══════════════════════════ */
+const cssVar = name =>
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+/* Three figures, one engine. A design pack picks its figure via design.hero:
+   'wave' (aurora) · 'rain' (terminal) · 'grid' (neon) · 'static' (no WebGL).
+   'particles' is a legacy alias for 'wave'. */
+function initHero() {
+  const canvas = $('#hero-canvas');
+  const design = (DATA && DATA.meta && DATA.meta.design) || {};
+  const style = design.hero === 'particles' ? 'wave' : (design.hero || 'wave');
+  const staticBg = 'var(--hero-static-bg, radial-gradient(ellipse at 30% 20%, rgba(124,108,255,.28), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(34,211,238,.2), transparent 55%))';
+  if (style === 'static' || !hasThree) { canvas.style.background = staticBg; return; }
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true }); }
+  catch { canvas.style.background = staticBg; return; }
+  const scene = new THREE.Scene();
+  const fogColor = new THREE.Color(cssVar('--hero-fog') || '#0b0b14').getHex();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 500);
+
+  const accent  = new THREE.Color(cssVar('--accent')  || '#7c6cff');
+  const accent2 = new THREE.Color(cssVar('--accent2') || '#22d3ee');
+  const accent3 = new THREE.Color(cssVar('--accent3') || '#f472b6');
+
+  let mouseX = 0, mouseY = 0;
+  addEventListener('pointermove', e => {
+    mouseX = (e.clientX / innerWidth - .5);
+    mouseY = (e.clientY / innerHeight - .5);
+  }, { passive:true });
+
+  const points = (positions, colors, size, opacity=.85) => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const p = new THREE.Points(g, new THREE.PointsMaterial({ size, vertexColors:true,
+      transparent:true, opacity, blending:THREE.AdditiveBlending, depthWrite:false }));
+    scene.add(p);
+    return { g, p };
+  };
+
+  /* ── figure: WAVE — an ocean of light with drifting motes (aurora) ── */
+  function buildWave() {
+    scene.fog = new THREE.FogExp2(fogColor, 0.016);
+    const COLS = 160, ROWS = 90, SPACING = 0.62;
+    const n = COLS * ROWS;
+    const pos = new Float32Array(n*3), col = new Float32Array(n*3);
+    let i = 0;
+    for (let x = 0; x < COLS; x++) for (let z = 0; z < ROWS; z++) {
+      pos[i*3] = (x - COLS/2) * SPACING; pos[i*3+1] = 0; pos[i*3+2] = (z - ROWS/2) * SPACING;
+      const t = x / COLS;
+      const c = t < .5 ? accent.clone().lerp(accent2, t*2) : accent2.clone().lerp(accent3, (t-.5)*2);
+      col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+      i++;
+    }
+    const wave = points(pos, col, .11);
+    const M = 260;
+    const mpos = new Float32Array(M*3), mcol = new Float32Array(M*3), seeds = new Float32Array(M);
+    for (let j = 0; j < M; j++) {
+      mpos[j*3] = (Math.random()-.5)*90; mpos[j*3+1] = Math.random()*22 - 2;
+      mpos[j*3+2] = (Math.random()-.5)*60;
+      const c = [accent, accent2, accent3][j % 3];
+      mcol[j*3]=c.r; mcol[j*3+1]=c.g; mcol[j*3+2]=c.b;
+      seeds[j] = Math.random()*Math.PI*2;
+    }
+    const motes = points(mpos, mcol, .28, .6);
+    return t => {
+      const p = wave.g.attributes.position.array;
+      let k = 0;
+      for (let x = 0; x < COLS; x++) for (let z = 0; z < ROWS; z++) {
+        const xi = (x - COLS/2) * SPACING, zi = (z - ROWS/2) * SPACING;
+        p[k*3+1] = Math.sin(xi*.32 + t*.9)*1.15 + Math.cos(zi*.38 + t*.62)*1.05
+                 + Math.sin((xi+zi)*.18 + t*.45)*.7;
+        k++;
+      }
+      wave.g.attributes.position.needsUpdate = true;
+      const mp = motes.g.attributes.position.array;
+      for (let j = 0; j < M; j++) {
+        mp[j*3+1] += Math.sin(t*.6 + seeds[j]) * .006 + .004;
+        if (mp[j*3+1] > 24) mp[j*3+1] = -2;
+      }
+      motes.g.attributes.position.needsUpdate = true;
+      wave.p.rotation.y = Math.sin(t*.05)*.14;
+      camera.position.x += (mouseX*4 - camera.position.x) * .04;
+      camera.position.y += (7.5 - mouseY*2.5 - camera.position.y) * .04;
+      camera.lookAt(0, 1.2, 0);
+    };
+  }
+
+  /* ── figure: RAIN — code-rain columns falling down the screen (terminal) ── */
+  function buildRain() {
+    scene.fog = new THREE.FogExp2(fogColor, 0.014);
+    const NCOL = 110, TRAIL = 16, W = 74, H = 44, STEP = .95;
+    const n = NCOL * TRAIL;
+    const pos = new Float32Array(n*3), col = new Float32Array(n*3);
+    const colX = new Float32Array(NCOL), colZ = new Float32Array(NCOL),
+          speed = new Float32Array(NCOL), off = new Float32Array(NCOL);
+    const head = accent.clone().lerp(new THREE.Color('#ffffff'), .6);
+    for (let c = 0; c < NCOL; c++) {
+      colX[c] = (c / NCOL - .5) * W + (Math.random()-.5)*.5;
+      colZ[c] = (Math.random()-.5) * 22;
+      speed[c] = 3.5 + Math.random()*8.5;
+      off[c] = Math.random() * (H + TRAIL*STEP);
+      for (let k = 0; k < TRAIL; k++) {
+        const i = c*TRAIL + k, f = k / TRAIL;
+        const base = k === 0 ? head
+          : accent.clone().lerp(accent2, f*.45).multiplyScalar(Math.pow(1-f, 1.6)*.95 + .05);
+        pos[i*3] = colX[c]; pos[i*3+1] = 0; pos[i*3+2] = colZ[c];
+        col[i*3] = base.r; col[i*3+1] = base.g; col[i*3+2] = base.b;
+      }
+    }
+    const rain = points(pos, col, .42, .9);
+    const span = H + TRAIL*STEP;
+    return t => {
+      const p = rain.g.attributes.position.array;
+      for (let c = 0; c < NCOL; c++) {
+        const headY = H/2 - ((t*speed[c] + off[c]) % span);
+        for (let k = 0; k < TRAIL; k++) {
+          p[(c*TRAIL + k)*3 + 1] = headY + k*STEP;
+        }
+      }
+      rain.g.attributes.position.needsUpdate = true;
+      camera.position.x += (mouseX*3 - camera.position.x) * .04;
+      camera.position.y += (-mouseY*2 - camera.position.y) * .04;
+      camera.lookAt(0, 0, 0);
+    };
+  }
+
+  /* ── figure: GRID — synthwave horizon: scrolling floor + striped sun (neon) ── */
+  function buildGrid() {
+    scene.fog = new THREE.FogExp2(fogColor, 0.0075);
+    const lineMat = cols => new THREE.LineBasicMaterial({ vertexColors:true,
+      transparent:true, opacity:.85, blending:THREE.AdditiveBlending, depthWrite:false });
+    const Z0 = -150, Z1 = 22, XW = 70, LAT = 4;
+    const depthColor = z => {           // near = accent, far = accent2
+      const f = Math.min(Math.max((Z1 - z) / (Z1 - Z0), 0), 1);
+      return accent.clone().lerp(accent2, f);
+    };
+    // longitudinal rails (static)
+    const lonV = [], lonC = [];
+    for (let x = -XW; x <= XW; x += 3.5) {
+      for (const z of [Z1, Z0]) {
+        const c = depthColor(z);
+        lonV.push(x, 0, z); lonC.push(c.r, c.g, c.b);
+      }
+    }
+    const lonG = new THREE.BufferGeometry();
+    lonG.setAttribute('position', new THREE.Float32BufferAttribute(lonV, 3));
+    lonG.setAttribute('color', new THREE.Float32BufferAttribute(lonC, 3));
+    scene.add(new THREE.LineSegments(lonG, lineMat()));
+    // latitude rungs (these scroll toward the camera)
+    const latV = [], latC = [];
+    for (let z = Z0; z <= Z1; z += LAT) {
+      const c = depthColor(z);
+      latV.push(-XW, 0, z, XW, 0, z); latC.push(c.r,c.g,c.b, c.r,c.g,c.b);
+    }
+    const latG = new THREE.BufferGeometry();
+    latG.setAttribute('position', new THREE.Float32BufferAttribute(latV, 3));
+    latG.setAttribute('color', new THREE.Float32BufferAttribute(latC, 3));
+    const rungs = new THREE.LineSegments(latG, lineMat());
+    scene.add(rungs);
+    // striped sun rising off-center, half-sunk into the horizon
+    const SUNR = 24, SUNX = 95, SUNY = 6, SUNZ = -130, BANDS = 24;
+    const sunV = [], sunC = [];
+    for (let b = 0; b < BANDS; b++) {
+      const f = b / (BANDS - 1);                    // 0 top → 1 bottom
+      if (f > .55 && b % 2) continue;               // slitted lower bands, classic style
+      const y = SUNY + SUNR - f * 2 * SUNR;
+      if (y < .6) continue;                         // below the grid = submerged
+      const half = Math.sqrt(Math.max(SUNR*SUNR - (y - SUNY)*(y - SUNY), 0));
+      if (half < .8) continue;
+      const c = accent3.clone().lerp(accent, f*.85);
+      sunV.push(SUNX - half, y, SUNZ, SUNX + half, y, SUNZ);
+      sunC.push(c.r,c.g,c.b, c.r,c.g,c.b);
+    }
+    const sunG = new THREE.BufferGeometry();
+    sunG.setAttribute('position', new THREE.Float32BufferAttribute(sunV, 3));
+    sunG.setAttribute('color', new THREE.Float32BufferAttribute(sunC, 3));
+    scene.add(new THREE.LineSegments(sunG, new THREE.LineBasicMaterial({ vertexColors:true,
+      transparent:true, opacity:.95, blending:THREE.AdditiveBlending, depthWrite:false, fog:false })));
+    // star field above the horizon
+    const S = 220;
+    const spos = new Float32Array(S*3), scol = new Float32Array(S*3);
+    for (let j = 0; j < S; j++) {
+      spos[j*3] = (Math.random()-.5)*220; spos[j*3+1] = 6 + Math.random()*70;
+      spos[j*3+2] = -60 - Math.random()*90;
+      const c = [accent2, accent3, accent][j % 3].clone().multiplyScalar(.55 + Math.random()*.45);
+      scol[j*3]=c.r; scol[j*3+1]=c.g; scol[j*3+2]=c.b;
+    }
+    const stars = points(spos, scol, .5, .8);
+    stars.p.material.fog = false;
+    return t => {
+      rungs.position.z = (t * 9) % LAT;
+      stars.p.rotation.y = Math.sin(t*.02)*.03;
+      camera.position.x += (mouseX*5 - camera.position.x) * .04;
+      camera.position.y += (3.4 - mouseY*2 - camera.position.y) * .04;
+      camera.lookAt(0, 5.5, -60);
+    };
+  }
+
+  const cameraStart = { wave:[0,7.5,26], rain:[0,0,30], grid:[0,3.4,18] }[style] || [0,7.5,26];
+  camera.position.set(...cameraStart);
+  const update = ({ wave:buildWave, rain:buildRain, grid:buildGrid }[style] || buildWave)();
+
+  function resize() {
+    const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
+    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  addEventListener('resize', resize); resize();
+
+  const clock = new THREE.Clock();
+  let running = true;
+  // pause rendering when hero is off-screen
+  new IntersectionObserver(([e]) => { running = e.isIntersecting; },
+      { threshold: 0 }).observe($('#hero'));
+
+  function frame() {
+    requestAnimationFrame(frame);
+    if (!running) return;
+    update(clock.getElapsedTime());
+    renderer.render(scene, camera);
+  }
+  if (reducedMotion) { resize(); update(0); renderer.render(scene, camera); }
+  else frame();
+}
+
+/* ═══════════════════════════ SVG CHARTS ═══════════════════════════ */
+function barChart(data, { height=190, color='url(#gradV)' } = {}) {
+  if (!data.length) return '<div class="text-white/30 text-sm py-8 text-center">No data</div>';
+  const max = Math.max(...data.map(d => d.count), 1);
+  const n = data.length, gap = n > 60 ? .5 : 2;
+  const bw = Math.max((720 - gap*n) / n, 1.2);
+  const bars = data.map((d, i) => {
+    const h = Math.max((d.count / max) * (height-24), d.count ? 2 : 0);
+    const x = i * (bw + gap);
+    return `<rect class="bar-anim" x="${x.toFixed(2)}" y="${(height-h).toFixed(2)}" width="${bw.toFixed(2)}" height="${h.toFixed(2)}" rx="${Math.min(bw/2,3)}" fill="${color}" opacity=".92"><title>${esc(d.label ?? d.date)} — ${fmtNum(d.count)}</title></rect>`;
+  }).join('');
+  const first = data[0].label ?? data[0].date, last = data[n-1].label ?? data[n-1].date;
+  return `<svg viewBox="0 0 720 ${height}" class="w-full" preserveAspectRatio="none" style="height:${height}px">
+    <defs><linearGradient id="gradV" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="var(--accent2)"/></linearGradient></defs>${bars}</svg>
+    <div class="flex justify-between text-[.68rem] text-white/40 mt-1.5 font-mono"><span>${esc(String(first))}</span><span>${esc(String(last))}</span></div>`;
+}
+
+function hBars(data, { labelKey='name', valueKey='count' } = {}) {
+  if (!data.length) return '<div class="text-white/30 text-sm py-8 text-center">No data</div>';
+  const max = Math.max(...data.map(d => d[valueKey]), 1);
+  return data.map(d => {
+    const pct = (d[valueKey] / max) * 100;
+    return `<div class="mb-2.5">
+      <div class="flex justify-between text-xs mb-1">
+        <span class="text-white/75 font-mono truncate pr-3">${esc(d[labelKey])}</span>
+        <span class="text-white/45 shrink-0">${fmtNum(d[valueKey])}</span></div>
+      <div class="h-1.5 rounded-full bg-white/5 overflow-hidden">
+        <div class="hbar-anim h-full rounded-full grad-line" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+}
+
+function donut(parts, size=150) {
+  const total = parts.reduce((s,p) => s+p.value, 0) || 1;
+  const R = 56, C = 2*Math.PI*R;
+  let off = 0;
+  const rings = parts.map(p => {
+    const frac = p.value/total, dash = frac*C;
+    const el = `<circle r="${R}" cx="75" cy="75" fill="none" stroke="${p.color}" stroke-width="15"
+      stroke-dasharray="${dash} ${C-dash}" stroke-dashoffset="${-off}" stroke-linecap="round"
+      transform="rotate(-90 75 75)"><title>${esc(p.label)} — ${fmtNum(p.value)}</title></circle>`;
+    off += dash;
+    return el;
+  }).join('');
+  const legend = parts.map(p => `<div class="flex items-center gap-2 text-xs">
+      <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${p.color}"></span>
+      <span class="text-white/70">${esc(p.label)}</span>
+      <span class="text-white/40 ml-auto">${fmtNum(p.value)}</span></div>`).join('');
+  return `<div class="flex items-center gap-6">
+    <svg viewBox="0 0 150 150" style="width:${size}px;height:${size}px" class="shrink-0">
+      <circle r="${R}" cx="75" cy="75" fill="none" style="stroke:var(--track,rgba(255,255,255,.06))" stroke-width="15"/>${rings}
+      <text x="75" y="71" text-anchor="middle" style="fill:var(--donut-text,#fff)" font-size="20" font-weight="600" font-family="Space Grotesk">${fmtCompact(total)}</text>
+      <text x="75" y="89" text-anchor="middle" style="fill:var(--donut-text-dim,rgba(255,255,255,.45))" font-size="9.5">total</text></svg>
+    <div class="flex-1 space-y-2 min-w-0">${legend}</div></div>`;
+}
+
+/* ═══════════════════════════ SHARED UI BITS ═══════════════════════════ */
+function statCard(icon, value, label, sub='') {
+  return `<div class="glass rounded-2xl p-5 card-hover reveal">
+    <div class="text-xl mb-2 opacity-80">${icon}</div>
+    <div class="font-display font-bold text-2xl md:text-3xl text-white counter" data-target="${value ?? 0}">0</div>
+    <div class="text-xs text-white/50 mt-1 uppercase tracking-wider">${esc(label)}</div>
+    ${sub ? `<div class="text-[.7rem] text-white/35 mt-1">${esc(sub)}</div>` : ''}</div>`;
+}
+function sectionHead(title, sub='') {
+  return `<div class="reveal mb-7 mt-16">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-[3px] rounded grad-line"></div>
+      <h2 class="font-display font-semibold text-xl md:text-2xl text-white">${esc(title)}</h2></div>
+    ${sub ? `<p class="text-white/45 text-sm mt-2 ml-11">${esc(sub)}</p>` : ''}</div>`;
+}
+function panel(inner, cls='') {
+  return `<div class="glass rounded-2xl p-5 md:p-6 reveal ${cls}">${inner}</div>`;
+}
+function noteChip(note) {
+  return note ? `<div class="chip mb-4 !text-amber-200/80 border-amber-300/30">⚠ ${esc(note)}</div>` : '';
+}
+
+const COLTYPE_META = {
+  number:  { color:'var(--ct-number,#f6c177)', icon:'#',  label:'number'  },
+  string:  { color:'var(--ct-string,#a5e3a1)', icon:'𝖠',  label:'text'    },
+  date:    { color:'var(--accent2)',           icon:'📅', label:'date'    },
+  boolean: { color:'var(--accent3)',           icon:'◐',  label:'boolean' },
+};
+
+/* ═══════════════════════════ TABLE DATASET ═══════════════════════════ */
+const tableState = {};   // dsId → { sortCol, sortDir, page }
+const PAGE_SIZE = 100;
+
+function colMiniViz(c) {
+  if (c.type === 'number' && c.histogram)
+    return barChart(c.histogram, { height:76 });
+  if (c.type === 'string' && c.top_values && c.top_values.length)
+    return hBars(c.top_values.slice(0,3), { labelKey:'value' });
+  if (c.type === 'boolean') {
+    const t = c.true_count || 0, f = c.false_count || 0, tot = (t+f) || 1;
+    return `<div class="flex h-2 rounded-full overflow-hidden bg-white/5 mt-3 mb-1.5">
+        <div class="hbar-anim" style="width:${t/tot*100}%;background:var(--accent2)"></div>
+        <div class="hbar-anim" style="width:${f/tot*100}%;background:var(--accent3)"></div></div>
+      <div class="flex justify-between text-[.68rem] text-white/45">
+        <span>true ${fmtNum(t)}</span><span>false ${fmtNum(f)}</span></div>`;
+  }
+  if (c.type === 'date' && c.min)
+    return `<div class="text-[.75rem] text-white/55 font-mono mt-3">${fmtDate(c.min)} <span class="text-white/30">→</span> ${fmtDate(c.max)}</div>`;
+  return '<div class="text-white/25 text-xs mt-3">—</div>';
+}
+
+function colChips(c) {
+  const chips = [`<span class="chip">${fmtNum(c.distinct)} distinct</span>`];
+  if (c.nulls) chips.push(`<span class="chip !text-amber-200/70">∅ ${fmtNum(c.nulls)}</span>`);
+  if (c.type === 'number' && c.mean !== undefined)
+    chips.push(`<span class="chip">μ ${fmtCompact(c.mean)}</span>`);
+  if (c.type === 'string' && c.avg_len)
+    chips.push(`<span class="chip">~${c.avg_len} chars</span>`);
+  return chips.join('');
+}
+
+function renderTable(ds) {
+  const s = ds.stats;
+  const typeParts = [
+    { label:'number',  value:s.numeric_cols, color:COLTYPE_META.number.color },
+    { label:'text',    value:s.text_cols,    color:COLTYPE_META.string.color },
+    { label:'date',    value:s.date_cols,    color:COLTYPE_META.date.color },
+    { label:'boolean', value:s.bool_cols,    color:COLTYPE_META.boolean.color },
+  ].filter(p => p.value);
+
+  const ts = ds.timeseries;
+  return `<section>
+    ${sectionHead('At a glance', `From ${esc(ds.label)}. Think of it as a big grid: rows go across, columns go down.`)}
+    ${noteChip(ds.note)}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      ${statCard('▦', s.row_count, 'Rows', 'one row = one record')}
+      ${statCard('▥', s.col_count, 'Columns', 'one column = one kind of info')}
+      ${statCard('◔', s.filled_pct, '% filled in', `${fmtCompact(s.null_cells)} boxes are empty`)}
+      ${statCard('∑', s.cell_count, 'Little boxes', 'rows × columns')}
+    </div>
+    <div class="grid lg:grid-cols-3 gap-4 mt-4">
+      ${ts ? panel(`<div class="text-sm text-white/60 mb-4 font-medium">When things happened <span class="text-white/35 font-normal">· from the ${esc(ts.column)} column · one bar per ${esc(ts.unit)}</span></div>${barChart(ts.points)}`, 'lg:col-span-2')
+           : panel(`<div class="text-sm text-white/60 mb-4 font-medium">Columns with the most different answers</div>${hBars([...ds.columns].sort((a,b)=>b.distinct-a.distinct).slice(0,7).map(c=>({name:c.name,count:c.distinct})))}`, 'lg:col-span-2')}
+      ${panel(`<div class="text-sm text-white/60 mb-4 font-medium">What the columns hold</div>${donut(typeParts)}`)}
+    </div>
+
+    ${sectionHead('Meet your columns', 'A column is like a labeled jar. One card per jar — click it to peek inside.')}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      ${ds.columns.map((c, i) => {
+        const m = COLTYPE_META[c.type] || COLTYPE_META.string;
+        return `<article class="glass rounded-2xl p-5 card-hover cursor-pointer reveal" data-open-col="${ds.id}:${i}">
+          <div class="flex items-center gap-2.5 mb-1">
+            <span class="w-7 h-7 rounded-lg flex items-center justify-center text-[.7rem] font-bold shrink-0"
+                  style="background:color-mix(in srgb, ${m.color} 22%, transparent);border:1px solid color-mix(in srgb, ${m.color} 45%, transparent);color:${m.color}">${m.icon}</span>
+            <h3 class="font-mono text-[.85rem] text-white truncate">${esc(c.name)}</h3>
+            <span class="chip ml-auto shrink-0" style="color:${m.color}">${m.label}</span></div>
+          ${colMiniViz(c)}
+          <div class="flex flex-wrap gap-1.5 mt-3">${colChips(c)}</div>
+        </article>`;
+      }).join('')}
+    </div>
+
+    ${sectionHead('The data, row by row', 'Type in the search box up top to filter · click a column name to sort')}
+    <div class="glass rounded-2xl reveal overflow-hidden">
+      <div class="flex items-center gap-3 px-5 pt-4 pb-3 flex-wrap">
+        <div id="tcount-${ds.id}" class="text-xs text-white/45"></div>
+        <div class="ml-auto flex items-center gap-2">
+          <button class="chip hover:bg-white/15 disabled:opacity-30" id="tprev-${ds.id}">← prev</button>
+          <span id="tpage-${ds.id}" class="text-xs text-white/45"></span>
+          <button class="chip hover:bg-white/15 disabled:opacity-30" id="tnext-${ds.id}">next →</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto max-h-[70vh] overflow-y-auto">
+        <table class="dtable w-full text-[.8rem]">
+          <thead id="thead-${ds.id}"></thead>
+          <tbody id="tbody-${ds.id}"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>`;
+}
+
+function cellHtml(v, type) {
+  if (v === null || v === undefined) return '<td class="py-1.5 px-3 cell-null">∅</td>';
+  if (type === 'number') {
+    const n = toNum(v);
+    return `<td class="py-1.5 px-3 cell-num" title="${esc(v)}">${n !== null ? fmtNum(n) : esc(v)}</td>`;
+  }
+  if (type === 'boolean' || typeof v === 'boolean') {
+    const b = v === true || String(v).toLowerCase() === 'true' || String(v).toLowerCase() === 'yes';
+    return `<td class="py-1.5 px-3 cell-bool ${b?'text-emerald-300/80':'text-rose-300/70'}">${b?'✓ true':'✗ false'}</td>`;
+  }
+  return `<td class="py-1.5 px-3 text-white/70" title="${esc(v)}">${esc(v)}</td>`;
+}
+
+function fillTable(ds) {
+  const thead = $(`#thead-${ds.id}`), tbody = $(`#tbody-${ds.id}`);
+  if (!thead || !tbody) return;
+  const st = tableState[ds.id] ??= { sortCol:null, sortDir:1, page:0 };
+  const q = ($('#search')?.value || '').trim().toLowerCase();
+
+  let rows = ds.rows;
+  if (q) rows = rows.filter(r => r.some(c =>
+      c !== null && String(c).toLowerCase().includes(q)));
+
+  if (st.sortCol !== null) {
+    const ci = st.sortCol, type = ds.columns[ci]?.type, dir = st.sortDir;
+    rows = [...rows].sort((a, b) => {
+      const va = a[ci], vb = b[ci];
+      if (va === null && vb === null) return 0;
+      if (va === null) return 1;
+      if (vb === null) return -1;
+      if (type === 'number') return ((toNum(va) ?? 0) - (toNum(vb) ?? 0)) * dir;
+      return String(va).localeCompare(String(vb), undefined, { numeric:true }) * dir;
+    });
+  }
+
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  st.page = Math.min(st.page, pages - 1);
+  const slice = rows.slice(st.page * PAGE_SIZE, (st.page + 1) * PAGE_SIZE);
+
+  thead.innerHTML = `<tr class="text-left text-white/45 text-[.68rem] uppercase tracking-wider">
+    ${ds.columns.map((c, i) => `<th class="py-2.5 px-3" data-sort-col="${i}">
+      ${esc(c.name)} <span class="text-white/60">${st.sortCol===i ? (st.sortDir===1?'▲':'▼') : ''}</span></th>`).join('')}</tr>`;
+  tbody.innerHTML = slice.map(r =>
+    `<tr>${r.map((v, i) => cellHtml(v, ds.columns[i]?.type)).join('')}</tr>`).join('')
+    || `<tr><td class="py-8 text-center text-white/35" colspan="${ds.columns.length}">Nothing matches that search.</td></tr>`;
+
+  const shownFrom = rows.length ? st.page * PAGE_SIZE + 1 : 0;
+  const shownTo = Math.min(rows.length, (st.page + 1) * PAGE_SIZE);
+  $(`#tcount-${ds.id}`).textContent =
+    `${fmtNum(shownFrom)}–${fmtNum(shownTo)} of ${fmtNum(rows.length)} rows` +
+    (q ? ` (filtered from ${fmtNum(ds.rows.length)})` : '') +
+    (ds.capped ? ` · first ${fmtNum(ds.rows.length)} embedded` : '');
+  $(`#tpage-${ds.id}`).textContent = `${st.page + 1} / ${pages}`;
+  $(`#tprev-${ds.id}`).disabled = st.page === 0;
+  $(`#tnext-${ds.id}`).disabled = st.page >= pages - 1;
+}
+
+function wireTable(ds) {
+  const st = tableState[ds.id] ??= { sortCol:null, sortDir:1, page:0 };
+  $(`#thead-${ds.id}`)?.closest('table')?.addEventListener('click', e => {
+    const th = e.target.closest('[data-sort-col]');
+    if (!th) return;
+    const ci = +th.dataset.sortCol;
+    if (st.sortCol === ci) {
+      if (st.sortDir === 1) st.sortDir = -1;
+      else { st.sortCol = null; st.sortDir = 1; }
+    } else { st.sortCol = ci; st.sortDir = 1; }
+    st.page = 0;
+    fillTable(ds);
+  });
+  $(`#tprev-${ds.id}`)?.addEventListener('click', () => { st.page--; fillTable(ds); });
+  $(`#tnext-${ds.id}`)?.addEventListener('click', () => { st.page++; fillTable(ds); });
+  fillTable(ds);
+}
+
+function openColumn(ds, idx) {
+  const c = ds.columns[idx];
+  if (!c) return;
+  const m = COLTYPE_META[c.type] || COLTYPE_META.string;
+  $('#modal-title').textContent = c.name;
+  $('#modal-meta').innerHTML = `
+    <span class="chip" style="color:${m.color}">${m.label}</span>
+    <span class="chip">${fmtNum(c.distinct)} distinct</span>
+    <span class="chip">∅ ${fmtNum(c.nulls)} empty</span>
+    ${c.type==='number' && c.mean!==undefined ? `<span class="chip">min ${fmtCompact(c.min)}</span><span class="chip">median ${fmtCompact(c.median)}</span><span class="chip">mean ${fmtCompact(c.mean)}</span><span class="chip">max ${fmtCompact(c.max)}</span>` : ''}
+    ${c.type==='date' && c.min ? `<span class="chip">${fmtDate(c.min)} → ${fmtDate(c.max)}</span>` : ''}
+    ${c.type==='string' && c.avg_len ? `<span class="chip">avg length ${c.avg_len}</span>` : ''}`;
+  let body = '';
+  if (c.type === 'number' && c.histogram)
+    body = `<div class="glass rounded-2xl p-5"><div class="text-sm text-white/60 mb-4 font-medium">Distribution</div>${barChart(c.histogram, { height:230 })}</div>`;
+  else if (c.type === 'string' && c.top_values && c.top_values.length)
+    body = `<div class="glass rounded-2xl p-5"><div class="text-sm text-white/60 mb-4 font-medium">Most frequent values</div>${hBars(c.top_values, { labelKey:'value' })}</div>`;
+  else if (c.type === 'boolean')
+    body = `<div class="glass rounded-2xl p-5">${donut([
+      { label:'true',  value:c.true_count||0,  color:'var(--accent2)' },
+      { label:'false', value:c.false_count||0, color:'var(--accent3)' }])}</div>`;
+  else
+    body = `<div class="text-white/40 text-sm">No further breakdown for this column type.</div>`;
+  $('#modal-thread').innerHTML = body;
+  showModal();
+  animateBars($('#modal-thread'));
+}
+
+/* ═══════════════════════════ TEXT DATASET ═══════════════════════════ */
+function renderText(ds) {
+  const s = ds.stats;
+  const isMd = ds.format === 'markdown';
+  const hasOutline = isMd && ds.outline.length > 0;
+  return `<section>
+    ${sectionHead('Read it here', hasOutline ? 'Click a title on the left to jump straight to that part' : '')}
+    <div class="flex flex-wrap gap-2 mb-6 reveal">
+      <span class="chip">📝 ${fmtCompact(s.words)} words</span>
+      <span class="chip">⏱ ~${s.reading_minutes} min read</span>
+      ${isMd && s.headings ? `<span class="chip">§ ${fmtNum(s.headings)} sections</span>` : ''}
+      ${s.code_blocks ? `<span class="chip">⌨ ${fmtNum(s.code_blocks)} code blocks</span>` : ''}
+      ${s.links ? `<span class="chip">🔗 ${fmtNum(s.links)} links</span>` : ''}
+    </div>
+    ${noteChip(ds.note)}
+    <div class="grid ${hasOutline ? 'lg:grid-cols-[16rem_1fr]' : ''} gap-4 items-start">
+      ${hasOutline ? `<div class="glass rounded-2xl p-4 reveal lg:sticky lg:top-20 max-h-[75vh] overflow-y-auto">
+        <div class="text-[.68rem] uppercase tracking-widest text-white/40 mb-2.5 px-1.5">Outline</div>
+        ${ds.outline.map((h, i) => `<a href="#hd-${ds.id}-${i}" class="block px-1.5 py-1 rounded-lg text-[.8rem] hover:bg-white/5 transition-colors text-white/${h.level<=2?'80':'50'}" style="padding-left:${(h.level-1)*.7+.4}rem">${esc(h.text)}</a>`).join('')}
+      </div>` : ''}
+      <div class="glass rounded-2xl p-6 md:p-10 reveal min-w-0">
+        ${isMd ? `<div class="prose-msg prose-doc" id="doc-${ds.id}">${md(ds.content)}</div>`
+               : `<pre class="font-mono text-[.82rem] leading-relaxed text-white/70 whitespace-pre-wrap overflow-x-auto">${esc(ds.content)}</pre>`}
+      </div>
+    </div>
+  </section>`;
+}
+
+function wireText(ds) {
+  if (ds.format !== 'markdown' || !ds.outline.length) return;
+  // give rendered headings ids matching the outline order
+  const doc = $(`#doc-${ds.id}`);
+  if (!doc) return;
+  const heads = $$('h1,h2,h3,h4', doc);
+  ds.outline.forEach((h, i) => {
+    // match by text to survive md() quirks; fall back to order
+    const el = heads.find(e => !e.id && e.textContent.trim() === h.text.trim()) || heads[i];
+    if (el && !el.id) el.id = `hd-${ds.id}-${i}`;
+  });
+}
+
+/* ═══════════════════════════ LOG DATASET ═══════════════════════════ */
+const LVL_COLORS = {
+  ERROR:'var(--lvl-error,#fb7185)', WARN:'var(--lvl-warn,#fbbf24)',
+  INFO:'var(--lvl-info,#38bdf8)', DEBUG:'var(--lvl-debug,#94a3b8)',
+};
+const logState = {};   // dsId → { level, shown }
+const LOG_CHUNK = 400;
+
+function renderLog(ds) {
+  const s = ds.stats;
+  const range = s.date_range ? `${fmtDate(s.date_range[0])} → ${fmtDate(s.date_range[1])}` : '';
+  const lvlParts = s.levels.map(l => ({
+    label:l.level, value:l.count, color:LVL_COLORS[l.level] || '#94a3b8' }));
+  const warn = (s.levels.find(l => l.level==='WARN') || {}).count || 0;
+  return `<section>
+    ${sectionHead('At a glance', `A log is a diary your software writes. ${range ? `This one runs ${range}.` : `This one is ${esc(ds.label)}.`}`)}
+    ${noteChip(ds.note)}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      ${statCard('☰', s.total_lines, 'Diary lines', 'one line = one thing that happened')}
+      ${statCard('⛔', s.error_count, 'Errors', s.error_pct ? `things that broke — ${s.error_pct}% of lines` : 'things that broke')}
+      ${statCard('⚠️', warn, 'Warnings', 'close calls, nothing broke yet')}
+      ${statCard('🕐', s.timestamped_lines, 'Have a clock time')}
+    </div>
+    <div class="grid lg:grid-cols-3 gap-4 mt-4">
+      ${s.by_date.length > 1
+        ? panel(`<div class="text-sm text-white/60 mb-4 font-medium">How busy each day was</div>${barChart(s.by_date.map(d=>({label:d.date,count:d.count})))}`, 'lg:col-span-2')
+        : panel(`<div class="text-sm text-white/60 mb-4 font-medium">What time of day things happen</div>${barChart(s.by_hour.map((c,h)=>({label:String(h).padStart(2,'0')+':00',count:c})), { height:150 })}`, 'lg:col-span-2')}
+      ${panel(`<div class="text-sm text-white/60 mb-4 font-medium">How serious the messages are</div>${lvlParts.length ? donut(lvlParts) : '<div class="text-white/30 text-sm py-8 text-center">No message types found</div>'}`)}
+    </div>
+    ${(s.by_date.length > 1 && s.by_hour.some(c=>c)) || s.top_sources.length ? `
+    <div class="grid lg:grid-cols-3 gap-4 mt-4">
+      ${s.by_date.length > 1 ? panel(`<div class="text-sm text-white/60 mb-4 font-medium">What time of day things happen</div>${barChart(s.by_hour.map((c,h)=>({label:String(h).padStart(2,'0')+':00',count:c})), { height:130 })}`, s.top_sources.length ? 'lg:col-span-2' : 'lg:col-span-3') : ''}
+      ${s.top_sources.length ? panel(`<div class="text-sm text-white/60 mb-4 font-medium">Which parts talk the most</div>${hBars(s.top_sources.slice(0,7))}`, s.by_date.length > 1 ? '' : 'lg:col-span-3') : ''}
+    </div>` : ''}
+
+    ${sectionHead('The log, line by line', 'Search up top · click a badge below to see only that kind of message')}
+    <div class="glass rounded-2xl reveal overflow-hidden">
+      <div class="flex items-center gap-2 px-5 pt-4 pb-3 flex-wrap" id="lvlbar-${ds.id}">
+        <button class="chip lvl-chip active" data-lvl="ALL">All</button>
+        ${s.levels.map(l => `<button class="chip lvl-chip" data-lvl="${esc(l.level)}" style="color:${LVL_COLORS[l.level]||'#94a3b8'}">${esc(l.level)} · ${fmtCompact(l.count)}</button>`).join('')}
+        <div id="lcount-${ds.id}" class="text-xs text-white/45 ml-auto"></div>
+      </div>
+      <div class="px-2.5 pb-3 max-h-[70vh] overflow-y-auto" id="lview-${ds.id}"></div>
+      <div class="px-5 pb-4"><button id="lmore-${ds.id}" class="chip hover:bg-white/15 hidden">↓ load more</button></div>
+    </div>
+  </section>`;
+}
+
+function logLineHtml(l) {
+  const color = LVL_COLORS[l.level] || null;
+  return `<div class="logline">
+    ${l.level ? `<span class="loglvl" style="color:${color};background:color-mix(in srgb, ${color} 14%, transparent)">${esc(l.level)}</span>`
+              : '<span class="loglvl" style="color:rgba(255,255,255,.25)">·</span>'}
+    <span class="logtext">${esc(l.raw) || '&nbsp;'}</span></div>`;
+}
+
+function fillLog(ds, { append=false } = {}) {
+  const view = $(`#lview-${ds.id}`);
+  if (!view) return;
+  const st = logState[ds.id] ??= { level:'ALL', shown:LOG_CHUNK };
+  const q = ($('#search')?.value || '').trim().toLowerCase();
+  let lines = ds.lines;
+  if (st.level !== 'ALL') lines = lines.filter(l => l.level === st.level);
+  if (q) lines = lines.filter(l => l.raw.toLowerCase().includes(q));
+
+  const slice = lines.slice(0, st.shown);
+  view.innerHTML = slice.map(logLineHtml).join('') ||
+    '<div class="text-white/35 text-sm py-8 text-center">Nothing matches.</div>';
+  $(`#lcount-${ds.id}`).textContent =
+    `${fmtNum(Math.min(st.shown, lines.length))} of ${fmtNum(lines.length)} shown`;
+  const more = $(`#lmore-${ds.id}`);
+  more.classList.toggle('hidden', lines.length <= st.shown);
+}
+
+function wireLog(ds) {
+  const st = logState[ds.id] ??= { level:'ALL', shown:LOG_CHUNK };
+  $(`#lvlbar-${ds.id}`)?.addEventListener('click', e => {
+    const b = e.target.closest('.lvl-chip');
+    if (!b) return;
+    st.level = b.dataset.lvl; st.shown = LOG_CHUNK;
+    $$('.lvl-chip', $(`#lvlbar-${ds.id}`)).forEach(x =>
+      x.classList.toggle('active', x === b));
+    fillLog(ds);
+  });
+  $(`#lmore-${ds.id}`)?.addEventListener('click', () => {
+    st.shown += LOG_CHUNK; fillLog(ds, { append:true });
+  });
+  fillLog(ds);
+}
+
+/* ═══════════════════════════ GENERIC DATASET ═══════════════════════════ */
+function jtreeNode(key, val, depth) {
+  const keyHtml = key !== null ? `<span class="jk">${esc(key)}</span><span class="jm">: </span>` : '';
+  if (Array.isArray(val)) {
+    if (!val.length) return `<div>${keyHtml}<span class="jm">[]</span></div>`;
+    return `<details ${depth<1?'open':''} data-lazy="1"><summary><span class="tw">▸</span>${keyHtml}<span class="jm">Array(${val.length})</span></summary><div class="jchildren" data-pending="1"></div></details>`;
+  }
+  if (val && typeof val === 'object') {
+    const keys = Object.keys(val);
+    if (!keys.length) return `<div>${keyHtml}<span class="jm">{}</span></div>`;
+    return `<details ${depth<1?'open':''} data-lazy="1"><summary><span class="tw">▸</span>${keyHtml}<span class="jm">{${keys.length} key${keys.length===1?'':'s'}}</span></summary><div class="jchildren" data-pending="1"></div></details>`;
+  }
+  if (typeof val === 'string') {
+    const shown = val.length > 300 ? val.slice(0,300)+'…' : val;
+    return `<div>${keyHtml}<span class="js_">"${esc(shown)}"</span></div>`;
+  }
+  if (typeof val === 'number') return `<div>${keyHtml}<span class="jn">${val}</span></div>`;
+  if (typeof val === 'boolean') return `<div>${keyHtml}<span class="jb">${val}</span></div>`;
+  return `<div>${keyHtml}<span class="jz">null</span></div>`;
+}
+
+const nodeDataMap = new WeakMap();
+function expandLazy(detailsEl) {
+  const holder = detailsEl.querySelector(':scope > .jchildren[data-pending]');
+  if (!holder) return;
+  holder.removeAttribute('data-pending');
+  const val = nodeDataMap.get(detailsEl);
+  if (val === undefined) return;
+  const entries = Array.isArray(val) ? val.map((v,i)=>[String(i),v]) : Object.entries(val);
+  const CAP = 400;
+  holder.innerHTML = entries.slice(0,CAP).map(([k,v]) => jtreeNode(k, v, 99)).join('')
+    + (entries.length > CAP ? `<div class="jz">… ${fmtNum(entries.length-CAP)} more not shown</div>` : '');
+  wireLazyTree(holder, entries.slice(0,CAP));
+}
+function wireLazyTree(container, entries) {
+  const detailNodes = [...container.querySelectorAll(':scope > details')];
+  let di = 0;
+  entries.forEach(([k, v]) => {
+    const isBranch = (Array.isArray(v) && v.length) || (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length);
+    if (isBranch) {
+      const el = detailNodes[di++];
+      if (el) {
+        nodeDataMap.set(el, v);
+        el.addEventListener('toggle', () => { if (el.open) expandLazy(el); }, { once:false });
+        if (el.open) expandLazy(el);
+      }
+    }
+  });
+}
+
+const TYPE_COLORS = { object:'var(--accent)', array:'var(--accent2)',
+  string:'var(--ct-string,#a5e3a1)', number:'var(--ct-number,#f6c177)',
+  boolean:'var(--accent3)', 'null':'var(--muted,#6b6b8a)' };
+
+function renderGeneric(ds) {
+  const s = ds.stats;
+  const typeParts = Object.entries(s.type_counts).filter(([,v])=>v)
+    .map(([k,v]) => ({ label:k, value:v, color:TYPE_COLORS[k]||'#94a3b8' }));
+  return `<section>
+    ${sectionHead('The shape of your data', `From ${esc(ds.label)}. Picture boxes inside boxes — it starts with ${s.root_type === 'array' ? 'a list' : 'one big box'}.`)}
+    ${noteChip(ds.note)}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      ${statCard('🧩', s.total_nodes, 'Pieces', 'every value counts as one')}
+      ${statCard('🪜', s.max_depth, 'Layers deep', 'boxes inside boxes')}
+      ${statCard('🔑', (s.top_keys[0]||{}).count || 0, 'Most-used label', (s.top_keys[0]||{}).key || '')}
+      ${statCard('🏷', Object.keys(s.type_counts).length, 'Kinds of values')}
+    </div>
+    <div class="grid lg:grid-cols-2 gap-4 mt-4">
+      ${panel(`<div class="text-sm text-white/60 mb-4 font-medium">What it's made of</div>${donut(typeParts)}`)}
+      ${panel(`<div class="text-sm text-white/60 mb-4 font-medium">Labels that repeat the most</div>${hBars(s.top_keys.slice(0,8), { labelKey:'key' })}`)}
+    </div>
+    ${sectionHead('Dig in', 'Click any row with an arrow to open it — like folders inside folders')}
+    ${panel(`<div class="jtree overflow-x-auto" id="jtree-${ds.id}"></div>`)}
+  </section>`;
+}
+
+function mountGenericTree(ds) {
+  const host = $(`#jtree-${ds.id}`);
+  if (!host) return;
+  host.innerHTML = jtreeNode(null, ds.data, 0);
+  const root = host.querySelector(':scope > details');
+  if (root) {
+    nodeDataMap.set(root, ds.data);
+    root.addEventListener('toggle', () => { if (root.open) expandLazy(root); });
+    expandLazy(root);
+  }
+}
+
+/* ═══════════════════════════ MODAL PLUMBING ═══════════════════════════ */
+function showModal() {
+  const m = $('#modal');
+  m.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  $('#modal-thread').scrollTop = 0;
+  if (hasGsap && !reducedMotion) {
+    gsap.fromTo('#modal-backdrop', { opacity:0 }, { opacity:1, duration:.3 });
+    gsap.fromTo('#modal-panel', { y:60, opacity:0, scale:.985 },
+        { y:0, opacity:1, scale:1, duration:.45, ease:'power3.out' });
+  }
+}
+function hideModal() {
+  const m = $('#modal');
+  const done = () => { m.classList.add('hidden'); document.body.style.overflow=''; };
+  if (hasGsap && !reducedMotion) {
+    gsap.to('#modal-panel', { y:50, opacity:0, duration:.28, ease:'power2.in' });
+    gsap.to('#modal-backdrop', { opacity:0, duration:.28, onComplete:done });
+  } else done();
+}
+$('#modal-close').addEventListener('click', hideModal);
+$('#modal-backdrop').addEventListener('click', hideModal);
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').classList.contains('hidden')) hideModal(); });
+
+/* ═══════════════════════════ ANIMATION ═══════════════════════════ */
+function animateCounters(scope=document) {
+  $$('.counter', scope).forEach(el => {
+    const target = +el.dataset.target || 0;
+    if (!hasGsap || reducedMotion) { el.textContent = fmtNum(target); return; }
+    const obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+      onUpdate: () => el.textContent = target > 9999 ? fmtCompact(obj.v) : fmtNum(Math.round(obj.v)),
+      onComplete: () => el.textContent = target > 9999 ? fmtCompact(target) : fmtNum(target),
+    });
+  });
+}
+function animateReveals(scope=document) {
+  const els = $$('.reveal', scope).filter(el => !el.dataset.revealed);
+  els.forEach(el => el.dataset.revealed = '1');
+  if (!hasGsap || reducedMotion) { els.forEach(el => { el.style.opacity=1; el.style.transform='none'; }); return; }
+  ScrollTrigger.batch(els, {
+    start: 'top 94%', once: true,
+    onEnter: batch => gsap.to(batch, { opacity:1, y:0, duration:.7, stagger:.07, ease:'power3.out' }),
+  });
+  // catch anything already above the fold
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+function animateBars(scope=document) {
+  if (!hasGsap || reducedMotion) return;
+  $$('svg .bar-anim', scope).forEach(r => {
+    gsap.fromTo(r, { scaleY:0 }, { scaleY:1, duration:.8, ease:'power2.out',
+      transformOrigin:'50% 100%',
+      scrollTrigger:{ trigger:r.closest('svg'), start:'top 92%', once:true },
+      delay: Math.random()*.4 });
+  });
+  $$('.hbar-anim', scope).forEach(b => {
+    gsap.fromTo(b, { scaleX:0 }, { scaleX:1, duration:.9, ease:'power3.out',
+      transformOrigin:'0 50%',
+      scrollTrigger:{ trigger:b, start:'top 95%', once:true } });
+  });
+}
+
+/* ═══════════════════════════ APP ═══════════════════════════ */
+const SEARCHABLE = new Set(['table', 'log']);
+
+function renderDataset(ds) {
+  const content = $('#content');
+  let html = '';
+  if (ds.type === 'table')     html = renderTable(ds);
+  else if (ds.type === 'text') html = renderText(ds);
+  else if (ds.type === 'log')  html = renderLog(ds);
+  else                         html = renderGeneric(ds);
+  content.innerHTML = html;
+
+  if (ds.type === 'table')   wireTable(ds);
+  if (ds.type === 'text')    wireText(ds);
+  if (ds.type === 'log')     wireLog(ds);
+  if (ds.type === 'generic') mountGenericTree(ds);
+
+  animateReveals(content);
+  animateCounters(content);
+  animateBars(content);
+  if (hasGsap && !reducedMotion) requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+
+let activeDs = null;
+function activate(dsId, { scroll=false } = {}) {
+  const ds = DATA.datasets.find(d => d.id === dsId);
+  if (!ds) return;
+  activeDs = ds;
+  $$('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.ds === dsId));
+  $('#search-wrap').style.display = SEARCHABLE.has(ds.type) ? '' : 'none';
+  const content = $('#content');
+  const doRender = () => renderDataset(ds);
+  if (hasGsap && !reducedMotion && content.children.length) {
+    gsap.to(content, { opacity:0, y:10, duration:.2, onComplete:() => {
+      doRender(); gsap.fromTo(content, { opacity:0, y:14 }, { opacity:1, y:0, duration:.4 });
+    }});
+  } else doRender();
+  if (scroll) $('#content-start').scrollIntoView({ behavior: reducedMotion?'auto':'smooth' });
+}
+
+function heroChips() {
+  const chips = [];
+  chips.push(`<span class="chip text-white/75">📅 ${esc(DATA.meta.generated_at)}</span>`);
+  for (const ds of DATA.datasets) {
+    if (ds.type === 'table')
+      chips.push(`<span class="chip text-white/75">▦ ${fmtCompact(ds.stats.row_count)} rows × ${fmtNum(ds.stats.col_count)} cols</span>`);
+    else if (ds.type === 'text')
+      chips.push(`<span class="chip text-white/75">📖 ${fmtCompact(ds.stats.words)} words · ~${ds.stats.reading_minutes} min</span>`);
+    else if (ds.type === 'log')
+      chips.push(`<span class="chip text-white/75">☰ ${fmtCompact(ds.stats.total_lines)} lines${ds.stats.error_count ? ` · ⛔ ${fmtCompact(ds.stats.error_count)}` : ''}</span>`);
+    else
+      chips.push(`<span class="chip text-white/75">🧩 ${fmtCompact(ds.stats.total_nodes)} nodes · ${esc(ds.label)}</span>`);
+  }
+  return chips.slice(0, 6).join('');
+}
+
+function boot() {
+  if (!DATA || !DATA.datasets) {
+    $('#hero-subtitle').textContent = 'No data was injected into this template. Run scripts/build_html.py to generate a populated viewer.';
+    return;
+  }
+  const meta = DATA.meta;
+  if (meta.accent) document.documentElement.style.setProperty('--accent', meta.accent);
+  const design = meta.design || {};
+  if (design.accent2) document.documentElement.style.setProperty('--accent2', design.accent2);
+  if (design.accent3) document.documentElement.style.setProperty('--accent3', design.accent3);
+  document.title = meta.title;
+  $('#nav-title').textContent = meta.title;
+
+  // hero text
+  const words = meta.title.split(' ');
+  const mid = Math.ceil(words.length/2);
+  $('#hero-title').innerHTML =
+    `<span class="grad-text">${esc(words.slice(0,mid).join(' '))}</span> <span class="text-white">${esc(words.slice(mid).join(' '))}</span>`;
+  $('#hero-subtitle').textContent = meta.subtitle ||
+    `A simple tour of ${meta.sources.map(s=>s).join(' + ')}. No jargon.`;
+  $('#hero-chips').innerHTML = heroChips();
+  $('#footer-text').textContent =
+    `${meta.title} · generated ${meta.generated_at} from ${meta.sources.join(', ')} · eliviz`;
+
+  // tabs
+  const tabs = $('#tabs');
+  if (DATA.datasets.length > 1) {
+    tabs.innerHTML = DATA.datasets.map(d =>
+      `<button class="tab-btn px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white whitespace-nowrap" data-ds="${d.id}">${esc(d.label)}</button>`).join('');
+    tabs.addEventListener('click', e => {
+      const b = e.target.closest('.tab-btn');
+      if (b) activate(b.dataset.ds, { scroll:true });
+    });
+  }
+
+  // search
+  $('#search').addEventListener('input', () => {
+    if (!activeDs) return;
+    if (activeDs.type === 'table') {
+      (tableState[activeDs.id] ??= { sortCol:null, sortDir:1, page:0 }).page = 0;
+      fillTable(activeDs);
+    }
+    if (activeDs.type === 'log') {
+      (logState[activeDs.id] ??= { level:'ALL', shown:LOG_CHUNK }).shown = LOG_CHUNK;
+      fillLog(activeDs);
+    }
+  });
+
+  // delegated clicks (column profile cards)
+  document.addEventListener('click', e => {
+    const colEl = e.target.closest('[data-open-col]');
+    if (colEl) {
+      const [dsId, idx] = colEl.dataset.openCol.split(':');
+      const ds = DATA.datasets.find(d => d.id === dsId);
+      if (ds) openColumn(ds, +idx);
+    }
+  });
+
+  initHero();
+  activate(DATA.datasets[0].id);
+
+  // hero intro animation
+  if (hasGsap && !reducedMotion) {
+    const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+    tl.fromTo('#hero-eyebrow', { opacity:0, y:16 }, { opacity:1, y:0, duration:.7 }, .15)
+      .fromTo('#hero-title', { opacity:0, y:34, scale:.97 }, { opacity:1, y:0, scale:1, duration:1 }, .3)
+      .fromTo('#hero-subtitle', { opacity:0, y:22 }, { opacity:1, y:0, duration:.8 }, .55)
+      .fromTo('#hero-chips .chip', { opacity:0, y:16 }, { opacity:1, y:0, duration:.55, stagger:.07 }, .75);
+    gsap.to('#hero-canvas', {
+      scrollTrigger: { trigger:'#hero', start:'top top', end:'bottom top', scrub:true },
+      opacity:.25, y:120,
+    });
+  } else {
+    $('#hero-eyebrow').style.opacity = 1;
+  }
+}
+boot();
+</script>
+</body>
+</html>
