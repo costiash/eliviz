@@ -92,8 +92,11 @@ re-implement injection.
     },
     "by_time": {                        // first date column, same bucketing as timeseries
       "column": "date", "unit": "month",
+      "span_days": 271,                 // inclusive day span of the dated rows
       "counts": { "2026-01": 131, … },
       "sums": { "total": { "2026-01": 158472.26, … } },
+      "per_day": { "count": 4.43,      // dated rows / span_days, 2 decimals
+                   "sums": { "total": 5490.73 } },  // per-day averages for "per day" glosses
       "peak": { "bucket": "2026-07", "count": 153,
                 "pct_vs_prev": 28.6,          // vs the previous bucket
                 "pct_vs_mean_others": 16.9 }  // vs the mean of all other buckets

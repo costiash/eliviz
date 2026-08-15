@@ -363,7 +363,9 @@ def build_aggregates(columns, col_values):
                 buckets.setdefault(key(d), []).append(i)
             ordered = sorted(buckets.items())
             counts = {k: len(idx) for k, idx in ordered}
-            time_entry = {"column": name, "unit": unit, "counts": counts}
+            span_days = max(1, (hi - lo).days + 1)
+            time_entry = {"column": name, "unit": unit,
+                          "span_days": span_days, "counts": counts}
             sums = {}
             for num in num_cols:
                 vals = col_values[num]
@@ -373,6 +375,13 @@ def build_aggregates(columns, col_values):
                 sums[num] = s
             if sums:
                 time_entry["sums"] = sums
+            # per-day averages: the deterministic source for "per day" glosses
+            per_day = {"count": round(len(dts) / span_days, 2)}
+            day_sums = {num: round(sum(s.values()) / span_days, 2)
+                        for num, s in sums.items()}
+            if day_sums:
+                per_day["sums"] = day_sums
+            time_entry["per_day"] = per_day
             if len(counts) >= 2:
                 peak_bucket = max(counts, key=lambda k: counts[k])
                 labels = [k for k, _ in ordered]

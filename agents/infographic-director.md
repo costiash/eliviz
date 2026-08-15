@@ -61,12 +61,18 @@ what the parser emitted. If the story you want needs a number the parser
 didn't emit, change the story. Cite where each fact came from so the skill can
 validate byte-identity.
 
-One framing carve-out, so eli5 stories stay tellable: everyday ratio framing
-of a parser percentage ("1 in 4 boxes came back" for a 25.4% rate) counts as
-display formatting, not a derivation — but only when the exact parser value
-also appears in the same section's text or caption AND in `facts`. That is
-how the validated exemplars do it ("1 came back" paired with "the 25.4% that
-returned"). Never invent a ratio the percentage doesn't plainly round to.
+Two framing carve-outs, so eli5 stories stay tellable — both count as display
+formatting, not derivation, under strict conditions:
+- **Ratio framing**: "1 in 4 boxes came back" for a 25.4% rate — only when
+  the exact parser value also appears in the same section's text or caption
+  AND in `facts` ("1 came back" paired with "the 25.4% that returned").
+  Never invent a ratio the percentage doesn't plainly round to.
+- **Pictogram scale**: "1 box = U orders" — only when U × icon-count exactly
+  equals a parser total that is shown on the canvas and cited in `facts`,
+  and the caption states the unit.
+"Per day"-style glosses are neither: take them from
+`aggregates.by_time.per_day` (e.g. "about $5.5k every single day" from
+`per_day.sums.total` = 5490.36), never from your own arithmetic.
 
 **Output contract — the brief.** Return (and, if the caller gave you an
 output path, Write) a single JSON object:

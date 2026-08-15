@@ -147,11 +147,16 @@ its `level` and respect that level's `density_ceiling`.
   verbatim; every rendered number is byte-traceable to the brief (standard
   display formatting excepted). The director selects and arranges numbers —
   it never computes them. Display formatting means: thousands separators,
-  `$1.49M`-style abbreviation, whole-unit rounding, and everyday ratio
-  framing ("1 in 4" for a 25.4% rate) — ratio framing is allowed ONLY when
-  the exact brief value also appears on the canvas (in the fact text,
-  caption, or annotation), the way the validated exemplars pair "1 came
-  back" with "the 25.4% that returned".
+  `$1.49M`-style abbreviation rounded to the displayed precision, whole-unit
+  rounding, everyday ratio framing ("1 in 4" for a 25.4% rate), and pictogram
+  scale declarations ("1 box = 300 orders"). The two framings carry strict
+  conditions: ratio framing ONLY when the exact brief value also appears on
+  the canvas (fact text, caption, or annotation — the way the exemplars pair
+  "1 came back" with "the 25.4% that returned"); a pictogram unit U ONLY when
+  U × icon-count exactly equals a brief total that is shown on the canvas AND
+  the caption states the unit (ISOTYPE rule: 1 icon = fixed quantity). "Per
+  day"-style glosses are NOT display formatting — use the parser's
+  `aggregates.by_time.per_day` values.
 - **Color semantics**: green=pass, amber=caution, red=risk, blue=info,
   purple=meta. Packs tune hues, never meanings.
 - **One icon dialect per canvas** (emoji-glyph OR line OR solid).
