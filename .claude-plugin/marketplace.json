@@ -3,13 +3,13 @@
   "owner": {
     "name": "Costa"
   },
-  "description": "Eliviz — data files to single-file interactive HTML experiences with switchable design identities.",
+  "description": "Eliviz — data files to single-file interactive HTML experiences and static infographic images, with switchable design identities.",
   "plugins": [
     {
       "name": "eliviz",
       "source": "./",
-      "description": "Turn any data file (CSV, Excel, SQLite, JSON/JSONL, Markdown, logs) into a single-file interactive HTML experience, with a five-style design bank and a design-adapter agent that crafts custom/blended styles on demand.",
-      "version": "1.0.1",
+      "description": "Turn any data file (CSV, Excel, SQLite, JSON/JSONL, Markdown, logs) into a single-file interactive HTML experience or a static infographic PNG. Ships a five-style report design bank, a level-keyed infographic bank (eli5/junior/pro), an infographic-director agent that writes data-story briefs, and a design-adapter agent that crafts custom/blended styles on demand.",
+      "version": "1.1.0",
       "author": { "name": "Costa" },
       "homepage": "https://github.com/costiash/eliviz",
       "license": "MIT",
@@ -17,7 +17,7 @@
       "keywords": ["visualization", "dashboard", "html", "data", "design",
         "reports", "eli5", "charts", "csv", "excel", "sqlite", "json",
         "markdown", "logs", "data-visualization", "single-file", "offline",
-        "interactive", "viewer"]
+        "interactive", "viewer", "infographic", "poster", "png", "image"]
     }
   ]
 }
