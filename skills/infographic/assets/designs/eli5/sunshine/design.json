@@ -1,0 +1,28 @@
+{
+  "id": "sunshine",
+  "level": "eli5",
+  "name": "Sunshine",
+  "tagline": "Cream ground, coral and amber, sticker shadows — the friendly default for beginners and kids.",
+  "mood": ["warm", "playful", "kids", "friendly"],
+  "ground": "#fff8ec",
+  "dark": false,
+  "roles": {
+    "ink": "#2b2140",
+    "muted": "#6b5d6e",
+    "hero": "#ffb02e",
+    "chip": "#ff6b57",
+    "annotation": "#ff6b57",
+    "series": ["#00b8a9", "#ffb02e", "#b7a6ff", "#ffd9a0"]
+  },
+  "type": {
+    "display": "Inter",
+    "body": "Inter",
+    "data": "Inter",
+    "display_weight": 900,
+    "google": ""
+  },
+  "icons": { "style": "line", "stroke": 2.6, "corner": "round" },
+  "shape": { "radius": 28, "shadow": "offset", "card_border": "none" },
+  "spine": { "style": "band", "chip": "circle" },
+  "density_ceiling": { "sections": 3, "series_per_chart": 1 }
+}

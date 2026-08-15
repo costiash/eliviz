@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- T4 · journey-spine — numbered vertical data story (portrait backbone).
+     GRAMMAR ONLY: structure and class names are fixed; all colors, fonts, and
+     surface styling come from exactly one pack's components.css, inlined at
+     the placeholder below. Canvas: story preset, 1080px wide, measured height.
+
+     How to compose from this skeleton:
+     - Keep every class name — packs style these exact hooks.
+     - Sections: copy the .sec block once per brief section (respect the
+       pack's density_ceiling). Chip numbers count 1..N in reading order.
+     - Micro-visuals are inline SVGs sized to fit the card (~640-780 wide).
+       Use the pack's --series-* tokens for fills; annotate the one feature
+       the reader would miss. Every number comes verbatim from the brief.
+     - Optional per-pack devices: nightglass uses .sec-head icons + .dot
+       takeaway bullets; sunshine drops icons and uses h1 .pop / chunkier copy.
+-->
+<html><head><meta charset="utf-8"><style>
+* { margin:0; box-sizing:border-box; }
+body { width:1080px; }
+/*__PACK_COMPONENTS_CSS__*/
+</style></head><body>
+
+<div class="eyebrow"><!-- 2-5 word series label, e.g. "Your data, made simple" --></div>
+<h1><!-- headline; may wrap key phrase in <span class="grad"> (dark packs)
+     or <span class="pop"> (sunshine) --></h1>
+<p class="hook"><!-- one-line hook framed as the question the data answers --></p>
+
+<div class="hero-card">
+  <div class="hero-n"><!-- THE hero stat, largest element on canvas --></div>
+  <div class="hero-t">
+    <div class="l"><!-- plain-words label --></div>
+    <div class="g"><!-- one-line gloss / everyday comparison --></div>
+  </div>
+</div>
+
+<div class="flow">
+  <div class="sec">
+    <div class="chip-col"><div class="chip">1</div></div>
+    <div class="sec-card">
+      <div class="sec-head"><!-- optional 40px line icon (svg) --><h2><!-- header, ≤4 words --></h2></div>
+      <p class="fact"><!-- fact sentence ≤14 words, the number in <b> --></p>
+      <!-- ONE micro-visual: inline svg chart OR pictogram row -->
+      <div class="ann"><!-- optional italic annotation pointing at a feature --></div>
+      <div class="picto-cap"><!-- required under pictograms: state the unit --></div>
+    </div>
+  </div>
+  <!-- more .sec blocks, numbered 2..N -->
+</div>
+
+<div class="takeaway">
+  <h2>★ <!-- "The takeaway" / register-appropriate --></h2>
+  <div>
+    <!-- 2-3 plain-words conclusion lines; nightglass prefixes each with
+         <span class="dot"></span> -->
+  </div>
+</div>
+
+<div class="src">
+  <span><!-- source file · date range · "every number computed from the file" --></span>
+  <span>made with eliviz</span>
+</div>
+
+</body></html>

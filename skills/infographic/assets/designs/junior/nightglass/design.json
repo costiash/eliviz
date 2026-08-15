@@ -1,0 +1,29 @@
+{
+  "id": "nightglass",
+  "level": "junior",
+  "name": "Nightglass",
+  "tagline": "Aurora-descended dark glass adapted to the infographic grammar — the clean-modern default.",
+  "mood": ["dark", "glass", "modern", "team"],
+  "ground": "#0b0b14",
+  "dark": true,
+  "ancestor": "aurora",
+  "roles": {
+    "ink": "#e6e6f0",
+    "muted": "rgba(255,255,255,.62)",
+    "hero": "#7c6cff",
+    "chip": "#7c6cff",
+    "annotation": "#f472b6",
+    "series": ["#7c6cff", "#22d3ee", "#f472b6", "#a99cff"]
+  },
+  "type": {
+    "display": "Inter",
+    "body": "Inter",
+    "data": "Inter",
+    "display_weight": 800,
+    "google": ""
+  },
+  "icons": { "style": "line", "stroke": 2.2, "corner": "round" },
+  "shape": { "radius": 22, "shadow": "none", "card_border": "hairline" },
+  "spine": { "style": "line", "chip": "circle" },
+  "density_ceiling": { "sections": 5, "series_per_chart": 2 }
+}

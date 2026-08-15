@@ -1,0 +1,65 @@
+/* sunshine — eli5 infographic pack (components for the section recipe).
+   Extracted from the validated sunshine.eli5 exemplar. Values are the pack's
+   register; the layout grammar comes from the template skeleton. */
+
+/* -- tokens ---------------------------------------------------------- */
+:root {
+  --ground: #fff8ec;
+  --ink: #2b2140;
+  --muted: #6b5d6e;
+  --hero: #ffb02e;
+  --chip: #ff6b57;
+  --annotation: #ff6b57;
+  --series-1: #00b8a9;
+  --series-2: #ffb02e;
+  --series-3: #b7a6ff;
+  --series-4: #ffd9a0;
+  --shadow: #e8d8c2;      /* the offset "sticker" shadow color */
+  --card-shadow: #f0e2cc;
+  --label: #a08f7f;       /* picto captions, source strip, chart labels */
+}
+
+/* -- canvas + headline ------------------------------------------------ */
+body { background: var(--ground); color: var(--ink);
+  font-family: Inter, system-ui, sans-serif; padding: 56px 64px 40px; }
+.eyebrow { display: inline-block; background: #ffe3b3; color: #8a5a00;
+  border-radius: 999px; padding: 10px 26px; font-size: 21px; font-weight: 800;
+  margin-bottom: 20px; }
+h1 { font-size: 64px; font-weight: 900; line-height: 1.06; letter-spacing: -.02em; }
+h1 .pop { color: var(--chip); }
+.hook { font-size: 25px; color: var(--muted); margin: 14px 0 34px; font-weight: 500; }
+
+/* -- hero card --------------------------------------------------------- */
+.hero-card { background: var(--ink); color: #fff; border-radius: 34px;
+  padding: 34px 44px; margin-bottom: 40px; display: flex; align-items: baseline;
+  gap: 30px; box-shadow: 0 10px 0 var(--shadow); }
+.hero-n { font-size: 104px; font-weight: 900; color: var(--hero); letter-spacing: -.02em; }
+.hero-t .l { font-size: 27px; font-weight: 700; }
+.hero-t .g { font-size: 21px; opacity: .75; margin-top: 6px; }
+
+/* -- spine + numbered sections ----------------------------------------- */
+.flow { position: relative; }
+.flow::before { content: ''; position: absolute; left: 29px; top: 16px;
+  bottom: 16px; width: 6px; background: var(--series-4); border-radius: 3px; }
+.sec { display: flex; gap: 28px; margin-bottom: 36px; position: relative; }
+.chip-col { width: 64px; flex-shrink: 0; }
+.chip { width: 64px; height: 64px; border-radius: 50%; background: var(--chip);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 30px; font-weight: 900; box-shadow: 0 5px 0 var(--shadow);
+  position: relative; z-index: 1; }
+.sec-card { flex: 1; background: #fff; border-radius: 28px;
+  padding: 28px 36px 24px; box-shadow: 0 8px 0 var(--card-shadow); }
+.sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.sec-card h2 { font-size: 32px; font-weight: 850; margin-bottom: 6px; }
+.fact { font-size: 23px; color: var(--muted); margin-bottom: 16px; }
+.fact b { color: var(--chip); }
+.ann { font-size: 20px; font-style: italic; color: var(--annotation); margin-top: 10px; }
+.picto-cap { font-size: 20px; color: var(--label); margin-top: 10px; font-weight: 600; }
+
+/* -- takeaway + source strip ------------------------------------------- */
+.takeaway { background: var(--series-1); color: #fff; border-radius: 30px;
+  padding: 30px 40px; box-shadow: 0 10px 0 var(--shadow); }
+.takeaway h2 { font-size: 30px; font-weight: 900; margin-bottom: 10px; }
+.takeaway div { font-size: 24px; line-height: 1.75; font-weight: 600; }
+.src { display: flex; justify-content: space-between; font-size: 18px;
+  color: var(--label); margin-top: 28px; font-weight: 600; }

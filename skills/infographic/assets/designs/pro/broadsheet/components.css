@@ -1,0 +1,72 @@
+/* broadsheet — pro infographic pack (components for the T6 briefing grammar).
+   Extracted from the validated broadsheet.pro exemplar. */
+
+/* -- tokens ---------------------------------------------------------- */
+:root {
+  --ground: #f7f2ea;
+  --ink: #1a1614;
+  --muted: #6f655c;
+  --hero: #b3382c;
+  --annotation: #b3382c;
+  --series-1: #b3382c;
+  --series-2: #2c5f8a;
+  --series-3: #c9bfb2;
+  --series-4: #3d7a4d;
+  --hairline: #d8cec2;
+  --sans: Inter, system-ui, sans-serif;
+}
+
+/* -- canvas + masthead ------------------------------------------------ */
+body { background: var(--ground); color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif; padding: 52px 64px 36px; }
+svg { max-width: 100%; height: auto; }
+.kicker { font-family: var(--sans); font-size: 15px; letter-spacing: .22em;
+  color: var(--hero); text-transform: uppercase; font-weight: 700;
+  padding-bottom: 10px; border-bottom: 3px solid var(--ink); margin-bottom: 18px; }
+h1 { font-size: 54px; font-weight: 700; line-height: 1.08; letter-spacing: -.01em; }
+.standfirst { font-size: 22px; color: var(--muted); margin: 14px 0 8px;
+  font-style: italic; max-width: 46em; }
+
+/* -- hairline KPI strip ------------------------------------------------ */
+.hero-row { display: flex; align-items: stretch; gap: 0;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  margin: 24px 0 34px; }
+.hero-cell { flex: 1; padding: 20px 26px; border-right: 1px solid var(--hairline); }
+.hero-cell:last-child { border-right: none; }
+.hero-cell .n { font-size: 46px; font-weight: 700; color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+.hero-cell:first-child .n { color: var(--hero); font-size: 56px; }
+.hero-cell .l { font-family: var(--sans); font-size: 14.5px; color: var(--muted);
+  margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
+
+/* -- two-column module grid -------------------------------------------- */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 44px; }
+.sec { display: flex; gap: 18px; padding: 22px 0 18px;
+  border-top: 1px solid var(--hairline); }
+.sec.wide { grid-column: 1 / -1; }
+.num { font-family: var(--sans); font-size: 15px; font-weight: 800; color: #fff;
+  background: var(--ink); width: 30px; height: 30px; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px; }
+h2 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+.sub { font-family: var(--sans); font-size: 16.5px; color: var(--muted);
+  margin-bottom: 14px; }
+.sub b { color: var(--hero); }
+.ann { font-size: 17px; font-style: italic; color: var(--annotation); margin-top: 8px; }
+
+/* -- data table --------------------------------------------------------- */
+table { font-family: var(--sans); font-size: 16px; border-collapse: collapse;
+  width: 100%; }
+th { text-align: left; color: var(--muted); font-weight: 600; font-size: 13.5px;
+  text-transform: uppercase; letter-spacing: .05em; padding: 6px 14px 6px 0;
+  border-bottom: 2px solid var(--ink); }
+td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--hairline);
+  font-variant-numeric: tabular-nums; }
+
+/* -- findings block + source line --------------------------------------- */
+.findings { border-top: 3px solid var(--ink); margin-top: 6px; padding-top: 18px; }
+.findings h2 { font-size: 24px; margin-bottom: 10px; }
+.findings ol { font-size: 19px; line-height: 1.7; padding-left: 22px; }
+.findings b { color: var(--hero); }
+.src { display: flex; justify-content: space-between; font-family: var(--sans);
+  font-size: 13.5px; color: var(--muted); margin-top: 26px; padding-top: 12px;
+  border-top: 1px solid var(--hairline); }

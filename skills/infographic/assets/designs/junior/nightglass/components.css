@@ -1,0 +1,79 @@
+/* nightglass — junior infographic pack (components for the section recipe).
+   Extracted from the validated journey-spine.nightglass.junior exemplar.
+   Palette ancestor: the html-report bank's aurora pack. */
+
+/* -- tokens ---------------------------------------------------------- */
+:root {
+  --ground: #0b0b14;
+  --ink: #e6e6f0;
+  --muted: rgba(255,255,255,.62);
+  --hero: #7c6cff;
+  --chip: #7c6cff;
+  --annotation: #f472b6;
+  --series-1: #7c6cff;
+  --series-2: #22d3ee;
+  --series-3: #f472b6;
+  --series-4: #a99cff;
+  --glass: rgba(255,255,255,.04);
+  --glass-strong: rgba(255,255,255,.05);
+  --hairline: rgba(255,255,255,.09);
+  --hairline-strong: rgba(255,255,255,.12);
+  --label: rgba(255,255,255,.45);
+}
+
+/* -- canvas + headline ------------------------------------------------ */
+body { background:
+  radial-gradient(ellipse at 15% 0%, rgba(124,108,255,.3), transparent 50%),
+  radial-gradient(ellipse at 100% 60%, rgba(34,211,238,.12), transparent 45%),
+  var(--ground);
+  color: var(--ink); font-family: Inter, system-ui, sans-serif;
+  padding: 56px 60px 40px; }
+.eyebrow { font-size: 20px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--series-2); margin-bottom: 14px; }
+h1 { font-size: 66px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; }
+.grad { background: linear-gradient(95deg, #7c6cff, #22d3ee 55%, #f472b6);
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hook { font-size: 25px; color: var(--muted); margin: 14px 0 34px; }
+
+/* -- hero card --------------------------------------------------------- */
+.hero-card { background: var(--glass-strong); border: 1px solid var(--hairline-strong);
+  border-radius: 26px; padding: 30px 40px 28px; margin-bottom: 44px;
+  display: flex; align-items: baseline; gap: 30px; }
+.hero-n { font-size: 110px; font-weight: 800; letter-spacing: -.03em;
+  background: linear-gradient(95deg, #a99cff, #67e3f9);
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-t .l { font-size: 26px; color: rgba(255,255,255,.8); font-weight: 600; }
+.hero-t .g { font-size: 21px; color: rgba(255,255,255,.5); margin-top: 6px; }
+
+/* -- spine + numbered sections ----------------------------------------- */
+.flow { position: relative; }
+.flow::before { content: ''; position: absolute; left: 26px; top: 10px;
+  bottom: 10px; width: 3px;
+  background: linear-gradient(180deg, #7c6cff, #22d3ee, #f472b6);
+  border-radius: 2px; opacity: .55; }
+.sec { display: flex; gap: 30px; margin-bottom: 40px; position: relative; }
+.chip-col { width: 56px; flex-shrink: 0; }
+.chip { width: 56px; height: 56px; border-radius: 50%; background: #131324;
+  border: 3px solid var(--chip); display: flex; align-items: center;
+  justify-content: center; font-size: 24px; font-weight: 800; color: #fff;
+  position: relative; z-index: 1; }
+.sec-card { flex: 1; background: var(--glass); border: 1px solid var(--hairline);
+  border-radius: 22px; padding: 26px 34px 24px; }
+.sec-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.sec-head h2 { font-size: 30px; font-weight: 750; }
+.fact { font-size: 22px; color: rgba(255,255,255,.66); margin-bottom: 18px; }
+.fact b { color: #67e3f9; }
+.ann { font-size: 20px; font-style: italic; color: var(--annotation); margin-top: 10px; }
+.picto-cap { font-size: 19px; color: var(--label); margin-top: 10px; }
+
+/* -- takeaway + source strip ------------------------------------------- */
+.takeaway { margin-top: 8px;
+  background: linear-gradient(120deg, rgba(124,108,255,.16), rgba(34,211,238,.1));
+  border: 1px solid rgba(124,108,255,.4); border-radius: 24px; padding: 30px 38px; }
+.takeaway h2 { font-size: 30px; margin-bottom: 14px; }
+.takeaway div { font-size: 23px; line-height: 1.8; color: rgba(255,255,255,.85); }
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block;
+  margin-right: 12px; background: linear-gradient(90deg, #7c6cff, #22d3ee); }
+.src { display: flex; justify-content: space-between; font-size: 18px;
+  color: rgba(255,255,255,.38); margin-top: 30px; padding-top: 18px;
+  border-top: 1px solid var(--hairline); }

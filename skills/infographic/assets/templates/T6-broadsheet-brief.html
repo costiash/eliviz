@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- T6 · broadsheet-brief — editorial data briefing (pro register).
+     GRAMMAR ONLY: kicker → finding-stating headline → standfirst → hairline
+     KPI strip → two-column module grid → findings block → formal source line.
+     Compatible packs: broadsheet, journal (pro level). Canvas: story preset,
+     1080px wide, measured height.
+
+     Composition rules:
+     - The headline STATES the top finding (newspaper style), it doesn't tease.
+     - KPI strip: 3-4 cells; first cell is the hero stat (pack renders it
+       larger and in the hero color).
+     - Modules: 4-6 .sec blocks numbered in reading order (left column top to
+       bottom, then right). Use .sec.wide for a module that needs full width.
+       One micro-visual per module: svg bars or a compact table. Dense,
+       annotated, no analogies.
+     - Findings: 2-3 numbered sentences — the analytical "so what".
+     - Every number verbatim from the brief; source line carries n= and range.
+-->
+<html><head><meta charset="utf-8"><style>
+* { margin:0; box-sizing:border-box; }
+body { width:1080px; }
+/*__PACK_COMPONENTS_CSS__*/
+</style></head><body>
+
+<div class="kicker"><!-- eliviz · data briefing --></div>
+<h1><!-- finding-stating headline --></h1>
+<p class="standfirst"><!-- scope line: file, period, n=, method sentence --></p>
+
+<div class="hero-row">
+  <div class="hero-cell"><div class="n"><!-- hero stat --></div><div class="l"><!-- label --></div></div>
+  <div class="hero-cell"><div class="n"><!-- kpi --></div><div class="l"><!-- label --></div></div>
+  <div class="hero-cell"><div class="n"><!-- kpi --></div><div class="l"><!-- label --></div></div>
+  <div class="hero-cell"><div class="n"><!-- kpi --></div><div class="l"><!-- label --></div></div>
+</div>
+
+<div class="grid">
+  <div class="sec"><div class="num">1</div><div class="sec-body">
+    <h2><!-- module header --></h2>
+    <p class="sub"><!-- terse finding, key number in <b> --></p>
+    <!-- ONE micro-visual: svg chart OR <table> -->
+    <div class="ann"><!-- optional italic annotation --></div>
+  </div></div>
+  <!-- more .sec modules, numbered 2..N -->
+</div>
+
+<div class="findings">
+  <h2>Findings</h2>
+  <ol>
+    <li><!-- numbered analytical conclusion, key phrase in <b> --></li>
+  </ol>
+</div>
+
+<div class="src">
+  <span><!-- Source: file (n=…; range). All figures computed deterministically from the file. --></span>
+  <span>made with eliviz</span>
+</div>
+
+</body></html>

@@ -1,0 +1,28 @@
+{
+  "id": "broadsheet",
+  "level": "pro",
+  "name": "Broadsheet",
+  "tagline": "Warm paper, Georgia display, ink plus one red and one blue — the data-journalism default.",
+  "mood": ["editorial", "print", "analyst", "formal"],
+  "ground": "#f7f2ea",
+  "dark": false,
+  "roles": {
+    "ink": "#1a1614",
+    "muted": "#6f655c",
+    "hero": "#b3382c",
+    "chip": "#1a1614",
+    "annotation": "#b3382c",
+    "series": ["#b3382c", "#2c5f8a", "#c9bfb2", "#3d7a4d"]
+  },
+  "type": {
+    "display": "Georgia",
+    "body": "Georgia",
+    "data": "Inter",
+    "display_weight": 700,
+    "google": ""
+  },
+  "icons": { "style": "line", "stroke": 2, "corner": "square" },
+  "shape": { "radius": 0, "shadow": "hairline", "card_border": "hairline" },
+  "spine": { "style": "rule", "chip": "square" },
+  "density_ceiling": { "sections": 7, "series_per_chart": 3 }
+}

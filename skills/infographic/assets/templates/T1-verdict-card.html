@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- T1 · verdict-card — the "AI report-card" grid (light ground only).
+     This template ships its own semantic skin: the color dialect is FIXED
+     (green=pass, amber=caution, red/rose=risk, blue=info, purple=meta) and a
+     pack may tune hues/fonts via the tokens below, never the meanings.
+     Icon dialect: emoji-glyph (✅ ⚠️ ❌ ❓ 💡 🛡️) — one dialect per canvas.
+     Canvas: 1200px wide, measured height. Levels: eli5, junior.
+
+     Composition rules:
+     - Z-pattern macro-flow: title+context chip → KPI verdict strip →
+       process flow → findings grid → baby graph + TL;DR columns →
+       flowchart verdict strip → bottom-line banner → source strip.
+     - Every findings panel cites its source ("Source: …" line).
+     - Verdict strip must read standalone; chips arrow-chain to an OVERALL.
+     - Drop whole zones rather than shrinking them when data is thin.
+-->
+<html><head><meta charset="utf-8"><style>
+* { margin:0; box-sizing:border-box; }
+:root {
+  /* tokens a light pack may tune (hues only — semantics stay fixed) */
+  --ink: #1f2937; --muted: #4b5563; --faint: #9ca3af;
+  --pass-bg:#f0fdf4; --pass-line:#4ade80; --pass-fill:#dcfce7; --pass-ink:#15803d; --pass-soft:#86efac;
+  --warn-bg:#fefce8; --warn-line:#facc15; --warn-fill:#fef9c3; --warn-ink:#b45309; --warn-soft:#fde047;
+  --risk-fill:#ffe4e6; --risk-soft:#fda4af;
+  --info-bg:#eff6ff; --info-line:#60a5fa; --info-soft:#93c5fd; --info-ink:#1d4ed8;
+  --meta-bg:#f3e8ff; --meta-line:#a855f7; --meta-ink:#7e22ce;
+}
+body { width:1200px; background:#ffffff; color:var(--ink);
+  font-family:Inter,system-ui,sans-serif; padding:40px 44px 28px; }
+.titlerow { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+h1 { font-size:40px; font-weight:800; letter-spacing:-.01em; }
+.ctx { background:var(--meta-bg); border:2px solid var(--meta-line); color:var(--meta-ink);
+  border-radius:12px; padding:8px 18px; font-size:18px; font-weight:700; }
+.kpirow { display:flex; gap:16px; margin-bottom:24px; }
+.kpi { flex:1; border:2.5px solid; border-radius:14px; padding:14px 18px;
+  display:flex; gap:12px; align-items:center; }
+.kico { font-size:30px; }
+.kl { font-size:13px; font-weight:700; letter-spacing:.08em; color:var(--muted); }
+.kv { font-size:26px; font-weight:800; }
+.zone { border:2px solid var(--info-soft); border-radius:16px; padding:18px 22px 16px; margin-bottom:20px; }
+.zone.amber { border-color:var(--warn-soft); } .zone.green { border-color:var(--pass-soft); }
+.zh { font-size:20px; font-weight:800; color:var(--info-ink); letter-spacing:.04em; margin-bottom:14px; }
+.zone.amber .zh { color:var(--warn-ink); } .zone.green .zh { color:var(--pass-ink); }
+.flow { display:flex; gap:8px; align-items:stretch; }
+.step { flex:1; background:var(--info-bg); border:1.5px solid var(--info-soft);
+  border-radius:12px; padding:12px 14px; position:relative; }
+.step:not(:last-child)::after { content:'➜'; position:absolute; right:-14px; top:42%;
+  color:#6b7280; font-size:16px; z-index:2; }
+.step:nth-child(2) { background:var(--warn-fill); border-color:var(--warn-soft); }
+.step:nth-child(3) { background:var(--pass-fill); border-color:var(--pass-soft); }
+.step:nth-child(4) { background:#fae8ff; border-color:#d8b4fe; }
+.step:nth-child(5) { background:var(--risk-fill); border-color:var(--risk-soft); }
+.stitle { font-size:15.5px; font-weight:800; margin-bottom:5px; }
+.stext { font-size:13.5px; color:var(--muted); line-height:1.45; }
+.findrow { display:flex; gap:14px; }
+.find { flex:1; border:2px solid; border-radius:12px; overflow:hidden;
+  display:flex; flex-direction:column; }
+.fhead { padding:9px 13px; font-size:15px; font-weight:800; }
+.fbody { padding:11px 13px; font-size:14px; line-height:1.5; color:#374151; flex:1; }
+.fg { font-size:17px; margin-right:6px; }
+.fsrc { padding:0 13px 10px; font-size:12px; color:var(--faint); }
+.cols { display:flex; gap:20px; margin-bottom:20px; }
+.cols .zone { flex:1; margin-bottom:0; }
+.tl { font-size:15.5px; line-height:2.05; }
+.tl b { color:#111827; }
+.verd { display:flex; gap:8px; align-items:center; background:var(--pass-bg);
+  border:2.5px solid var(--pass-line); border-radius:16px; padding:16px 18px; }
+.vchip { flex:1; text-align:center; border-radius:10px; padding:10px 6px;
+  font-size:14.5px; font-weight:700; border:1.5px solid; }
+.varr { color:#6b7280; font-size:15px; }
+.vfinal { flex:1.3; background:var(--pass-fill); border:2px solid #16a34a;
+  border-radius:10px; text-align:center; padding:8px; }
+.vfinal .b { font-size:21px; font-weight:900; color:var(--pass-ink); }
+.bottom { margin-top:14px; background:var(--info-bg); border:1.5px dashed var(--info-soft);
+  border-radius:10px; padding:10px 16px; font-size:15px; color:#374151; }
+.src { margin-top:12px; font-size:12.5px; color:var(--faint);
+  display:flex; justify-content:space-between; }
+/*__PACK_COMPONENTS_CSS__*/  /* optional light-pack token overrides */
+</style></head><body>
+
+<div class="titlerow"><h1><!-- title — X Verdict Report --></h1>
+  <div class="ctx"><!-- context chip: level · scope --></div></div>
+
+<div class="kpirow">
+  <!-- 3-4 KPI badges; inline style sets background/border to the SEMANTIC
+       color of each verdict (pass/info/warn/risk tokens) -->
+  <div class="kpi" style="background:var(--pass-bg);border-color:var(--pass-line)">
+    <div class="kico"><!-- emoji --></div>
+    <div><div class="kl"><!-- LABEL --></div><div class="kv"><!-- value --></div></div>
+  </div>
+</div>
+
+<div class="zone">
+  <div class="zh"><!-- WHAT WE DID (how the numbers were made) --></div>
+  <div class="flow">
+    <div class="step"><div class="stitle"><!-- 1. step --></div><div class="stext"><!-- one line --></div></div>
+    <!-- 4-5 steps, arrow-connected automatically -->
+  </div>
+</div>
+
+<div class="zone amber">
+  <div class="zh"><!-- KEY FINDINGS (the N big takeaways) --></div>
+  <div class="findrow">
+    <div class="find" style="border-color:var(--pass-soft)">
+      <div class="fhead" style="background:var(--pass-fill)"><!-- 1. finding title --></div>
+      <div class="fbody"><span class="fg"><!-- ✅/❓/⚠️ --></span><!-- ≤3 short lines --></div>
+      <div class="fsrc">Source: <!-- which columns/rows --></div>
+    </div>
+    <!-- 3-5 findings, each tinted to its semantic color -->
+  </div>
+</div>
+
+<div class="cols">
+  <div class="zone green" style="flex:1.15">
+    <div class="zh"><!-- BABY GRAPH (what it shows) --></div>
+    <!-- one micro bar chart svg with coded scale + emoji legend line -->
+  </div>
+  <div class="zone">
+    <div class="zh"><!-- TL;DR (one-liners) --></div>
+    <div class="tl"><!-- glyph + <b>topic:</b> one-liner per line --></div>
+  </div>
+</div>
+
+<div class="verd">
+  <div style="font-size:26px"><!-- emoji --></div>
+  <div class="vchip" style="background:var(--pass-fill);border-color:var(--pass-soft)"><!-- Question?<br>YES ✅ --></div>
+  <div class="varr">➜</div>
+  <!-- yes/no chips arrow-chained, each in its semantic color -->
+  <div class="vfinal"><div class="b"><!-- OVERALL: … --></div>
+    <div style="font-size:13px;color:var(--muted)"><!-- (caveat) --></div></div>
+</div>
+
+<div class="bottom">💡 <b>Bottom line:</b> <!-- one-sentence resolution --></div>
+<div class="src"><span><!-- file · n= · range · honesty line --></span><span>made with eliviz</span></div>
+
+</body></html>
