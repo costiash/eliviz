@@ -66,7 +66,7 @@ re-implement injection.
   },
   "columns": [
     { "name": "quantity", "type": "number", "nulls": 0, "distinct": 40,
-      "min": 1, "max": 40, "mean": 19.9, "median": 20,
+      "min": 1, "max": 40, "sum": 23880, "mean": 19.9, "median": 20,
       "histogram": [ { "label": "1–2.95", "count": 31 } ] },     // 20 bins
     { "name": "region", "type": "string", "nulls": 0, "distinct": 4,
       "top_values": [ { "value": "EMEA", "count": 312 } ],       // top 10
@@ -74,11 +74,31 @@ re-implement injection.
     { "name": "date", "type": "date", "nulls": 0, "distinct": 190,
       "min": "2026-01-01T00:00:00", "max": "2026-07-28T00:00:00" },
     { "name": "returned", "type": "boolean", "nulls": 0, "distinct": 2,
-      "true_count": 298, "false_count": 902 }
+      "true_count": 298, "false_count": 902, "true_pct": 24.8 }
   ],
   "timeseries": {                       // null if no date column
     "column": "date", "unit": "hour"|"day"|"month"|"year",
     "points": [ { "label": "2026-01", "count": 171 } ]
+  },
+  "aggregates": {                       // null if no categorical AND no date col
+    "by_category": {                    // string cols with 2–12 distinct values (max 4 cols)
+      "region": {
+        "counts":    { "EMEA": 312, … },          // rows per value
+        "share_pct": { "EMEA": 26.0, … },         // 1 decimal
+        "sums":  { "total": { "EMEA": 329170.93, … } },   // per numeric col (max 6), 2 decimals
+        "means": { "total": { "EMEA": 1272.19, … } },     // 2 decimals
+        "rates_pct": { "returned": { "EMEA": 26.5, … } }  // per boolean col, % true, 1 decimal
+      }
+    },
+    "by_time": {                        // first date column, same bucketing as timeseries
+      "column": "date", "unit": "month",
+      "counts": { "2026-01": 131, … },
+      "sums": { "total": { "2026-01": 158472.26, … } },
+      "peak": { "bucket": "2026-07", "count": 153,
+                "pct_vs_prev": 28.6,          // vs the previous bucket
+                "pct_vs_mean_others": 16.9 }  // vs the mean of all other buckets
+    },
+    "row_basis": 1200                   // rows the aggregates cover (always ALL rows)
   },
   "rows": [ [ "ORD-1000", "2026-03-05", …, 26, 79.16, false, null ], … ],
   "capped": false, "note": null
@@ -95,6 +115,12 @@ always cover ALL rows**. Columns are capped at 60 (noted).
 
 The timeseries buckets by the first date column: hour (≤1 day span), day
 (≤120 days, zero-filled), month (≤~10 years), else year.
+
+`aggregates` exists so downstream consumers — the infographic skill's brief, or
+any custom section you add — can copy every number verbatim instead of computing
+their own. Rounding conventions: sums/means 2 decimals, shares/rates/percent
+deltas 1 decimal. It is bounded by design: categorical columns need 2–12
+distinct values (first 4 qualify), numeric columns cap at 6.
 
 ### type: "text" dataset
 

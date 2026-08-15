@@ -16,7 +16,10 @@ import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# the parser is shared plugin-wide: <plugin-root>/lib/parse_input.py
+_PLUGIN_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, os.path.join(_PLUGIN_ROOT, "lib"))
 from parse_input import build_model  # noqa: E402
 
 DATA_PLACEHOLDER = "/*__VIZ_DATA__*/"

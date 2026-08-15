@@ -198,6 +198,7 @@ def profile_column(name, values):
             median = nums[mid] if len(nums) % 2 else (nums[mid - 1] + nums[mid]) / 2
             prof.update({
                 "min": lo, "max": hi,
+                "sum": round(sum(nums), 4),
                 "mean": round(sum(nums) / len(nums), 4),
                 "median": round(median, 4),
             })
@@ -220,6 +221,7 @@ def profile_column(name, values):
         prof["distinct"] = len(set(bools))
         prof["true_count"] = t
         prof["false_count"] = len(bools) - t
+        prof["true_pct"] = round(100 * t / len(bools), 1) if bools else 0
     elif ctype == "date":
         dts = [d for d in (parse_dt(v) for v in non_null) if d is not None]
         prof["distinct"] = len({d.isoformat() for d in dts})
@@ -274,6 +276,125 @@ def build_timeseries(columns, col_values):
     }
 
 
+AGG_CAT_MAX_DISTINCT = 12
+AGG_MAX_CAT_COLS = 4
+AGG_MAX_NUM_COLS = 6
+
+
+def build_aggregates(columns, col_values):
+    """Deterministic group-by aggregates so downstream consumers (the
+    infographic brief, custom sections) never have to compute a number
+    themselves. Bounded: only low-cardinality categoricals, only the first
+    few numeric columns.
+
+    Rounding conventions: sums/means 2 decimals, shares/rates 1 decimal.
+    """
+    cat_cols = [c["name"] for c in columns
+                if c["type"] == "string"
+                and 2 <= c["distinct"] <= AGG_CAT_MAX_DISTINCT][:AGG_MAX_CAT_COLS]
+    num_cols = [c["name"] for c in columns
+                if c["type"] == "number"][:AGG_MAX_NUM_COLS]
+    bool_cols = [c["name"] for c in columns if c["type"] == "boolean"]
+    date_cols = [c["name"] for c in columns if c["type"] == "date"]
+    if not cat_cols and not date_cols:
+        return None
+
+    n_rows = len(next(iter(col_values.values()))) if col_values else 0
+    agg = {}
+
+    by_category = {}
+    for cat in cat_cols:
+        keys = [str(v) if v is not None else None for v in col_values[cat]]
+        counts = Counter(k for k in keys if k is not None)
+        total = sum(counts.values())
+        entry = {
+            "counts": dict(counts.most_common()),
+            "share_pct": {k: round(100 * c / total, 1)
+                          for k, c in counts.most_common()} if total else {},
+        }
+        sums, means = {}, {}
+        for num in num_cols:
+            g = {}
+            for k, v in zip(keys, col_values[num]):
+                x = try_number(v)
+                if k is not None and x is not None:
+                    g.setdefault(k, []).append(x)
+            if g:
+                sums[num] = {k: round(sum(xs), 2) for k, xs in g.items()}
+                means[num] = {k: round(sum(xs) / len(xs), 2)
+                              for k, xs in g.items()}
+        rates = {}
+        for bcol in bool_cols:
+            g = {}
+            for k, v in zip(keys, col_values[bcol]):
+                b = try_bool(v)
+                if k is not None and b is not None:
+                    g.setdefault(k, []).append(b)
+            if g:
+                rates[bcol] = {k: round(100 * sum(bs) / len(bs), 1)
+                               for k, bs in g.items()}
+        if sums:
+            entry["sums"] = sums
+            entry["means"] = means
+        if rates:
+            entry["rates_pct"] = rates
+        by_category[cat] = entry
+    if by_category:
+        agg["by_category"] = by_category
+
+    if date_cols:
+        name = date_cols[0]
+        parsed = [parse_dt(v) for v in col_values[name]]
+        dts = [(i, d.replace(tzinfo=None)) for i, d in enumerate(parsed) if d]
+        if len(dts) >= 2:
+            lo = min(d for _, d in dts)
+            hi = max(d for _, d in dts)
+            span_days = (hi - lo).days
+            if span_days <= 1:
+                unit, key = "hour", lambda d: d.strftime("%Y-%m-%d %H:00")
+            elif span_days <= 120:
+                unit, key = "day", lambda d: d.date().isoformat()
+            elif span_days <= 3600:
+                unit, key = "month", lambda d: d.strftime("%Y-%m")
+            else:
+                unit, key = "year", lambda d: d.strftime("%Y")
+            buckets = {}
+            for i, d in dts:
+                buckets.setdefault(key(d), []).append(i)
+            ordered = sorted(buckets.items())
+            counts = {k: len(idx) for k, idx in ordered}
+            time_entry = {"column": name, "unit": unit, "counts": counts}
+            sums = {}
+            for num in num_cols:
+                vals = col_values[num]
+                s = {k: round(sum(x for x in (try_number(vals[i]) for i in idx)
+                                  if x is not None), 2)
+                     for k, idx in ordered}
+                sums[num] = s
+            if sums:
+                time_entry["sums"] = sums
+            if len(counts) >= 2:
+                peak_bucket = max(counts, key=lambda k: counts[k])
+                labels = [k for k, _ in ordered]
+                pos = labels.index(peak_bucket)
+                peak = {"bucket": peak_bucket, "count": counts[peak_bucket]}
+                if pos > 0:
+                    prev = counts[labels[pos - 1]]
+                    if prev:
+                        peak["pct_vs_prev"] = round(
+                            100 * (counts[peak_bucket] - prev) / prev, 1)
+                others = [c for k, c in counts.items() if k != peak_bucket]
+                mean_others = sum(others) / len(others) if others else 0
+                if mean_others:
+                    peak["pct_vs_mean_others"] = round(
+                        100 * (counts[peak_bucket] - mean_others) / mean_others, 1)
+                time_entry["peak"] = peak
+            agg["by_time"] = time_entry
+
+    agg["row_basis"] = n_rows
+    return agg or None
+
+
 def normalize_table(headers, rows, label, source_format, max_rows, note=None):
     """headers: list[str]; rows: list[list] aligned with headers."""
     headers = [str(h) if clean(h) is not None else f"col_{i+1}"
@@ -292,6 +413,7 @@ def normalize_table(headers, rows, label, source_format, max_rows, note=None):
 
     columns = [profile_column(h, col_values[h]) for h in headers]
     timeseries = build_timeseries(columns, col_values)
+    aggregates = build_aggregates(columns, col_values)
 
     total_rows = len(rows)
     null_cells = sum(c["nulls"] for c in columns)
@@ -322,6 +444,7 @@ def normalize_table(headers, rows, label, source_format, max_rows, note=None):
         },
         "columns": columns,
         "timeseries": timeseries,
+        "aggregates": aggregates,
         "rows": display_rows,
         "capped": capped,
         "note": note,

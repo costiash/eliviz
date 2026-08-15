@@ -1,5 +1,5 @@
 ---
-name: eliviz
+name: html-report
 description: >-
   Parse data files of many formats — CSV/TSV, Excel (.xlsx), SQLite, JSONL/NDJSON,
   JSON, Markdown, plain text, and log files — and generate a stunning,
@@ -9,9 +9,11 @@ description: >-
   markdown reading view with outline navigation, a filterable log viewer, and a
   collapsible tree explorer for arbitrary JSON. Use this skill whenever the user
   uploads or points at a data file (spreadsheet, export, database, document, log)
-  and wants to "visualize", "explore", "browse", "display", "make a
-  dashboard/report/viewer/UI for", or "turn into a webpage" that data — even if
-  they don't say "HTML" explicitly. Ships a five-style design bank (dark glass,
+  and wants to "visualize", "explore", "browse", "display", or "turn into a
+  webpage" that data, or asks for an interactive "report", "page", "dashboard",
+  "viewer", or "UI" for it — even if they don't say "HTML" explicitly. Not for
+  static image asks ("infographic", "poster image", "PNG I can share") — that is
+  the separate infographic skill. Ships a five-style design bank (dark glass,
   editorial light, brutalist, terminal CRT, neon cyberpunk) that is auto-picked
   per dataset, and pairs with the design-adapter agent for custom branding,
   new moods, or blended styles.
@@ -98,11 +100,13 @@ screenshot (see "Verify" below). Deliver the HTML file to the user.
 ## How it works
 
 ```
-eliviz/
+<plugin-root>/lib/
+└── parse_input.py        # SHARED parser: format detection + normalization →
+                          # normalized JSON (both eliviz skills call this one file)
+html-report/
 ├── SKILL.md
 ├── scripts/
-│   ├── parse_input.py    # format detection + normalization → normalized JSON
-│   └── build_html.py     # parse + inject data into the template → final HTML
+│   └── build_html.py     # parse (via ../../lib) + inject data into the template → final HTML
 ├── references/
 │   ├── data-model.md     # detection rules + exact normalized dataset schemas
 │   ├── design-spec.md    # the visual language, animation specs, extension guide
@@ -126,9 +130,11 @@ Column types (number / text / date / boolean) are inferred with a 90% threshold
 over non-null values; numeric columns get precomputed 20-bin histograms, date
 columns drive the rows-over-time chart, so the template's charts and counters are
 driven by real numbers. Run the parser standalone
-(`python scripts/parse_input.py input.csv -o normalized.json`) only when you need
-to inspect or post-process the normalized model; otherwise `build_html.py` does
-everything.
+(`python <plugin-root>/lib/parse_input.py input.csv -o normalized.json`) only
+when you need to inspect or post-process the normalized model; otherwise
+`build_html.py` does everything. Numeric columns also carry a `sum`, and table
+datasets carry a deterministic `aggregates` block (group-by counts/sums/means/
+rates and time buckets) — see `references/data-model.md`.
 
 ## The design bank
 
