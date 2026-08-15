@@ -399,6 +399,14 @@ def normalize_table(headers, rows, label, source_format, max_rows, note=None):
     """headers: list[str]; rows: list[list] aligned with headers."""
     headers = [str(h) if clean(h) is not None else f"col_{i+1}"
                for i, h in enumerate(headers)]
+    # Duplicate names would collapse into one column-major bucket and corrupt
+    # every downstream stat — keep each physical column its own logical column.
+    seen = Counter()
+    uniq = []
+    for h in headers:
+        seen[h] += 1
+        uniq.append(h if seen[h] == 1 else f"{h} ({seen[h]})")
+    headers = uniq
     if len(headers) > MAX_COLS:
         note = ((note + " · ") if note else "") + \
             f"showing first {MAX_COLS} of {len(headers)} columns"

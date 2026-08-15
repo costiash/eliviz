@@ -105,6 +105,10 @@ re-implement injection.
 }
 ```
 
+Duplicate header names are uniquified on ingest — the first occurrence keeps
+its name, later collisions become `"name (2)"`, `"name (3)"`, … — so every
+physical column profiles and aggregates independently.
+
 Column types are inferred over non-null values with a 90% threshold, tested in
 the order boolean → number → date → string. Numbers accept thousands separators
 and scientific notation; dates accept ISO-8601 plus a handful of common formats.
