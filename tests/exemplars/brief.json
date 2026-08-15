@@ -1,0 +1,63 @@
+{
+  "source": "sales_pulse.csv",
+  "level": "eli5",
+  "narrative": "One store, nine months, 1200 orders \u2014 what actually happened",
+  "facts": {
+    "orders": 1200,
+    "revenue": 1487886.85,
+    "avg_order": 1239.9057,
+    "revenue_per_day": 5490.36,
+    "busiest_month": "2026-07",
+    "busiest_month_orders": 153,
+    "orders_by_month": {
+      "2026-01": 131,
+      "2026-02": 146,
+      "2026-03": 138,
+      "2026-04": 124,
+      "2026-05": 121,
+      "2026-06": 119,
+      "2026-07": 153,
+      "2026-08": 137,
+      "2026-09": 131
+    },
+    "revenue_by_product": {
+      "Gadgets": 305811.3,
+      "Doohickeys": 292225.13,
+      "Widgets": 256772.53,
+      "Sprockets": 329170.93,
+      "Gizmos": 303906.96
+    },
+    "orders_by_region": {
+      "APAC": 320,
+      "LATAM": 307,
+      "EMEA": 287,
+      "AMER": 286
+    },
+    "returned": 305,
+    "returned_pct": 25.4,
+    "return_rate_by_product": {
+      "Gadgets": 26.5,
+      "Doohickeys": 20.3,
+      "Widgets": 26.5,
+      "Sprockets": 26.6,
+      "Gizmos": 27.2
+    },
+    "aov_by_region": {
+      "EMEA": 1272.19,
+      "LATAM": 1212.93,
+      "AMER": 1254.81,
+      "APAC": 1223.51
+    },
+    "revenue_by_month": {
+      "2026-01": 158472.26,
+      "2026-02": 181529.69,
+      "2026-03": 169317.69,
+      "2026-04": 162139.58,
+      "2026-05": 159798.5,
+      "2026-06": 142756.45,
+      "2026-07": 183400.62,
+      "2026-08": 166980.12,
+      "2026-09": 163491.94
+    }
+  }
+}

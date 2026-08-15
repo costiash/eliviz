@@ -1,0 +1,1201 @@
+order_id,date,product,region,quantity,unit_price,total,returned,notes
+ORD-1000,2026-02-01,Gadgets,EMEA,18,31.65,569.7,true,gift wrap
+ORD-1001,2026-07-02,Gadgets,EMEA,2,13.96,27.92,false,bulk discount
+ORD-1002,2026-09-14,Doohickeys,EMEA,15,55.56,833.4,false,bulk discount
+ORD-1003,2026-07-11,Doohickeys,EMEA,18,21.19,381.42,true,rush order
+ORD-1004,2026-02-12,Widgets,LATAM,23,73.64,1693.72,true,rush order
+ORD-1005,2026-02-18,Sprockets,AMER,19,100.04,1900.76,false,bulk discount
+ORD-1006,2026-02-02,Widgets,APAC,15,93.45,1401.75,true,rush order
+ORD-1007,2026-05-15,Doohickeys,APAC,24,22.03,528.72,false,bulk discount
+ORD-1008,2026-02-20,Gadgets,APAC,11,65.49,720.39,false,rush order
+ORD-1009,2026-05-21,Doohickeys,EMEA,36,28.69,1032.84,false,repeat customer
+ORD-1010,2026-01-26,Widgets,APAC,21,49.94,1048.74,false,
+ORD-1011,2026-08-13,Gadgets,APAC,30,19.72,591.6,false,bulk discount
+ORD-1012,2026-07-19,Gadgets,LATAM,26,45.35,1179.1,true,repeat customer
+ORD-1013,2026-01-28,Gadgets,LATAM,8,20.88,167.04,true,rush order
+ORD-1014,2026-07-20,Sprockets,EMEA,30,64.91,1947.3,true,bulk discount
+ORD-1015,2026-09-25,Doohickeys,EMEA,18,92.93,1672.74,false,rush order
+ORD-1016,2026-03-15,Doohickeys,APAC,1,114.6,114.6,true,repeat customer
+ORD-1017,2026-05-27,Gadgets,AMER,33,74.25,2450.25,false,gift wrap
+ORD-1018,2026-09-01,Widgets,EMEA,39,40.93,1596.27,false,repeat customer
+ORD-1019,2026-05-08,Sprockets,EMEA,4,31.18,124.72,true,bulk discount
+ORD-1020,2026-08-27,Sprockets,APAC,5,117.42,587.1,false,bulk discount
+ORD-1021,2026-08-18,Sprockets,LATAM,11,34.01,374.11,false,gift wrap
+ORD-1022,2026-04-23,Doohickeys,LATAM,20,49.68,993.6,false,
+ORD-1023,2026-04-08,Sprockets,APAC,5,42.56,212.8,false,
+ORD-1024,2026-02-23,Widgets,AMER,4,29.79,119.16,true,gift wrap
+ORD-1025,2026-04-09,Gadgets,LATAM,32,28.07,898.24,false,repeat customer
+ORD-1026,2026-08-26,Widgets,LATAM,27,25.28,682.56,false,rush order
+ORD-1027,2026-07-15,Widgets,EMEA,4,81.78,327.12,false,bulk discount
+ORD-1028,2026-06-26,Gadgets,LATAM,7,32.09,224.63,false,rush order
+ORD-1029,2026-03-09,Widgets,LATAM,30,32.23,966.9,true,
+ORD-1030,2026-09-27,Gadgets,APAC,1,116.37,116.37,false,rush order
+ORD-1031,2026-08-07,Gadgets,LATAM,26,108.59,2823.34,true,rush order
+ORD-1032,2026-05-26,Sprockets,LATAM,30,36.37,1091.1,false,
+ORD-1033,2026-05-07,Sprockets,EMEA,4,70.76,283.04,false,
+ORD-1034,2026-01-19,Sprockets,APAC,31,61.83,1916.73,true,gift wrap
+ORD-1035,2026-02-28,Widgets,APAC,12,11.02,132.24,false,
+ORD-1036,2026-04-19,Widgets,LATAM,39,7.65,298.35,false,
+ORD-1037,2026-04-22,Gizmos,APAC,21,30.93,649.53,false,rush order
+ORD-1038,2026-06-25,Sprockets,EMEA,5,4.09,20.45,true,gift wrap
+ORD-1039,2026-04-17,Doohickeys,EMEA,17,18.5,314.5,false,
+ORD-1040,2026-05-06,Doohickeys,EMEA,29,100.55,2915.95,false,bulk discount
+ORD-1041,2026-02-05,Widgets,APAC,17,16.51,280.67,false,
+ORD-1042,2026-04-23,Doohickeys,LATAM,22,26.82,590.04,false,repeat customer
+ORD-1043,2026-01-03,Widgets,EMEA,28,100.03,2800.84,false,repeat customer
+ORD-1044,2026-03-21,Gizmos,LATAM,17,21.91,372.47,true,
+ORD-1045,2026-02-23,Doohickeys,APAC,10,66.83,668.3,false,
+ORD-1046,2026-01-10,Widgets,AMER,24,108.18,2596.32,false,bulk discount
+ORD-1047,2026-04-22,Sprockets,LATAM,7,44.38,310.66,false,
+ORD-1048,2026-03-26,Widgets,APAC,12,106.13,1273.56,false,repeat customer
+ORD-1049,2026-07-26,Widgets,LATAM,16,34.22,547.52,true,repeat customer
+ORD-1050,2026-08-08,Gizmos,AMER,13,98.54,1281.02,false,repeat customer
+ORD-1051,2026-04-08,Gizmos,AMER,2,80.22,160.44,false,repeat customer
+ORD-1052,2026-02-25,Sprockets,LATAM,18,44.08,793.44,false,
+ORD-1053,2026-02-09,Doohickeys,EMEA,12,70.93,851.16,true,gift wrap
+ORD-1054,2026-07-12,Sprockets,EMEA,21,54.06,1135.26,false,gift wrap
+ORD-1055,2026-04-09,Widgets,APAC,3,85.93,257.79,false,rush order
+ORD-1056,2026-02-22,Widgets,AMER,22,75.91,1670.02,false,bulk discount
+ORD-1057,2026-07-11,Sprockets,APAC,26,84.57,2198.82,false,rush order
+ORD-1058,2026-07-22,Doohickeys,LATAM,12,75.02,900.24,true,
+ORD-1059,2026-05-07,Sprockets,AMER,28,94.93,2658.04,false,rush order
+ORD-1060,2026-08-22,Gadgets,EMEA,14,62.81,879.34,false,gift wrap
+ORD-1061,2026-06-03,Gadgets,APAC,16,81.72,1307.52,false,
+ORD-1062,2026-01-08,Widgets,LATAM,31,74.52,2310.12,false,bulk discount
+ORD-1063,2026-04-23,Gadgets,APAC,25,60.84,1521.0,true,repeat customer
+ORD-1064,2026-02-25,Sprockets,LATAM,28,28.6,800.8,true,gift wrap
+ORD-1065,2026-04-28,Gizmos,AMER,8,56.41,451.28,false,gift wrap
+ORD-1066,2026-09-14,Gadgets,LATAM,36,55.17,1986.12,false,
+ORD-1067,2026-04-27,Sprockets,LATAM,18,92.6,1666.8,false,
+ORD-1068,2026-08-03,Doohickeys,AMER,19,30.44,578.36,true,
+ORD-1069,2026-03-08,Gadgets,EMEA,25,84.19,2104.75,false,rush order
+ORD-1070,2026-06-18,Gadgets,LATAM,30,51.65,1549.5,false,repeat customer
+ORD-1071,2026-01-28,Widgets,AMER,37,47.5,1757.5,false,repeat customer
+ORD-1072,2026-07-28,Sprockets,APAC,27,65.97,1781.19,false,
+ORD-1073,2026-05-14,Doohickeys,LATAM,32,6.4,204.8,false,repeat customer
+ORD-1074,2026-08-05,Gizmos,EMEA,40,65.49,2619.6,true,bulk discount
+ORD-1075,2026-07-05,Doohickeys,LATAM,30,24.26,727.8,false,
+ORD-1076,2026-08-11,Gizmos,AMER,22,92.06,2025.32,false,
+ORD-1077,2026-02-16,Widgets,AMER,2,90.64,181.28,false,bulk discount
+ORD-1078,2026-02-25,Gadgets,APAC,3,91.25,273.75,true,gift wrap
+ORD-1079,2026-03-08,Widgets,APAC,9,58.41,525.69,false,bulk discount
+ORD-1080,2026-05-25,Sprockets,EMEA,24,22.63,543.12,false,
+ORD-1081,2026-02-19,Sprockets,LATAM,2,111.68,223.36,false,bulk discount
+ORD-1082,2026-04-03,Gadgets,EMEA,38,83.8,3184.4,false,repeat customer
+ORD-1083,2026-02-26,Doohickeys,LATAM,37,94.57,3499.09,false,
+ORD-1084,2026-09-21,Gizmos,LATAM,22,4.48,98.56,true,rush order
+ORD-1085,2026-06-21,Gizmos,APAC,30,85.76,2572.8,false,gift wrap
+ORD-1086,2026-09-25,Sprockets,AMER,31,57.39,1779.09,false,repeat customer
+ORD-1087,2026-04-27,Gizmos,APAC,6,35.63,213.78,false,gift wrap
+ORD-1088,2026-07-11,Doohickeys,APAC,2,60.83,121.66,false,
+ORD-1089,2026-06-26,Sprockets,AMER,17,42.82,727.94,true,gift wrap
+ORD-1090,2026-04-03,Gizmos,APAC,16,87.25,1396.0,false,bulk discount
+ORD-1091,2026-08-15,Gadgets,LATAM,2,13.89,27.78,false,
+ORD-1092,2026-06-16,Gizmos,AMER,36,65.12,2344.32,false,bulk discount
+ORD-1093,2026-08-09,Widgets,APAC,20,32.41,648.2,false,
+ORD-1094,2026-09-25,Gizmos,AMER,12,25.41,304.92,false,
+ORD-1095,2026-04-10,Doohickeys,EMEA,15,45.22,678.3,false,
+ORD-1096,2026-01-02,Gadgets,LATAM,36,37.18,1338.48,true,repeat customer
+ORD-1097,2026-01-19,Gizmos,AMER,19,57.92,1100.48,false,
+ORD-1098,2026-05-28,Widgets,LATAM,31,16.35,506.85,false,
+ORD-1099,2026-01-05,Doohickeys,EMEA,10,97.9,979.0,false,
+ORD-1100,2026-09-25,Sprockets,APAC,27,73.94,1996.38,false,rush order
+ORD-1101,2026-08-10,Doohickeys,EMEA,38,118.83,4515.54,true,repeat customer
+ORD-1102,2026-04-21,Widgets,APAC,14,33.96,475.44,false,
+ORD-1103,2026-09-03,Gizmos,LATAM,11,3.31,36.41,false,
+ORD-1104,2026-04-10,Gizmos,EMEA,19,85.25,1619.75,false,
+ORD-1105,2026-04-14,Gadgets,AMER,8,66.71,533.68,false,
+ORD-1106,2026-01-06,Sprockets,AMER,20,72.62,1452.4,false,
+ORD-1107,2026-08-23,Doohickeys,LATAM,20,84.87,1697.4,false,
+ORD-1108,2026-01-14,Widgets,EMEA,21,73.63,1546.23,false,bulk discount
+ORD-1109,2026-01-25,Gadgets,LATAM,18,70.42,1267.56,false,
+ORD-1110,2026-03-19,Gizmos,EMEA,28,77.27,2163.56,false,
+ORD-1111,2026-07-11,Gadgets,AMER,21,81.41,1709.61,false,bulk discount
+ORD-1112,2026-08-10,Sprockets,EMEA,26,98.19,2552.94,false,
+ORD-1113,2026-06-09,Gizmos,EMEA,21,16.56,347.76,false,rush order
+ORD-1114,2026-01-07,Gizmos,LATAM,34,45.33,1541.22,true,
+ORD-1115,2026-05-18,Gizmos,LATAM,9,111.54,1003.86,true,
+ORD-1116,2026-04-23,Widgets,LATAM,11,39.36,432.96,true,
+ORD-1117,2026-02-15,Gadgets,LATAM,8,78.78,630.24,false,gift wrap
+ORD-1118,2026-05-14,Gadgets,LATAM,31,117.69,3648.39,false,rush order
+ORD-1119,2026-04-20,Gadgets,EMEA,33,90.32,2980.56,false,repeat customer
+ORD-1120,2026-07-11,Widgets,AMER,33,34.26,1130.58,false,repeat customer
+ORD-1121,2026-08-28,Gizmos,AMER,10,55.25,552.5,false,gift wrap
+ORD-1122,2026-09-13,Gadgets,APAC,30,112.14,3364.2,false,
+ORD-1123,2026-07-02,Gizmos,LATAM,21,90.13,1892.73,false,rush order
+ORD-1124,2026-01-05,Doohickeys,EMEA,33,115.95,3826.35,false,
+ORD-1125,2026-09-15,Gizmos,APAC,1,87.53,87.53,true,rush order
+ORD-1126,2026-05-11,Widgets,AMER,40,84.05,3362.0,false,
+ORD-1127,2026-08-28,Widgets,APAC,35,7.2,252.0,false,
+ORD-1128,2026-02-14,Widgets,LATAM,7,91.96,643.72,false,bulk discount
+ORD-1129,2026-05-01,Widgets,AMER,3,40.95,122.85,false,
+ORD-1130,2026-07-05,Sprockets,APAC,16,65.15,1042.4,false,
+ORD-1131,2026-02-20,Gadgets,LATAM,25,75.51,1887.75,false,
+ORD-1132,2026-08-21,Widgets,LATAM,17,56.77,965.09,false,bulk discount
+ORD-1133,2026-09-06,Doohickeys,AMER,5,54.68,273.4,false,bulk discount
+ORD-1134,2026-05-15,Gizmos,LATAM,20,26.31,526.2,true,
+ORD-1135,2026-07-19,Doohickeys,EMEA,23,70.25,1615.75,false,
+ORD-1136,2026-01-19,Gizmos,AMER,4,109.54,438.16,false,gift wrap
+ORD-1137,2026-06-08,Gadgets,EMEA,13,75.64,983.32,true,
+ORD-1138,2026-08-02,Gadgets,EMEA,38,45.69,1736.22,false,
+ORD-1139,2026-07-06,Sprockets,AMER,13,18.46,239.98,false,repeat customer
+ORD-1140,2026-03-09,Doohickeys,AMER,31,116.18,3601.58,true,rush order
+ORD-1141,2026-02-05,Gizmos,AMER,15,103.64,1554.6,true,repeat customer
+ORD-1142,2026-07-01,Gizmos,AMER,17,65.78,1118.26,false,gift wrap
+ORD-1143,2026-07-27,Gadgets,LATAM,24,15.68,376.32,true,gift wrap
+ORD-1144,2026-09-11,Widgets,LATAM,40,28.9,1156.0,false,bulk discount
+ORD-1145,2026-07-04,Widgets,AMER,9,8.31,74.79,false,
+ORD-1146,2026-02-08,Gizmos,AMER,35,18.87,660.45,false,gift wrap
+ORD-1147,2026-03-14,Sprockets,LATAM,7,100.54,703.78,false,
+ORD-1148,2026-06-07,Gadgets,AMER,29,55.03,1595.87,true,bulk discount
+ORD-1149,2026-06-18,Doohickeys,APAC,23,10.08,231.84,true,repeat customer
+ORD-1150,2026-08-03,Sprockets,EMEA,14,78.08,1093.12,true,repeat customer
+ORD-1151,2026-06-08,Gadgets,EMEA,9,95.08,855.72,false,gift wrap
+ORD-1152,2026-04-27,Gadgets,EMEA,15,41.44,621.6,false,repeat customer
+ORD-1153,2026-03-05,Gadgets,EMEA,35,32.33,1131.55,true,
+ORD-1154,2026-01-12,Widgets,APAC,16,71.9,1150.4,false,
+ORD-1155,2026-03-24,Widgets,LATAM,27,64.55,1742.85,false,repeat customer
+ORD-1156,2026-06-17,Sprockets,APAC,38,15.76,598.88,true,bulk discount
+ORD-1157,2026-09-10,Widgets,EMEA,30,78.27,2348.1,false,repeat customer
+ORD-1158,2026-07-14,Gizmos,EMEA,7,60.36,422.52,true,
+ORD-1159,2026-03-03,Sprockets,AMER,9,35.18,316.62,false,gift wrap
+ORD-1160,2026-09-10,Gizmos,EMEA,30,62.15,1864.5,true,repeat customer
+ORD-1161,2026-09-24,Gadgets,LATAM,14,53.32,746.48,false,repeat customer
+ORD-1162,2026-08-13,Doohickeys,LATAM,27,88.36,2385.72,false,bulk discount
+ORD-1163,2026-05-12,Gizmos,EMEA,10,83.36,833.6,true,repeat customer
+ORD-1164,2026-02-03,Doohickeys,APAC,28,14.3,400.4,true,gift wrap
+ORD-1165,2026-09-18,Gizmos,AMER,22,81.39,1790.58,false,repeat customer
+ORD-1166,2026-01-10,Widgets,APAC,39,39.56,1542.84,false,bulk discount
+ORD-1167,2026-08-08,Sprockets,AMER,7,43.96,307.72,true,repeat customer
+ORD-1168,2026-05-19,Sprockets,EMEA,15,97.44,1461.6,false,
+ORD-1169,2026-03-09,Doohickeys,EMEA,20,110.82,2216.4,false,repeat customer
+ORD-1170,2026-03-19,Widgets,EMEA,26,11.14,289.64,false,rush order
+ORD-1171,2026-07-15,Doohickeys,AMER,22,21.42,471.24,true,
+ORD-1172,2026-03-06,Widgets,AMER,40,8.82,352.8,false,bulk discount
+ORD-1173,2026-07-16,Doohickeys,APAC,39,54.72,2134.08,true,
+ORD-1174,2026-07-04,Sprockets,LATAM,19,82.35,1564.65,false,
+ORD-1175,2026-04-13,Gadgets,AMER,39,9.41,366.99,false,repeat customer
+ORD-1176,2026-03-25,Widgets,EMEA,17,36.87,626.79,false,bulk discount
+ORD-1177,2026-07-06,Gadgets,AMER,9,47.48,427.32,true,rush order
+ORD-1178,2026-01-14,Widgets,AMER,2,56.79,113.58,false,gift wrap
+ORD-1179,2026-07-23,Gizmos,EMEA,27,36.87,995.49,false,
+ORD-1180,2026-08-27,Widgets,APAC,24,13.31,319.44,false,gift wrap
+ORD-1181,2026-07-17,Doohickeys,AMER,6,49.3,295.8,false,
+ORD-1182,2026-03-03,Sprockets,APAC,33,77.09,2543.97,false,
+ORD-1183,2026-03-08,Gadgets,APAC,7,20.13,140.91,false,repeat customer
+ORD-1184,2026-02-06,Sprockets,LATAM,32,57.28,1832.96,false,repeat customer
+ORD-1185,2026-06-05,Gizmos,AMER,29,10.99,318.71,false,gift wrap
+ORD-1186,2026-01-12,Gizmos,LATAM,33,11.68,385.44,true,
+ORD-1187,2026-06-27,Widgets,LATAM,19,11.98,227.62,false,gift wrap
+ORD-1188,2026-09-26,Sprockets,APAC,3,55.62,166.86,false,gift wrap
+ORD-1189,2026-08-17,Gizmos,EMEA,10,115.05,1150.5,false,bulk discount
+ORD-1190,2026-02-17,Gizmos,LATAM,12,7.58,90.96,false,
+ORD-1191,2026-06-10,Doohickeys,EMEA,25,50.83,1270.75,false,
+ORD-1192,2026-06-04,Doohickeys,AMER,36,82.37,2965.32,false,
+ORD-1193,2026-02-19,Doohickeys,LATAM,10,110.26,1102.6,false,gift wrap
+ORD-1194,2026-02-10,Doohickeys,APAC,36,47.07,1694.52,true,bulk discount
+ORD-1195,2026-07-17,Doohickeys,APAC,24,5.13,123.12,false,
+ORD-1196,2026-08-07,Gadgets,EMEA,15,120.0,1800.0,false,repeat customer
+ORD-1197,2026-02-17,Sprockets,EMEA,35,100.71,3524.85,false,repeat customer
+ORD-1198,2026-03-20,Gadgets,APAC,25,21.05,526.25,false,
+ORD-1199,2026-07-12,Sprockets,AMER,16,116.44,1863.04,false,
+ORD-1200,2026-09-08,Gizmos,APAC,20,115.97,2319.4,false,bulk discount
+ORD-1201,2026-08-15,Sprockets,LATAM,19,94.04,1786.76,false,repeat customer
+ORD-1202,2026-04-26,Doohickeys,EMEA,39,19.19,748.41,false,repeat customer
+ORD-1203,2026-06-18,Sprockets,EMEA,7,86.23,603.61,false,
+ORD-1204,2026-03-09,Gadgets,LATAM,29,108.92,3158.68,true,
+ORD-1205,2026-08-12,Gizmos,AMER,2,51.54,103.08,false,rush order
+ORD-1206,2026-02-12,Widgets,AMER,15,6.3,94.5,false,
+ORD-1207,2026-01-10,Gadgets,LATAM,31,84.44,2617.64,false,gift wrap
+ORD-1208,2026-01-03,Gadgets,LATAM,2,32.94,65.88,true,repeat customer
+ORD-1209,2026-05-08,Gadgets,LATAM,20,17.26,345.2,false,
+ORD-1210,2026-02-27,Widgets,APAC,32,72.82,2330.24,false,
+ORD-1211,2026-07-01,Sprockets,LATAM,40,44.28,1771.2,false,bulk discount
+ORD-1212,2026-02-17,Sprockets,EMEA,24,10.92,262.08,false,repeat customer
+ORD-1213,2026-08-02,Doohickeys,EMEA,25,117.78,2944.5,false,repeat customer
+ORD-1214,2026-02-12,Widgets,AMER,16,88.75,1420.0,false,
+ORD-1215,2026-06-18,Gadgets,LATAM,22,98.18,2159.96,false,bulk discount
+ORD-1216,2026-03-26,Gizmos,EMEA,9,10.38,93.42,false,
+ORD-1217,2026-01-26,Doohickeys,AMER,13,106.64,1386.32,false,repeat customer
+ORD-1218,2026-09-16,Gadgets,AMER,17,7.28,123.76,false,repeat customer
+ORD-1219,2026-01-28,Doohickeys,LATAM,22,34.97,769.34,false,bulk discount
+ORD-1220,2026-08-13,Gizmos,LATAM,22,116.93,2572.46,false,repeat customer
+ORD-1221,2026-09-09,Widgets,LATAM,6,88.07,528.42,false,gift wrap
+ORD-1222,2026-05-11,Doohickeys,AMER,7,12.37,86.59,false,gift wrap
+ORD-1223,2026-07-06,Widgets,AMER,29,44.13,1279.77,false,
+ORD-1224,2026-01-03,Gadgets,EMEA,26,45.51,1183.26,false,repeat customer
+ORD-1225,2026-08-02,Doohickeys,AMER,9,10.87,97.83,false,gift wrap
+ORD-1226,2026-01-20,Doohickeys,AMER,10,82.45,824.5,false,repeat customer
+ORD-1227,2026-02-19,Gizmos,AMER,9,64.95,584.55,false,
+ORD-1228,2026-02-01,Gizmos,EMEA,12,61.39,736.68,false,repeat customer
+ORD-1229,2026-05-23,Sprockets,AMER,29,28.1,814.9,false,
+ORD-1230,2026-02-05,Gizmos,EMEA,5,55.89,279.45,false,bulk discount
+ORD-1231,2026-06-23,Doohickeys,AMER,5,67.35,336.75,false,bulk discount
+ORD-1232,2026-03-26,Widgets,APAC,24,62.52,1500.48,false,
+ORD-1233,2026-08-01,Doohickeys,LATAM,24,67.82,1627.68,false,gift wrap
+ORD-1234,2026-02-03,Gizmos,LATAM,20,49.58,991.6,false,repeat customer
+ORD-1235,2026-02-05,Gizmos,LATAM,21,78.15,1641.15,false,
+ORD-1236,2026-09-21,Gadgets,LATAM,38,24.29,923.02,true,repeat customer
+ORD-1237,2026-02-17,Gadgets,AMER,10,38.58,385.8,false,
+ORD-1238,2026-09-10,Sprockets,AMER,6,32.32,193.92,false,bulk discount
+ORD-1239,2026-05-20,Gadgets,APAC,35,13.93,487.55,false,bulk discount
+ORD-1240,2026-06-27,Widgets,EMEA,37,7.82,289.34,true,bulk discount
+ORD-1241,2026-05-21,Gizmos,EMEA,14,92.73,1298.22,false,bulk discount
+ORD-1242,2026-09-10,Gizmos,AMER,20,59.5,1190.0,false,
+ORD-1243,2026-01-06,Gizmos,APAC,29,51.63,1497.27,false,gift wrap
+ORD-1244,2026-03-11,Doohickeys,LATAM,21,88.9,1866.9,false,repeat customer
+ORD-1245,2026-06-17,Gadgets,LATAM,36,15.42,555.12,true,
+ORD-1246,2026-08-08,Doohickeys,LATAM,10,14.33,143.3,false,
+ORD-1247,2026-03-27,Doohickeys,APAC,21,112.25,2357.25,false,rush order
+ORD-1248,2026-09-15,Gizmos,EMEA,32,105.85,3387.2,true,rush order
+ORD-1249,2026-09-15,Doohickeys,EMEA,16,28.17,450.72,true,
+ORD-1250,2026-08-20,Widgets,EMEA,31,36.43,1129.33,false,
+ORD-1251,2026-05-24,Doohickeys,EMEA,24,92.37,2216.88,false,
+ORD-1252,2026-09-07,Widgets,LATAM,24,67.73,1625.52,false,repeat customer
+ORD-1253,2026-09-09,Widgets,APAC,40,82.61,3304.4,true,rush order
+ORD-1254,2026-06-26,Doohickeys,APAC,22,68.27,1501.94,false,gift wrap
+ORD-1255,2026-09-13,Widgets,APAC,33,7.71,254.43,false,repeat customer
+ORD-1256,2026-08-17,Sprockets,APAC,30,20.43,612.9,false,gift wrap
+ORD-1257,2026-06-06,Doohickeys,AMER,26,118.9,3091.4,false,bulk discount
+ORD-1258,2026-05-16,Widgets,LATAM,2,46.1,92.2,false,repeat customer
+ORD-1259,2026-01-20,Sprockets,APAC,31,34.07,1056.17,true,gift wrap
+ORD-1260,2026-08-06,Sprockets,LATAM,34,76.6,2604.4,false,repeat customer
+ORD-1261,2026-04-02,Widgets,APAC,37,113.94,4215.78,true,rush order
+ORD-1262,2026-06-14,Gadgets,LATAM,10,51.32,513.2,false,repeat customer
+ORD-1263,2026-01-23,Sprockets,AMER,9,63.69,573.21,false,gift wrap
+ORD-1264,2026-07-11,Sprockets,AMER,12,56.78,681.36,false,bulk discount
+ORD-1265,2026-05-20,Gadgets,AMER,31,25.49,790.19,false,
+ORD-1266,2026-05-25,Gizmos,AMER,19,85.47,1623.93,false,
+ORD-1267,2026-09-26,Sprockets,LATAM,18,36.67,660.06,false,repeat customer
+ORD-1268,2026-06-25,Doohickeys,EMEA,10,36.98,369.8,false,rush order
+ORD-1269,2026-05-24,Sprockets,AMER,31,28.04,869.24,false,
+ORD-1270,2026-02-20,Widgets,APAC,38,31.0,1178.0,false,
+ORD-1271,2026-02-14,Widgets,APAC,22,86.93,1912.46,true,gift wrap
+ORD-1272,2026-03-14,Gadgets,AMER,31,58.86,1824.66,false,
+ORD-1273,2026-01-25,Gadgets,EMEA,6,79.32,475.92,false,rush order
+ORD-1274,2026-03-02,Gadgets,AMER,26,95.19,2474.94,true,
+ORD-1275,2026-05-19,Doohickeys,AMER,39,15.55,606.45,false,bulk discount
+ORD-1276,2026-09-17,Gadgets,LATAM,32,107.04,3425.28,false,
+ORD-1277,2026-02-11,Doohickeys,APAC,11,88.54,973.94,true,bulk discount
+ORD-1278,2026-06-26,Gadgets,APAC,19,69.43,1319.17,false,repeat customer
+ORD-1279,2026-07-17,Widgets,APAC,21,13.15,276.15,false,rush order
+ORD-1280,2026-06-08,Gadgets,LATAM,1,33.51,33.51,false,
+ORD-1281,2026-05-19,Doohickeys,APAC,37,4.34,160.58,true,bulk discount
+ORD-1282,2026-02-15,Sprockets,AMER,20,21.69,433.8,true,bulk discount
+ORD-1283,2026-05-12,Gadgets,LATAM,40,28.84,1153.6,false,rush order
+ORD-1284,2026-06-14,Sprockets,APAC,36,109.8,3952.8,false,bulk discount
+ORD-1285,2026-02-17,Doohickeys,EMEA,29,64.8,1879.2,true,
+ORD-1286,2026-09-17,Gadgets,APAC,13,70.01,910.13,false,repeat customer
+ORD-1287,2026-09-15,Sprockets,LATAM,8,82.59,660.72,true,gift wrap
+ORD-1288,2026-08-26,Sprockets,LATAM,4,56.05,224.2,false,gift wrap
+ORD-1289,2026-01-18,Doohickeys,EMEA,30,81.71,2451.3,false,
+ORD-1290,2026-01-24,Widgets,LATAM,14,70.66,989.24,false,bulk discount
+ORD-1291,2026-02-18,Widgets,LATAM,4,112.35,449.4,true,
+ORD-1292,2026-07-06,Gizmos,AMER,9,92.6,833.4,false,rush order
+ORD-1293,2026-07-13,Sprockets,APAC,6,82.88,497.28,false,
+ORD-1294,2026-03-18,Gadgets,EMEA,26,64.87,1686.62,true,
+ORD-1295,2026-08-22,Gizmos,APAC,35,52.62,1841.7,false,rush order
+ORD-1296,2026-06-05,Widgets,EMEA,18,25.05,450.9,false,gift wrap
+ORD-1297,2026-01-08,Sprockets,EMEA,14,10.87,152.18,false,gift wrap
+ORD-1298,2026-01-08,Gadgets,APAC,3,50.07,150.21,true,
+ORD-1299,2026-09-10,Sprockets,AMER,15,98.45,1476.75,false,
+ORD-1300,2026-05-05,Doohickeys,AMER,34,28.86,981.24,true,gift wrap
+ORD-1301,2026-03-21,Widgets,AMER,28,68.03,1904.84,false,repeat customer
+ORD-1302,2026-09-11,Doohickeys,LATAM,27,50.77,1370.79,false,repeat customer
+ORD-1303,2026-09-16,Doohickeys,APAC,16,102.37,1637.92,false,
+ORD-1304,2026-09-14,Gadgets,LATAM,27,68.2,1841.4,false,
+ORD-1305,2026-04-11,Doohickeys,EMEA,6,110.9,665.4,false,
+ORD-1306,2026-05-13,Widgets,APAC,39,73.54,2868.06,false,rush order
+ORD-1307,2026-04-28,Widgets,APAC,22,38.47,846.34,false,bulk discount
+ORD-1308,2026-02-24,Sprockets,APAC,31,109.99,3409.69,false,
+ORD-1309,2026-09-11,Sprockets,AMER,19,47.54,903.26,false,
+ORD-1310,2026-06-17,Gizmos,AMER,32,57.52,1840.64,false,
+ORD-1311,2026-06-14,Gadgets,APAC,3,68.82,206.46,true,
+ORD-1312,2026-09-19,Doohickeys,APAC,38,87.24,3315.12,false,
+ORD-1313,2026-04-13,Gizmos,AMER,37,100.5,3718.5,false,repeat customer
+ORD-1314,2026-08-24,Doohickeys,APAC,32,56.92,1821.44,false,bulk discount
+ORD-1315,2026-09-16,Sprockets,EMEA,12,110.28,1323.36,true,repeat customer
+ORD-1316,2026-02-27,Gizmos,APAC,4,92.43,369.72,false,
+ORD-1317,2026-03-01,Doohickeys,EMEA,14,62.17,870.38,false,bulk discount
+ORD-1318,2026-08-01,Gizmos,EMEA,1,65.27,65.27,true,gift wrap
+ORD-1319,2026-05-18,Gizmos,APAC,19,5.01,95.19,true,
+ORD-1320,2026-09-05,Sprockets,AMER,16,25.46,407.36,false,
+ORD-1321,2026-07-03,Gizmos,APAC,24,115.24,2765.76,false,
+ORD-1322,2026-02-21,Gizmos,LATAM,3,13.94,41.82,false,
+ORD-1323,2026-01-23,Gizmos,AMER,11,12.67,139.37,true,gift wrap
+ORD-1324,2026-01-08,Sprockets,LATAM,14,108.45,1518.3,false,
+ORD-1325,2026-02-22,Sprockets,EMEA,18,108.22,1947.96,false,repeat customer
+ORD-1326,2026-06-01,Gizmos,EMEA,14,71.68,1003.52,false,
+ORD-1327,2026-04-19,Sprockets,AMER,25,82.21,2055.25,false,repeat customer
+ORD-1328,2026-03-26,Doohickeys,EMEA,6,61.59,369.54,true,rush order
+ORD-1329,2026-04-27,Sprockets,LATAM,5,42.85,214.25,false,
+ORD-1330,2026-05-26,Doohickeys,LATAM,29,60.4,1751.6,false,
+ORD-1331,2026-07-03,Gadgets,EMEA,40,37.56,1502.4,true,
+ORD-1332,2026-03-13,Doohickeys,AMER,10,89.54,895.4,true,
+ORD-1333,2026-01-10,Doohickeys,EMEA,29,45.11,1308.19,false,
+ORD-1334,2026-03-14,Sprockets,LATAM,29,68.17,1976.93,true,
+ORD-1335,2026-02-12,Sprockets,AMER,36,13.89,500.04,false,
+ORD-1336,2026-05-14,Sprockets,APAC,25,94.16,2354.0,false,bulk discount
+ORD-1337,2026-07-06,Doohickeys,LATAM,9,34.46,310.14,false,
+ORD-1338,2026-03-14,Gizmos,EMEA,18,52.27,940.86,false,
+ORD-1339,2026-04-24,Gadgets,LATAM,32,72.48,2319.36,true,
+ORD-1340,2026-05-01,Sprockets,LATAM,26,41.87,1088.62,false,rush order
+ORD-1341,2026-06-14,Doohickeys,APAC,39,18.93,738.27,false,
+ORD-1342,2026-03-13,Gizmos,APAC,21,37.1,779.1,false,rush order
+ORD-1343,2026-05-27,Sprockets,APAC,26,45.71,1188.46,false,bulk discount
+ORD-1344,2026-09-01,Gadgets,LATAM,30,113.33,3399.9,false,repeat customer
+ORD-1345,2026-02-27,Gadgets,AMER,27,81.74,2206.98,false,
+ORD-1346,2026-03-23,Widgets,LATAM,28,95.32,2668.96,false,gift wrap
+ORD-1347,2026-07-18,Gizmos,EMEA,33,111.05,3664.65,false,bulk discount
+ORD-1348,2026-09-20,Gadgets,AMER,6,15.8,94.8,false,bulk discount
+ORD-1349,2026-01-19,Doohickeys,LATAM,26,116.12,3019.12,true,
+ORD-1350,2026-02-09,Sprockets,APAC,15,62.75,941.25,false,
+ORD-1351,2026-07-15,Gadgets,AMER,38,83.78,3183.64,true,rush order
+ORD-1352,2026-02-10,Widgets,EMEA,27,110.7,2988.9,false,
+ORD-1353,2026-05-11,Sprockets,LATAM,30,94.76,2842.8,false,rush order
+ORD-1354,2026-02-15,Doohickeys,EMEA,29,40.31,1168.99,true,
+ORD-1355,2026-06-21,Gadgets,APAC,7,82.23,575.61,false,gift wrap
+ORD-1356,2026-03-11,Gizmos,APAC,36,52.89,1904.04,false,bulk discount
+ORD-1357,2026-03-06,Sprockets,APAC,28,49.28,1379.84,false,gift wrap
+ORD-1358,2026-07-13,Gadgets,AMER,1,85.45,85.45,true,gift wrap
+ORD-1359,2026-02-26,Doohickeys,APAC,35,24.87,870.45,false,
+ORD-1360,2026-05-22,Doohickeys,LATAM,32,64.74,2071.68,false,gift wrap
+ORD-1361,2026-02-12,Sprockets,APAC,23,101.93,2344.39,false,gift wrap
+ORD-1362,2026-02-22,Gadgets,AMER,9,39.64,356.76,true,
+ORD-1363,2026-06-23,Gizmos,APAC,10,62.77,627.7,false,rush order
+ORD-1364,2026-03-16,Gadgets,APAC,35,84.13,2944.55,false,
+ORD-1365,2026-03-06,Sprockets,EMEA,21,101.51,2131.71,false,
+ORD-1366,2026-08-05,Sprockets,LATAM,13,98.38,1278.94,false,bulk discount
+ORD-1367,2026-08-14,Widgets,EMEA,29,60.18,1745.22,false,
+ORD-1368,2026-01-09,Gadgets,LATAM,15,65.9,988.5,false,gift wrap
+ORD-1369,2026-09-04,Sprockets,AMER,37,16.36,605.32,true,repeat customer
+ORD-1370,2026-08-18,Widgets,APAC,14,118.8,1663.2,false,repeat customer
+ORD-1371,2026-01-15,Widgets,LATAM,17,43.78,744.26,true,repeat customer
+ORD-1372,2026-04-07,Sprockets,LATAM,38,83.63,3177.94,false,gift wrap
+ORD-1373,2026-03-26,Widgets,AMER,14,98.18,1374.52,false,gift wrap
+ORD-1374,2026-09-06,Doohickeys,AMER,21,117.54,2468.34,false,repeat customer
+ORD-1375,2026-09-22,Gizmos,EMEA,7,18.86,132.02,false,repeat customer
+ORD-1376,2026-03-23,Doohickeys,APAC,9,32.21,289.89,false,rush order
+ORD-1377,2026-03-19,Gizmos,LATAM,18,76.45,1376.1,true,bulk discount
+ORD-1378,2026-02-13,Doohickeys,LATAM,33,90.73,2994.09,false,
+ORD-1379,2026-01-28,Gizmos,AMER,6,88.52,531.12,true,repeat customer
+ORD-1380,2026-09-13,Gadgets,LATAM,14,116.27,1627.78,false,
+ORD-1381,2026-05-11,Sprockets,LATAM,36,70.62,2542.32,false,bulk discount
+ORD-1382,2026-01-02,Gizmos,EMEA,7,76.26,533.82,true,repeat customer
+ORD-1383,2026-03-15,Gizmos,APAC,30,3.08,92.4,false,bulk discount
+ORD-1384,2026-05-06,Doohickeys,AMER,18,13.92,250.56,true,
+ORD-1385,2026-03-02,Gadgets,LATAM,26,76.2,1981.2,true,bulk discount
+ORD-1386,2026-02-01,Gadgets,APAC,14,58.79,823.06,false,
+ORD-1387,2026-01-23,Gizmos,APAC,22,98.6,2169.2,false,
+ORD-1388,2026-04-13,Widgets,EMEA,6,88.5,531.0,false,
+ORD-1389,2026-05-05,Gadgets,APAC,25,93.49,2337.25,true,gift wrap
+ORD-1390,2026-01-20,Gadgets,APAC,11,54.49,599.39,false,gift wrap
+ORD-1391,2026-08-28,Widgets,APAC,14,13.14,183.96,true,gift wrap
+ORD-1392,2026-07-12,Gadgets,APAC,28,39.8,1114.4,false,bulk discount
+ORD-1393,2026-02-08,Sprockets,AMER,36,73.32,2639.52,true,repeat customer
+ORD-1394,2026-05-07,Gadgets,LATAM,34,74.01,2516.34,false,bulk discount
+ORD-1395,2026-01-26,Widgets,APAC,16,60.9,974.4,false,bulk discount
+ORD-1396,2026-02-17,Doohickeys,APAC,1,118.47,118.47,false,repeat customer
+ORD-1397,2026-07-12,Gizmos,EMEA,35,82.9,2901.5,true,gift wrap
+ORD-1398,2026-02-01,Widgets,LATAM,17,28.24,480.08,false,bulk discount
+ORD-1399,2026-09-25,Gizmos,EMEA,27,52.56,1419.12,false,
+ORD-1400,2026-02-10,Gadgets,APAC,6,62.82,376.92,false,rush order
+ORD-1401,2026-02-10,Gadgets,EMEA,28,88.41,2475.48,false,
+ORD-1402,2026-07-04,Widgets,AMER,30,74.64,2239.2,false,
+ORD-1403,2026-01-23,Gadgets,LATAM,9,85.08,765.72,false,gift wrap
+ORD-1404,2026-09-26,Gadgets,AMER,17,22.53,383.01,true,repeat customer
+ORD-1405,2026-01-11,Widgets,AMER,28,34.82,974.96,true,rush order
+ORD-1406,2026-08-17,Sprockets,APAC,24,9.49,227.76,false,
+ORD-1407,2026-05-25,Widgets,APAC,7,107.63,753.41,true,
+ORD-1408,2026-01-08,Gizmos,APAC,3,58.2,174.6,false,repeat customer
+ORD-1409,2026-01-18,Gadgets,LATAM,27,29.27,790.29,false,
+ORD-1410,2026-02-19,Widgets,APAC,24,16.97,407.28,false,repeat customer
+ORD-1411,2026-09-02,Gizmos,AMER,26,11.06,287.56,false,
+ORD-1412,2026-02-18,Gadgets,AMER,30,3.93,117.9,false,bulk discount
+ORD-1413,2026-04-15,Gizmos,APAC,24,72.23,1733.52,false,
+ORD-1414,2026-01-14,Doohickeys,EMEA,2,30.26,60.52,false,
+ORD-1415,2026-07-28,Sprockets,APAC,20,15.16,303.2,false,rush order
+ORD-1416,2026-01-05,Gadgets,LATAM,18,13.88,249.84,false,rush order
+ORD-1417,2026-02-19,Gizmos,EMEA,7,62.14,434.98,true,rush order
+ORD-1418,2026-03-08,Doohickeys,LATAM,19,33.54,637.26,false,
+ORD-1419,2026-08-09,Gadgets,APAC,15,11.74,176.1,true,
+ORD-1420,2026-02-06,Gizmos,EMEA,29,57.53,1668.37,false,repeat customer
+ORD-1421,2026-04-15,Widgets,EMEA,20,57.21,1144.2,false,repeat customer
+ORD-1422,2026-05-27,Doohickeys,APAC,39,7.72,301.08,true,bulk discount
+ORD-1423,2026-04-12,Doohickeys,AMER,26,63.07,1639.82,false,
+ORD-1424,2026-07-28,Sprockets,APAC,29,68.05,1973.45,true,rush order
+ORD-1425,2026-02-26,Widgets,APAC,9,17.21,154.89,false,
+ORD-1426,2026-07-12,Doohickeys,EMEA,6,71.13,426.78,true,
+ORD-1427,2026-04-21,Widgets,AMER,29,97.69,2833.01,true,
+ORD-1428,2026-08-02,Gizmos,LATAM,11,111.12,1222.32,false,
+ORD-1429,2026-07-22,Gadgets,APAC,28,23.22,650.16,false,
+ORD-1430,2026-08-05,Sprockets,APAC,3,74.85,224.55,false,rush order
+ORD-1431,2026-07-18,Doohickeys,LATAM,31,10.13,314.03,false,rush order
+ORD-1432,2026-04-21,Sprockets,EMEA,34,32.15,1093.1,false,repeat customer
+ORD-1433,2026-06-16,Doohickeys,AMER,35,94.43,3305.05,false,
+ORD-1434,2026-03-01,Widgets,AMER,21,72.86,1530.06,true,repeat customer
+ORD-1435,2026-08-17,Gadgets,APAC,23,92.72,2132.56,true,
+ORD-1436,2026-04-09,Widgets,APAC,35,98.51,3447.85,false,
+ORD-1437,2026-03-06,Doohickeys,EMEA,16,72.32,1157.12,false,gift wrap
+ORD-1438,2026-03-19,Gizmos,AMER,13,100.89,1311.57,false,rush order
+ORD-1439,2026-01-03,Gadgets,EMEA,4,30.22,120.88,false,
+ORD-1440,2026-06-20,Doohickeys,APAC,13,97.35,1265.55,false,
+ORD-1441,2026-01-05,Gadgets,EMEA,38,85.45,3247.1,false,
+ORD-1442,2026-06-23,Doohickeys,AMER,26,71.56,1860.56,false,
+ORD-1443,2026-03-24,Gizmos,AMER,28,95.65,2678.2,false,bulk discount
+ORD-1444,2026-09-23,Gadgets,APAC,40,95.08,3803.2,false,
+ORD-1445,2026-05-05,Sprockets,LATAM,12,88.27,1059.24,true,
+ORD-1446,2026-06-26,Sprockets,EMEA,40,28.84,1153.6,false,
+ORD-1447,2026-06-24,Doohickeys,APAC,5,30.85,154.25,true,repeat customer
+ORD-1448,2026-06-15,Gadgets,EMEA,1,34.03,34.03,false,
+ORD-1449,2026-02-24,Gizmos,LATAM,1,8.63,8.63,false,rush order
+ORD-1450,2026-08-13,Widgets,LATAM,23,66.88,1538.24,false,
+ORD-1451,2026-08-03,Doohickeys,AMER,3,37.5,112.5,true,
+ORD-1452,2026-06-06,Widgets,EMEA,25,21.83,545.75,false,gift wrap
+ORD-1453,2026-08-23,Gadgets,LATAM,2,53.46,106.92,false,
+ORD-1454,2026-02-11,Gizmos,AMER,14,117.0,1638.0,false,
+ORD-1455,2026-04-04,Sprockets,LATAM,4,48.97,195.88,false,
+ORD-1456,2026-06-01,Sprockets,LATAM,28,13.25,371.0,false,
+ORD-1457,2026-01-07,Widgets,LATAM,11,77.67,854.37,true,
+ORD-1458,2026-07-16,Doohickeys,EMEA,32,107.7,3446.4,false,
+ORD-1459,2026-06-13,Widgets,AMER,24,24.83,595.92,false,rush order
+ORD-1460,2026-05-08,Gadgets,EMEA,18,69.02,1242.36,true,bulk discount
+ORD-1461,2026-06-26,Sprockets,APAC,35,51.44,1800.4,true,repeat customer
+ORD-1462,2026-07-27,Sprockets,LATAM,34,51.98,1767.32,false,rush order
+ORD-1463,2026-05-03,Widgets,APAC,26,108.62,2824.12,true,repeat customer
+ORD-1464,2026-08-06,Gadgets,APAC,11,116.74,1284.14,true,rush order
+ORD-1465,2026-02-22,Gadgets,AMER,28,26.62,745.36,false,bulk discount
+ORD-1466,2026-02-03,Sprockets,AMER,25,68.09,1702.25,false,gift wrap
+ORD-1467,2026-08-28,Sprockets,LATAM,1,95.03,95.03,true,rush order
+ORD-1468,2026-03-05,Widgets,EMEA,37,71.79,2656.23,true,repeat customer
+ORD-1469,2026-05-28,Gizmos,AMER,35,105.98,3709.3,false,bulk discount
+ORD-1470,2026-08-19,Gadgets,AMER,39,58.35,2275.65,false,
+ORD-1471,2026-07-02,Doohickeys,APAC,26,107.08,2784.08,true,bulk discount
+ORD-1472,2026-08-09,Doohickeys,AMER,24,5.37,128.88,false,repeat customer
+ORD-1473,2026-08-28,Gadgets,APAC,7,116.78,817.46,false,bulk discount
+ORD-1474,2026-08-25,Gizmos,EMEA,21,34.52,724.92,false,rush order
+ORD-1475,2026-04-27,Sprockets,AMER,27,89.69,2421.63,true,gift wrap
+ORD-1476,2026-03-03,Gizmos,APAC,20,86.02,1720.4,true,
+ORD-1477,2026-04-27,Gadgets,EMEA,13,100.93,1312.09,false,
+ORD-1478,2026-06-23,Gizmos,LATAM,13,35.06,455.78,true,bulk discount
+ORD-1479,2026-01-08,Gizmos,APAC,24,60.19,1444.56,false,gift wrap
+ORD-1480,2026-09-12,Doohickeys,EMEA,23,22.13,508.99,false,
+ORD-1481,2026-07-02,Gadgets,APAC,11,102.9,1131.9,false,bulk discount
+ORD-1482,2026-04-09,Widgets,LATAM,27,63.05,1702.35,false,bulk discount
+ORD-1483,2026-03-20,Sprockets,AMER,1,29.18,29.18,false,rush order
+ORD-1484,2026-07-28,Gadgets,LATAM,23,56.7,1304.1,false,bulk discount
+ORD-1485,2026-09-27,Widgets,EMEA,40,49.47,1978.8,false,gift wrap
+ORD-1486,2026-05-10,Doohickeys,AMER,7,59.36,415.52,false,repeat customer
+ORD-1487,2026-05-09,Sprockets,APAC,20,25.04,500.8,true,repeat customer
+ORD-1488,2026-07-22,Widgets,LATAM,21,82.65,1735.65,false,
+ORD-1489,2026-07-13,Sprockets,APAC,25,89.2,2230.0,false,bulk discount
+ORD-1490,2026-04-22,Gizmos,AMER,35,77.68,2718.8,false,repeat customer
+ORD-1491,2026-03-27,Widgets,LATAM,36,24.19,870.84,false,bulk discount
+ORD-1492,2026-05-24,Gadgets,AMER,36,92.26,3321.36,true,
+ORD-1493,2026-06-08,Doohickeys,AMER,20,52.2,1044.0,false,gift wrap
+ORD-1494,2026-05-15,Sprockets,EMEA,8,58.05,464.4,false,
+ORD-1495,2026-09-04,Gizmos,EMEA,25,64.99,1624.75,false,
+ORD-1496,2026-04-11,Gizmos,APAC,27,118.5,3199.5,false,repeat customer
+ORD-1497,2026-03-25,Gadgets,AMER,6,60.05,360.3,true,
+ORD-1498,2026-08-09,Gadgets,APAC,14,92.06,1288.84,false,repeat customer
+ORD-1499,2026-02-05,Gizmos,LATAM,40,53.74,2149.6,false,rush order
+ORD-1500,2026-07-01,Doohickeys,EMEA,3,65.45,196.35,false,repeat customer
+ORD-1501,2026-09-07,Gadgets,APAC,2,82.18,164.36,false,
+ORD-1502,2026-03-04,Doohickeys,APAC,25,61.89,1547.25,true,repeat customer
+ORD-1503,2026-01-10,Sprockets,AMER,19,56.34,1070.46,false,bulk discount
+ORD-1504,2026-03-11,Gadgets,APAC,32,45.03,1440.96,false,
+ORD-1505,2026-04-08,Widgets,APAC,9,27.71,249.39,true,
+ORD-1506,2026-01-13,Sprockets,EMEA,17,93.24,1585.08,true,bulk discount
+ORD-1507,2026-02-21,Widgets,LATAM,2,8.64,17.28,false,rush order
+ORD-1508,2026-02-18,Gadgets,APAC,17,58.5,994.5,true,
+ORD-1509,2026-07-22,Doohickeys,APAC,7,80.51,563.57,false,repeat customer
+ORD-1510,2026-02-17,Widgets,EMEA,40,16.77,670.8,false,
+ORD-1511,2026-04-25,Gadgets,AMER,17,100.29,1704.93,false,
+ORD-1512,2026-03-02,Gadgets,LATAM,36,61.07,2198.52,false,
+ORD-1513,2026-01-01,Sprockets,LATAM,6,109.1,654.6,false,
+ORD-1514,2026-09-03,Gadgets,LATAM,7,108.86,762.02,false,
+ORD-1515,2026-08-02,Widgets,AMER,7,98.14,686.98,false,repeat customer
+ORD-1516,2026-06-14,Widgets,EMEA,8,14.11,112.88,false,bulk discount
+ORD-1517,2026-03-11,Sprockets,AMER,23,107.66,2476.18,true,
+ORD-1518,2026-06-06,Gizmos,AMER,8,49.89,399.12,false,bulk discount
+ORD-1519,2026-08-26,Gadgets,EMEA,27,78.92,2130.84,false,bulk discount
+ORD-1520,2026-01-28,Sprockets,LATAM,11,15.13,166.43,false,
+ORD-1521,2026-07-25,Gadgets,LATAM,23,74.53,1714.19,false,
+ORD-1522,2026-07-15,Doohickeys,EMEA,3,10.41,31.23,false,bulk discount
+ORD-1523,2026-06-17,Sprockets,EMEA,34,83.52,2839.68,false,bulk discount
+ORD-1524,2026-04-16,Gizmos,APAC,23,80.65,1854.95,true,
+ORD-1525,2026-03-17,Gadgets,EMEA,31,102.67,3182.77,false,
+ORD-1526,2026-04-11,Gadgets,LATAM,18,8.89,160.02,false,repeat customer
+ORD-1527,2026-04-03,Sprockets,LATAM,30,54.97,1649.1,true,repeat customer
+ORD-1528,2026-08-15,Gizmos,EMEA,21,16.89,354.69,true,rush order
+ORD-1529,2026-07-02,Widgets,AMER,36,67.24,2420.64,false,bulk discount
+ORD-1530,2026-08-11,Gadgets,LATAM,24,99.56,2389.44,false,gift wrap
+ORD-1531,2026-08-23,Widgets,EMEA,24,86.76,2082.24,false,
+ORD-1532,2026-06-12,Doohickeys,EMEA,19,67.08,1274.52,true,
+ORD-1533,2026-08-05,Sprockets,APAC,27,15.51,418.77,false,
+ORD-1534,2026-07-07,Gadgets,AMER,30,99.47,2984.1,true,repeat customer
+ORD-1535,2026-07-02,Gizmos,LATAM,38,17.42,661.96,false,rush order
+ORD-1536,2026-01-17,Gizmos,LATAM,4,67.73,270.92,false,bulk discount
+ORD-1537,2026-03-24,Sprockets,AMER,9,15.12,136.08,false,rush order
+ORD-1538,2026-04-09,Doohickeys,LATAM,26,115.74,3009.24,false,
+ORD-1539,2026-07-20,Sprockets,AMER,33,37.97,1253.01,false,
+ORD-1540,2026-04-20,Gadgets,APAC,19,83.33,1583.27,false,bulk discount
+ORD-1541,2026-02-25,Sprockets,LATAM,23,68.79,1582.17,false,repeat customer
+ORD-1542,2026-07-26,Widgets,LATAM,1,64.16,64.16,false,
+ORD-1543,2026-01-07,Gadgets,AMER,18,90.77,1633.86,false,
+ORD-1544,2026-01-23,Sprockets,EMEA,19,26.87,510.53,false,repeat customer
+ORD-1545,2026-08-04,Sprockets,APAC,40,104.56,4182.4,false,
+ORD-1546,2026-09-26,Widgets,LATAM,19,84.07,1597.33,false,rush order
+ORD-1547,2026-06-18,Doohickeys,APAC,4,4.52,18.08,false,repeat customer
+ORD-1548,2026-04-21,Sprockets,APAC,24,91.35,2192.4,false,
+ORD-1549,2026-08-06,Gadgets,EMEA,5,24.88,124.4,false,
+ORD-1550,2026-07-09,Gadgets,AMER,36,33.92,1221.12,true,
+ORD-1551,2026-08-23,Doohickeys,EMEA,10,7.67,76.7,false,rush order
+ORD-1552,2026-09-12,Doohickeys,APAC,5,94.73,473.65,false,gift wrap
+ORD-1553,2026-02-26,Sprockets,LATAM,33,21.65,714.45,true,
+ORD-1554,2026-04-07,Doohickeys,APAC,22,41.73,918.06,false,gift wrap
+ORD-1555,2026-01-04,Sprockets,APAC,23,55.14,1268.22,true,bulk discount
+ORD-1556,2026-06-13,Sprockets,AMER,8,48.15,385.2,true,gift wrap
+ORD-1557,2026-06-17,Widgets,AMER,33,55.13,1819.29,false,
+ORD-1558,2026-09-03,Sprockets,EMEA,7,22.59,158.13,true,
+ORD-1559,2026-04-28,Gadgets,LATAM,28,100.77,2821.56,true,bulk discount
+ORD-1560,2026-03-01,Widgets,EMEA,30,86.87,2606.1,true,
+ORD-1561,2026-03-26,Sprockets,APAC,17,68.3,1161.1,false,rush order
+ORD-1562,2026-07-15,Widgets,LATAM,26,53.66,1395.16,true,gift wrap
+ORD-1563,2026-01-21,Sprockets,EMEA,40,10.4,416.0,true,
+ORD-1564,2026-09-04,Doohickeys,EMEA,19,95.07,1806.33,false,repeat customer
+ORD-1565,2026-08-13,Widgets,LATAM,26,99.19,2578.94,false,gift wrap
+ORD-1566,2026-04-05,Sprockets,AMER,26,96.22,2501.72,false,
+ORD-1567,2026-06-01,Gadgets,EMEA,36,105.35,3792.6,true,
+ORD-1568,2026-07-18,Doohickeys,APAC,36,113.8,4096.8,false,
+ORD-1569,2026-07-21,Gadgets,APAC,33,19.67,649.11,false,
+ORD-1570,2026-02-06,Sprockets,LATAM,37,102.71,3800.27,true,
+ORD-1571,2026-02-09,Sprockets,LATAM,7,26.1,182.7,false,
+ORD-1572,2026-03-22,Sprockets,EMEA,16,14.71,235.36,false,
+ORD-1573,2026-08-15,Doohickeys,APAC,22,75.11,1652.42,false,repeat customer
+ORD-1574,2026-06-14,Gadgets,APAC,11,3.57,39.27,false,
+ORD-1575,2026-06-05,Gizmos,LATAM,22,105.71,2325.62,false,repeat customer
+ORD-1576,2026-05-16,Sprockets,EMEA,36,15.73,566.28,false,repeat customer
+ORD-1577,2026-03-18,Widgets,EMEA,13,33.8,439.4,true,repeat customer
+ORD-1578,2026-09-21,Sprockets,LATAM,2,98.08,196.16,false,
+ORD-1579,2026-09-09,Sprockets,LATAM,35,107.6,3766.0,false,
+ORD-1580,2026-07-08,Doohickeys,APAC,38,88.79,3374.02,false,gift wrap
+ORD-1581,2026-09-03,Widgets,APAC,26,45.57,1184.82,false,repeat customer
+ORD-1582,2026-09-05,Sprockets,APAC,29,21.63,627.27,false,
+ORD-1583,2026-01-08,Doohickeys,AMER,32,30.11,963.52,false,
+ORD-1584,2026-04-17,Gizmos,EMEA,24,48.41,1161.84,true,bulk discount
+ORD-1585,2026-06-04,Doohickeys,AMER,34,77.13,2622.42,false,rush order
+ORD-1586,2026-07-12,Widgets,AMER,38,79.44,3018.72,false,
+ORD-1587,2026-09-13,Doohickeys,LATAM,23,98.62,2268.26,false,gift wrap
+ORD-1588,2026-01-17,Gadgets,EMEA,9,54.47,490.23,false,
+ORD-1589,2026-03-06,Widgets,APAC,11,45.38,499.18,false,repeat customer
+ORD-1590,2026-06-24,Gizmos,LATAM,8,59.34,474.72,false,gift wrap
+ORD-1591,2026-03-21,Widgets,APAC,27,5.63,152.01,false,
+ORD-1592,2026-09-02,Gadgets,AMER,37,20.18,746.66,false,gift wrap
+ORD-1593,2026-07-20,Doohickeys,EMEA,37,77.6,2871.2,false,rush order
+ORD-1594,2026-08-28,Gizmos,APAC,31,22.96,711.76,false,gift wrap
+ORD-1595,2026-09-09,Doohickeys,LATAM,11,87.73,965.03,true,
+ORD-1596,2026-07-13,Gadgets,LATAM,9,15.7,141.3,false,gift wrap
+ORD-1597,2026-02-06,Sprockets,EMEA,31,108.49,3363.19,true,
+ORD-1598,2026-08-22,Sprockets,EMEA,9,108.53,976.77,false,gift wrap
+ORD-1599,2026-07-12,Gizmos,APAC,3,84.62,253.86,false,repeat customer
+ORD-1600,2026-07-12,Sprockets,EMEA,38,97.14,3691.32,false,
+ORD-1601,2026-05-16,Widgets,AMER,15,109.48,1642.2,false,
+ORD-1602,2026-04-01,Widgets,EMEA,1,70.62,70.62,false,bulk discount
+ORD-1603,2026-04-23,Widgets,APAC,21,50.83,1067.43,false,bulk discount
+ORD-1604,2026-05-09,Doohickeys,AMER,35,52.56,1839.6,false,repeat customer
+ORD-1605,2026-04-14,Gizmos,APAC,36,94.7,3409.2,false,gift wrap
+ORD-1606,2026-09-16,Sprockets,AMER,17,118.66,2017.22,false,bulk discount
+ORD-1607,2026-03-28,Gizmos,APAC,8,90.49,723.92,true,
+ORD-1608,2026-09-13,Sprockets,EMEA,22,96.7,2127.4,false,rush order
+ORD-1609,2026-01-26,Gizmos,LATAM,6,99.32,595.92,true,
+ORD-1610,2026-05-08,Widgets,LATAM,24,12.36,296.64,false,gift wrap
+ORD-1611,2026-09-10,Gadgets,LATAM,39,9.72,379.08,false,
+ORD-1612,2026-04-28,Widgets,APAC,34,36.46,1239.64,false,bulk discount
+ORD-1613,2026-01-12,Gadgets,EMEA,16,79.64,1274.24,false,repeat customer
+ORD-1614,2026-07-12,Gadgets,EMEA,26,50.44,1311.44,true,
+ORD-1615,2026-09-10,Doohickeys,AMER,36,110.06,3962.16,false,
+ORD-1616,2026-04-15,Doohickeys,APAC,26,70.26,1826.76,false,gift wrap
+ORD-1617,2026-02-18,Doohickeys,EMEA,5,61.87,309.35,false,gift wrap
+ORD-1618,2026-05-23,Sprockets,LATAM,29,116.03,3364.87,false,repeat customer
+ORD-1619,2026-06-25,Sprockets,EMEA,30,82.75,2482.5,false,
+ORD-1620,2026-05-03,Gadgets,APAC,25,77.14,1928.5,false,rush order
+ORD-1621,2026-06-17,Doohickeys,APAC,35,4.14,144.9,false,
+ORD-1622,2026-07-22,Gadgets,LATAM,22,11.9,261.8,false,
+ORD-1623,2026-04-19,Gadgets,LATAM,18,24.39,439.02,false,
+ORD-1624,2026-04-28,Gadgets,APAC,17,27.19,462.23,false,
+ORD-1625,2026-02-04,Gizmos,EMEA,6,82.07,492.42,true,repeat customer
+ORD-1626,2026-08-12,Sprockets,AMER,40,39.9,1596.0,false,
+ORD-1627,2026-09-09,Sprockets,APAC,26,28.98,753.48,true,gift wrap
+ORD-1628,2026-07-16,Doohickeys,LATAM,35,6.81,238.35,false,rush order
+ORD-1629,2026-02-23,Widgets,EMEA,34,56.83,1932.22,false,rush order
+ORD-1630,2026-02-11,Doohickeys,APAC,24,74.7,1792.8,false,
+ORD-1631,2026-05-16,Gadgets,LATAM,40,43.14,1725.6,false,
+ORD-1632,2026-07-23,Gizmos,AMER,24,45.71,1097.04,false,
+ORD-1633,2026-03-19,Doohickeys,APAC,15,98.26,1473.9,false,repeat customer
+ORD-1634,2026-07-07,Gadgets,LATAM,10,96.6,966.0,true,
+ORD-1635,2026-07-16,Sprockets,AMER,9,119.48,1075.32,false,
+ORD-1636,2026-05-18,Widgets,APAC,37,8.58,317.46,true,
+ORD-1637,2026-05-16,Doohickeys,AMER,7,55.63,389.41,false,
+ORD-1638,2026-09-18,Gizmos,EMEA,17,43.26,735.42,false,repeat customer
+ORD-1639,2026-04-19,Sprockets,APAC,37,79.03,2924.11,false,
+ORD-1640,2026-06-22,Gizmos,EMEA,33,60.04,1981.32,false,gift wrap
+ORD-1641,2026-05-15,Doohickeys,LATAM,10,104.59,1045.9,false,repeat customer
+ORD-1642,2026-02-03,Doohickeys,AMER,11,43.2,475.2,false,bulk discount
+ORD-1643,2026-05-20,Gizmos,AMER,26,34.74,903.24,false,rush order
+ORD-1644,2026-03-06,Gadgets,AMER,2,17.63,35.26,true,
+ORD-1645,2026-03-13,Gizmos,EMEA,7,14.18,99.26,true,repeat customer
+ORD-1646,2026-07-17,Sprockets,APAC,6,15.16,90.96,true,bulk discount
+ORD-1647,2026-07-10,Doohickeys,LATAM,15,31.95,479.25,false,
+ORD-1648,2026-09-27,Doohickeys,AMER,11,6.34,69.74,false,rush order
+ORD-1649,2026-09-09,Sprockets,APAC,36,55.05,1981.8,false,bulk discount
+ORD-1650,2026-07-17,Doohickeys,LATAM,35,39.23,1373.05,false,repeat customer
+ORD-1651,2026-02-15,Doohickeys,APAC,20,45.8,916.0,false,
+ORD-1652,2026-01-17,Gizmos,EMEA,9,43.23,389.07,false,repeat customer
+ORD-1653,2026-08-10,Doohickeys,APAC,1,92.61,92.61,true,gift wrap
+ORD-1654,2026-06-07,Gizmos,LATAM,27,106.21,2867.67,false,
+ORD-1655,2026-07-27,Widgets,LATAM,25,28.81,720.25,false,gift wrap
+ORD-1656,2026-05-10,Gizmos,APAC,35,97.63,3417.05,true,
+ORD-1657,2026-03-10,Sprockets,LATAM,8,77.52,620.16,false,bulk discount
+ORD-1658,2026-08-07,Widgets,EMEA,21,5.27,110.67,false,
+ORD-1659,2026-05-09,Widgets,APAC,9,86.68,780.12,true,
+ORD-1660,2026-01-16,Doohickeys,LATAM,14,43.0,602.0,false,rush order
+ORD-1661,2026-01-11,Gadgets,EMEA,6,101.69,610.14,false,repeat customer
+ORD-1662,2026-07-03,Gadgets,AMER,35,58.01,2030.35,false,repeat customer
+ORD-1663,2026-01-04,Gizmos,APAC,16,48.02,768.32,true,
+ORD-1664,2026-08-24,Gadgets,LATAM,7,63.97,447.79,false,bulk discount
+ORD-1665,2026-05-11,Widgets,EMEA,11,76.61,842.71,false,rush order
+ORD-1666,2026-05-07,Gadgets,EMEA,24,106.84,2564.16,false,bulk discount
+ORD-1667,2026-07-11,Doohickeys,EMEA,1,22.58,22.58,false,repeat customer
+ORD-1668,2026-04-01,Gizmos,APAC,3,70.99,212.97,false,repeat customer
+ORD-1669,2026-02-08,Sprockets,AMER,11,61.49,676.39,true,
+ORD-1670,2026-06-21,Widgets,APAC,10,85.06,850.6,false,
+ORD-1671,2026-06-18,Gizmos,APAC,23,97.25,2236.75,true,bulk discount
+ORD-1672,2026-07-12,Widgets,LATAM,9,32.33,290.97,false,gift wrap
+ORD-1673,2026-05-18,Gadgets,AMER,32,25.2,806.4,false,bulk discount
+ORD-1674,2026-08-09,Sprockets,APAC,39,109.99,4289.61,true,gift wrap
+ORD-1675,2026-03-15,Sprockets,AMER,19,98.87,1878.53,false,
+ORD-1676,2026-09-13,Sprockets,AMER,12,106.3,1275.6,false,
+ORD-1677,2026-02-22,Gadgets,LATAM,35,98.83,3459.05,false,gift wrap
+ORD-1678,2026-05-11,Widgets,EMEA,27,77.99,2105.73,true,
+ORD-1679,2026-03-06,Gizmos,APAC,3,26.64,79.92,true,
+ORD-1680,2026-07-22,Sprockets,AMER,32,64.52,2064.64,true,
+ORD-1681,2026-04-20,Gadgets,LATAM,5,4.53,22.65,true,rush order
+ORD-1682,2026-01-12,Gizmos,AMER,36,89.99,3239.64,true,repeat customer
+ORD-1683,2026-05-17,Doohickeys,EMEA,3,88.91,266.73,false,gift wrap
+ORD-1684,2026-02-04,Gadgets,APAC,15,65.2,978.0,false,gift wrap
+ORD-1685,2026-03-18,Widgets,AMER,36,51.58,1856.88,false,bulk discount
+ORD-1686,2026-07-04,Sprockets,LATAM,11,95.72,1052.92,false,bulk discount
+ORD-1687,2026-03-18,Doohickeys,AMER,39,54.83,2138.37,false,repeat customer
+ORD-1688,2026-06-14,Doohickeys,APAC,28,99.66,2790.48,false,rush order
+ORD-1689,2026-09-24,Gizmos,LATAM,17,45.12,767.04,false,
+ORD-1690,2026-01-10,Gadgets,AMER,39,4.91,191.49,true,
+ORD-1691,2026-04-07,Doohickeys,APAC,21,5.54,116.34,true,
+ORD-1692,2026-08-12,Doohickeys,APAC,10,19.19,191.9,false,
+ORD-1693,2026-05-03,Gadgets,EMEA,37,49.78,1841.86,false,repeat customer
+ORD-1694,2026-08-06,Sprockets,EMEA,32,99.61,3187.52,false,
+ORD-1695,2026-07-03,Doohickeys,AMER,4,110.86,443.44,false,rush order
+ORD-1696,2026-02-28,Sprockets,EMEA,15,90.48,1357.2,false,
+ORD-1697,2026-05-17,Sprockets,APAC,3,40.36,121.08,false,gift wrap
+ORD-1698,2026-04-05,Gizmos,LATAM,4,81.82,327.28,true,
+ORD-1699,2026-07-10,Doohickeys,EMEA,26,20.32,528.32,false,gift wrap
+ORD-1700,2026-01-18,Gizmos,LATAM,26,33.72,876.72,false,repeat customer
+ORD-1701,2026-03-16,Gizmos,APAC,36,26.18,942.48,false,
+ORD-1702,2026-02-09,Sprockets,EMEA,28,40.84,1143.52,true,bulk discount
+ORD-1703,2026-07-14,Doohickeys,AMER,24,43.75,1050.0,true,repeat customer
+ORD-1704,2026-05-06,Gizmos,APAC,23,75.1,1727.3,false,
+ORD-1705,2026-04-07,Widgets,EMEA,24,21.25,510.0,true,
+ORD-1706,2026-03-28,Widgets,AMER,19,4.61,87.59,false,rush order
+ORD-1707,2026-01-11,Gadgets,APAC,14,89.58,1254.12,false,gift wrap
+ORD-1708,2026-08-20,Widgets,LATAM,10,84.32,843.2,true,
+ORD-1709,2026-03-02,Sprockets,AMER,19,26.48,503.12,true,rush order
+ORD-1710,2026-01-03,Doohickeys,EMEA,25,80.26,2006.5,true,
+ORD-1711,2026-07-08,Widgets,AMER,25,62.5,1562.5,false,repeat customer
+ORD-1712,2026-09-03,Gizmos,EMEA,12,26.27,315.24,true,
+ORD-1713,2026-09-10,Gadgets,EMEA,22,60.32,1327.04,false,bulk discount
+ORD-1714,2026-06-12,Sprockets,AMER,20,30.64,612.8,true,bulk discount
+ORD-1715,2026-05-13,Doohickeys,APAC,2,113.46,226.92,false,
+ORD-1716,2026-07-22,Gizmos,APAC,9,13.27,119.43,false,
+ORD-1717,2026-03-14,Doohickeys,LATAM,20,109.44,2188.8,false,
+ORD-1718,2026-03-19,Gadgets,APAC,35,83.03,2906.05,false,bulk discount
+ORD-1719,2026-09-05,Gadgets,APAC,28,119.5,3346.0,false,
+ORD-1720,2026-09-18,Gadgets,EMEA,8,24.54,196.32,false,rush order
+ORD-1721,2026-07-10,Doohickeys,APAC,29,90.24,2616.96,false,
+ORD-1722,2026-03-06,Sprockets,AMER,2,92.21,184.42,false,gift wrap
+ORD-1723,2026-04-08,Gizmos,APAC,2,45.03,90.06,false,bulk discount
+ORD-1724,2026-06-06,Gadgets,APAC,25,60.5,1512.5,false,
+ORD-1725,2026-01-14,Gizmos,APAC,1,111.28,111.28,false,repeat customer
+ORD-1726,2026-04-03,Gizmos,LATAM,12,111.47,1337.64,false,repeat customer
+ORD-1727,2026-08-08,Widgets,LATAM,28,50.37,1410.36,false,rush order
+ORD-1728,2026-09-17,Gizmos,LATAM,3,63.92,191.76,true,
+ORD-1729,2026-09-18,Widgets,LATAM,26,118.11,3070.86,true,
+ORD-1730,2026-05-15,Doohickeys,LATAM,26,106.47,2768.22,false,rush order
+ORD-1731,2026-05-20,Gadgets,LATAM,4,83.72,334.88,false,
+ORD-1732,2026-09-04,Sprockets,APAC,12,94.11,1129.32,false,rush order
+ORD-1733,2026-06-15,Sprockets,APAC,2,23.93,47.86,false,
+ORD-1734,2026-05-11,Widgets,EMEA,11,87.05,957.55,true,bulk discount
+ORD-1735,2026-08-21,Gizmos,APAC,24,12.98,311.52,false,gift wrap
+ORD-1736,2026-07-02,Sprockets,APAC,11,109.73,1207.03,false,repeat customer
+ORD-1737,2026-03-06,Doohickeys,LATAM,4,52.09,208.36,false,bulk discount
+ORD-1738,2026-03-04,Widgets,AMER,9,115.37,1038.33,true,rush order
+ORD-1739,2026-08-28,Widgets,LATAM,32,66.59,2130.88,false,
+ORD-1740,2026-08-15,Sprockets,EMEA,27,54.7,1476.9,false,gift wrap
+ORD-1741,2026-05-20,Gadgets,EMEA,36,98.95,3562.2,false,
+ORD-1742,2026-01-21,Widgets,AMER,23,7.3,167.9,false,
+ORD-1743,2026-01-04,Gadgets,AMER,27,119.27,3220.29,false,rush order
+ORD-1744,2026-06-02,Doohickeys,AMER,6,92.92,557.52,false,repeat customer
+ORD-1745,2026-02-25,Widgets,AMER,28,101.67,2846.76,false,
+ORD-1746,2026-02-23,Gizmos,APAC,18,41.52,747.36,false,gift wrap
+ORD-1747,2026-01-04,Sprockets,EMEA,37,88.38,3270.06,false,bulk discount
+ORD-1748,2026-05-14,Doohickeys,AMER,39,102.19,3985.41,false,gift wrap
+ORD-1749,2026-08-17,Gadgets,APAC,32,60.62,1939.84,false,
+ORD-1750,2026-01-04,Widgets,APAC,2,57.39,114.78,false,rush order
+ORD-1751,2026-01-11,Gadgets,EMEA,23,68.57,1577.11,false,bulk discount
+ORD-1752,2026-05-09,Sprockets,AMER,5,39.01,195.05,true,
+ORD-1753,2026-06-11,Sprockets,EMEA,26,87.75,2281.5,false,
+ORD-1754,2026-06-27,Gizmos,LATAM,22,110.91,2440.02,true,bulk discount
+ORD-1755,2026-03-16,Sprockets,AMER,10,76.38,763.8,false,repeat customer
+ORD-1756,2026-07-24,Doohickeys,AMER,4,100.71,402.84,true,
+ORD-1757,2026-06-26,Gadgets,AMER,23,10.75,247.25,true,
+ORD-1758,2026-07-21,Sprockets,LATAM,35,101.56,3554.6,false,gift wrap
+ORD-1759,2026-02-28,Doohickeys,EMEA,20,85.52,1710.4,false,rush order
+ORD-1760,2026-02-16,Doohickeys,APAC,16,46.48,743.68,false,
+ORD-1761,2026-02-12,Widgets,LATAM,3,94.0,282.0,true,repeat customer
+ORD-1762,2026-08-17,Gizmos,AMER,10,25.25,252.5,false,
+ORD-1763,2026-02-27,Gadgets,APAC,34,82.18,2794.12,true,rush order
+ORD-1764,2026-07-23,Doohickeys,EMEA,34,16.55,562.7,true,
+ORD-1765,2026-08-02,Doohickeys,EMEA,7,63.91,447.37,false,bulk discount
+ORD-1766,2026-04-11,Doohickeys,AMER,13,25.53,331.89,false,bulk discount
+ORD-1767,2026-02-09,Widgets,EMEA,10,21.43,214.3,true,
+ORD-1768,2026-09-12,Gadgets,AMER,36,40.26,1449.36,false,
+ORD-1769,2026-02-10,Sprockets,LATAM,40,107.39,4295.6,true,
+ORD-1770,2026-01-16,Widgets,EMEA,4,15.39,61.56,false,rush order
+ORD-1771,2026-03-23,Gizmos,AMER,39,107.28,4183.92,false,
+ORD-1772,2026-04-23,Gizmos,APAC,35,12.19,426.65,true,repeat customer
+ORD-1773,2026-08-04,Gizmos,LATAM,30,39.32,1179.6,false,
+ORD-1774,2026-03-28,Doohickeys,LATAM,40,33.19,1327.6,false,bulk discount
+ORD-1775,2026-06-26,Widgets,EMEA,21,56.03,1176.63,false,
+ORD-1776,2026-06-16,Doohickeys,AMER,30,101.95,3058.5,false,gift wrap
+ORD-1777,2026-02-13,Widgets,AMER,7,41.13,287.91,false,rush order
+ORD-1778,2026-07-08,Gadgets,LATAM,40,31.51,1260.4,false,
+ORD-1779,2026-06-07,Gizmos,AMER,38,53.44,2030.72,false,
+ORD-1780,2026-02-24,Widgets,LATAM,37,100.9,3733.3,false,gift wrap
+ORD-1781,2026-02-27,Gizmos,EMEA,29,23.61,684.69,true,bulk discount
+ORD-1782,2026-07-11,Widgets,EMEA,32,78.46,2510.72,false,repeat customer
+ORD-1783,2026-03-19,Gadgets,LATAM,1,91.58,91.58,false,rush order
+ORD-1784,2026-08-07,Doohickeys,AMER,14,82.74,1158.36,false,rush order
+ORD-1785,2026-06-03,Sprockets,LATAM,38,3.95,150.1,false,repeat customer
+ORD-1786,2026-05-02,Widgets,EMEA,24,108.43,2602.32,false,
+ORD-1787,2026-05-28,Sprockets,LATAM,2,30.52,61.04,false,bulk discount
+ORD-1788,2026-07-13,Gadgets,APAC,25,53.92,1348.0,false,
+ORD-1789,2026-04-18,Doohickeys,LATAM,25,101.67,2541.75,false,
+ORD-1790,2026-03-05,Widgets,APAC,1,11.39,11.39,false,bulk discount
+ORD-1791,2026-07-05,Gizmos,LATAM,6,19.05,114.3,false,gift wrap
+ORD-1792,2026-03-15,Gizmos,LATAM,33,52.62,1736.46,false,
+ORD-1793,2026-03-14,Gizmos,APAC,39,3.87,150.93,false,rush order
+ORD-1794,2026-09-19,Widgets,LATAM,24,6.92,166.08,false,
+ORD-1795,2026-08-23,Sprockets,AMER,6,19.62,117.72,false,gift wrap
+ORD-1796,2026-02-17,Gizmos,EMEA,40,13.35,534.0,false,gift wrap
+ORD-1797,2026-01-11,Gizmos,LATAM,35,94.09,3293.15,false,gift wrap
+ORD-1798,2026-06-14,Doohickeys,AMER,23,115.39,2653.97,false,
+ORD-1799,2026-05-24,Gizmos,APAC,37,33.47,1238.39,true,bulk discount
+ORD-1800,2026-05-26,Gizmos,EMEA,40,6.19,247.6,false,gift wrap
+ORD-1801,2026-02-28,Sprockets,AMER,18,32.49,584.82,false,repeat customer
+ORD-1802,2026-05-01,Sprockets,APAC,8,73.65,589.2,false,
+ORD-1803,2026-03-09,Sprockets,EMEA,16,59.74,955.84,false,
+ORD-1804,2026-03-20,Gizmos,LATAM,10,101.0,1010.0,false,bulk discount
+ORD-1805,2026-08-24,Doohickeys,EMEA,11,27.67,304.37,false,repeat customer
+ORD-1806,2026-02-02,Gizmos,AMER,11,57.29,630.19,false,bulk discount
+ORD-1807,2026-09-08,Gizmos,LATAM,25,82.97,2074.25,false,
+ORD-1808,2026-09-28,Gizmos,LATAM,28,4.39,122.92,false,gift wrap
+ORD-1809,2026-01-04,Gizmos,AMER,35,77.58,2715.3,false,
+ORD-1810,2026-05-26,Sprockets,LATAM,7,32.88,230.16,false,repeat customer
+ORD-1811,2026-04-24,Sprockets,AMER,38,93.15,3539.7,false,
+ORD-1812,2026-09-01,Widgets,LATAM,1,100.31,100.31,true,gift wrap
+ORD-1813,2026-02-22,Doohickeys,AMER,29,44.13,1279.77,false,
+ORD-1814,2026-01-20,Sprockets,APAC,6,9.66,57.96,true,bulk discount
+ORD-1815,2026-02-03,Sprockets,APAC,39,18.2,709.8,true,bulk discount
+ORD-1816,2026-03-09,Widgets,LATAM,19,57.63,1094.97,false,repeat customer
+ORD-1817,2026-07-23,Widgets,AMER,21,33.11,695.31,true,rush order
+ORD-1818,2026-07-11,Doohickeys,APAC,4,33.21,132.84,false,
+ORD-1819,2026-08-07,Gizmos,EMEA,40,48.94,1957.6,false,gift wrap
+ORD-1820,2026-07-07,Gizmos,AMER,40,78.27,3130.8,true,
+ORD-1821,2026-02-03,Gizmos,EMEA,37,88.12,3260.44,false,
+ORD-1822,2026-01-02,Doohickeys,LATAM,25,34.17,854.25,true,gift wrap
+ORD-1823,2026-08-16,Widgets,APAC,28,50.26,1407.28,true,rush order
+ORD-1824,2026-08-04,Doohickeys,AMER,37,65.63,2428.31,false,rush order
+ORD-1825,2026-01-21,Doohickeys,EMEA,6,45.75,274.5,false,repeat customer
+ORD-1826,2026-05-21,Widgets,LATAM,13,23.66,307.58,false,
+ORD-1827,2026-07-04,Gizmos,APAC,23,59.92,1378.16,false,
+ORD-1828,2026-04-01,Gizmos,EMEA,38,30.9,1174.2,false,rush order
+ORD-1829,2026-09-27,Widgets,EMEA,29,116.09,3366.61,false,
+ORD-1830,2026-06-26,Gadgets,LATAM,3,50.44,151.32,false,bulk discount
+ORD-1831,2026-04-03,Gizmos,EMEA,3,89.05,267.15,false,gift wrap
+ORD-1832,2026-01-08,Widgets,AMER,9,4.68,42.12,true,rush order
+ORD-1833,2026-03-27,Widgets,EMEA,38,10.48,398.24,false,gift wrap
+ORD-1834,2026-04-03,Gizmos,AMER,13,52.87,687.31,true,bulk discount
+ORD-1835,2026-09-05,Gadgets,EMEA,21,100.86,2118.06,false,
+ORD-1836,2026-02-04,Gizmos,APAC,18,19.52,351.36,false,gift wrap
+ORD-1837,2026-03-15,Widgets,APAC,16,111.3,1780.8,true,repeat customer
+ORD-1838,2026-07-25,Gizmos,EMEA,11,4.83,53.13,true,
+ORD-1839,2026-03-03,Gizmos,LATAM,38,106.77,4057.26,false,
+ORD-1840,2026-03-21,Gizmos,APAC,18,64.2,1155.6,false,gift wrap
+ORD-1841,2026-01-20,Sprockets,EMEA,12,86.91,1042.92,false,
+ORD-1842,2026-07-01,Widgets,EMEA,36,30.57,1100.52,false,repeat customer
+ORD-1843,2026-09-17,Gadgets,AMER,15,57.31,859.65,true,
+ORD-1844,2026-02-26,Gizmos,LATAM,10,83.17,831.7,false,
+ORD-1845,2026-01-02,Gizmos,AMER,24,36.35,872.4,false,gift wrap
+ORD-1846,2026-08-02,Sprockets,APAC,7,89.63,627.41,false,repeat customer
+ORD-1847,2026-01-16,Gadgets,LATAM,33,16.58,547.14,false,rush order
+ORD-1848,2026-04-24,Widgets,AMER,21,29.92,628.32,false,
+ORD-1849,2026-04-24,Gizmos,APAC,27,104.78,2829.06,true,rush order
+ORD-1850,2026-08-02,Sprockets,LATAM,28,19.96,558.88,false,rush order
+ORD-1851,2026-06-05,Doohickeys,AMER,30,87.22,2616.6,false,
+ORD-1852,2026-03-02,Gadgets,EMEA,37,9.98,369.26,false,rush order
+ORD-1853,2026-07-06,Doohickeys,APAC,22,28.72,631.84,false,gift wrap
+ORD-1854,2026-09-28,Sprockets,LATAM,15,13.12,196.8,false,gift wrap
+ORD-1855,2026-08-27,Gizmos,APAC,30,35.66,1069.8,false,
+ORD-1856,2026-07-19,Sprockets,APAC,15,107.34,1610.1,true,rush order
+ORD-1857,2026-01-02,Sprockets,EMEA,31,88.82,2753.42,false,gift wrap
+ORD-1858,2026-07-16,Gadgets,EMEA,7,55.94,391.58,true,bulk discount
+ORD-1859,2026-07-07,Gadgets,EMEA,9,44.93,404.37,true,rush order
+ORD-1860,2026-05-06,Sprockets,EMEA,30,103.38,3101.4,false,rush order
+ORD-1861,2026-03-28,Doohickeys,LATAM,26,24.64,640.64,true,repeat customer
+ORD-1862,2026-02-13,Doohickeys,LATAM,22,65.12,1432.64,false,bulk discount
+ORD-1863,2026-09-19,Widgets,AMER,14,95.16,1332.24,true,gift wrap
+ORD-1864,2026-06-02,Gizmos,EMEA,8,47.81,382.48,false,
+ORD-1865,2026-03-21,Sprockets,APAC,36,85.47,3076.92,false,
+ORD-1866,2026-04-18,Sprockets,APAC,8,78.94,631.52,false,
+ORD-1867,2026-06-09,Doohickeys,EMEA,33,82.59,2725.47,true,
+ORD-1868,2026-06-15,Widgets,LATAM,32,61.67,1973.44,false,rush order
+ORD-1869,2026-06-26,Gizmos,EMEA,5,25.04,125.2,true,rush order
+ORD-1870,2026-03-10,Doohickeys,EMEA,5,15.8,79.0,false,rush order
+ORD-1871,2026-03-28,Widgets,AMER,14,63.92,894.88,false,bulk discount
+ORD-1872,2026-09-05,Gizmos,EMEA,31,43.56,1350.36,false,
+ORD-1873,2026-02-01,Sprockets,AMER,15,100.69,1510.35,false,gift wrap
+ORD-1874,2026-06-21,Sprockets,LATAM,21,59.88,1257.48,false,
+ORD-1875,2026-03-26,Doohickeys,APAC,20,23.09,461.8,false,
+ORD-1876,2026-05-25,Doohickeys,LATAM,4,20.36,81.44,false,gift wrap
+ORD-1877,2026-03-23,Gadgets,APAC,35,36.37,1272.95,false,
+ORD-1878,2026-02-02,Gizmos,AMER,21,70.22,1474.62,false,
+ORD-1879,2026-04-18,Doohickeys,APAC,3,80.87,242.61,false,rush order
+ORD-1880,2026-09-06,Widgets,LATAM,35,38.28,1339.8,false,repeat customer
+ORD-1881,2026-03-15,Sprockets,AMER,21,21.26,446.46,false,rush order
+ORD-1882,2026-05-25,Sprockets,LATAM,37,81.03,2998.11,false,bulk discount
+ORD-1883,2026-02-24,Gadgets,EMEA,31,108.32,3357.92,false,
+ORD-1884,2026-07-20,Widgets,AMER,15,55.18,827.7,true,gift wrap
+ORD-1885,2026-04-19,Doohickeys,APAC,34,28.99,985.66,true,
+ORD-1886,2026-09-28,Widgets,LATAM,29,82.22,2384.38,false,rush order
+ORD-1887,2026-06-20,Widgets,AMER,39,62.85,2451.15,false,
+ORD-1888,2026-07-12,Doohickeys,AMER,25,46.62,1165.5,false,
+ORD-1889,2026-08-28,Gizmos,LATAM,36,13.25,477.0,false,
+ORD-1890,2026-03-26,Gizmos,APAC,28,88.25,2471.0,true,
+ORD-1891,2026-04-10,Sprockets,AMER,31,118.64,3677.84,true,gift wrap
+ORD-1892,2026-07-03,Doohickeys,LATAM,1,50.91,50.91,false,gift wrap
+ORD-1893,2026-08-23,Gadgets,APAC,37,91.36,3380.32,false,repeat customer
+ORD-1894,2026-07-10,Doohickeys,AMER,36,60.4,2174.4,false,gift wrap
+ORD-1895,2026-08-08,Gadgets,AMER,2,95.57,191.14,false,bulk discount
+ORD-1896,2026-08-04,Gizmos,APAC,19,51.81,984.39,true,
+ORD-1897,2026-05-16,Doohickeys,LATAM,5,73.07,365.35,false,repeat customer
+ORD-1898,2026-05-21,Widgets,AMER,31,116.99,3626.69,true,repeat customer
+ORD-1899,2026-05-06,Doohickeys,LATAM,38,9.85,374.3,false,
+ORD-1900,2026-03-02,Doohickeys,EMEA,18,45.26,814.68,false,
+ORD-1901,2026-09-21,Gadgets,EMEA,5,63.12,315.6,false,gift wrap
+ORD-1902,2026-06-28,Doohickeys,AMER,21,99.74,2094.54,false,
+ORD-1903,2026-09-19,Widgets,APAC,23,99.33,2284.59,false,
+ORD-1904,2026-08-14,Gadgets,EMEA,22,110.75,2436.5,false,
+ORD-1905,2026-09-08,Sprockets,EMEA,13,96.03,1248.39,false,rush order
+ORD-1906,2026-02-04,Gizmos,AMER,9,111.04,999.36,false,bulk discount
+ORD-1907,2026-06-05,Sprockets,AMER,29,107.1,3105.9,false,bulk discount
+ORD-1908,2026-05-01,Gadgets,APAC,8,29.02,232.16,false,
+ORD-1909,2026-04-05,Widgets,EMEA,6,52.7,316.2,true,repeat customer
+ORD-1910,2026-08-25,Widgets,EMEA,28,7.97,223.16,true,rush order
+ORD-1911,2026-02-09,Widgets,EMEA,3,10.75,32.25,true,gift wrap
+ORD-1912,2026-04-19,Doohickeys,EMEA,13,24.62,320.06,true,
+ORD-1913,2026-05-19,Sprockets,APAC,23,44.21,1016.83,true,
+ORD-1914,2026-01-17,Doohickeys,APAC,14,86.75,1214.5,true,bulk discount
+ORD-1915,2026-02-07,Gizmos,AMER,33,102.6,3385.8,false,rush order
+ORD-1916,2026-02-06,Gizmos,APAC,23,117.81,2709.63,false,rush order
+ORD-1917,2026-02-25,Widgets,APAC,21,17.46,366.66,false,repeat customer
+ORD-1918,2026-06-23,Widgets,EMEA,19,68.18,1295.42,false,rush order
+ORD-1919,2026-02-13,Doohickeys,LATAM,19,56.46,1072.74,false,gift wrap
+ORD-1920,2026-07-10,Widgets,LATAM,28,25.09,702.52,false,
+ORD-1921,2026-01-22,Gizmos,LATAM,32,81.64,2612.48,true,
+ORD-1922,2026-03-13,Widgets,APAC,26,84.32,2192.32,true,
+ORD-1923,2026-04-11,Gizmos,EMEA,13,72.61,943.93,false,repeat customer
+ORD-1924,2026-07-24,Sprockets,AMER,32,35.59,1138.88,false,
+ORD-1925,2026-08-22,Gizmos,AMER,39,114.17,4452.63,false,repeat customer
+ORD-1926,2026-08-04,Gizmos,APAC,8,32.33,258.64,false,
+ORD-1927,2026-02-24,Gizmos,EMEA,4,100.15,400.6,false,rush order
+ORD-1928,2026-06-05,Widgets,EMEA,20,75.77,1515.4,false,repeat customer
+ORD-1929,2026-08-07,Gizmos,AMER,19,80.46,1528.74,false,repeat customer
+ORD-1930,2026-09-18,Widgets,LATAM,2,114.45,228.9,true,rush order
+ORD-1931,2026-08-11,Widgets,EMEA,25,54.78,1369.5,false,gift wrap
+ORD-1932,2026-05-23,Gadgets,AMER,11,60.5,665.5,false,rush order
+ORD-1933,2026-02-19,Sprockets,LATAM,32,80.23,2567.36,false,gift wrap
+ORD-1934,2026-03-17,Gizmos,LATAM,4,48.79,195.16,false,repeat customer
+ORD-1935,2026-05-11,Widgets,APAC,4,6.29,25.16,false,
+ORD-1936,2026-01-25,Gizmos,AMER,22,47.53,1045.66,false,rush order
+ORD-1937,2026-06-02,Doohickeys,EMEA,16,31.97,511.52,true,repeat customer
+ORD-1938,2026-05-04,Sprockets,AMER,22,22.86,502.92,true,rush order
+ORD-1939,2026-07-19,Doohickeys,EMEA,33,108.46,3579.18,false,gift wrap
+ORD-1940,2026-01-11,Doohickeys,EMEA,25,69.73,1743.25,false,
+ORD-1941,2026-04-11,Doohickeys,APAC,32,61.82,1978.24,false,
+ORD-1942,2026-07-07,Widgets,APAC,32,77.35,2475.2,false,
+ORD-1943,2026-01-10,Gadgets,EMEA,37,50.04,1851.48,true,gift wrap
+ORD-1944,2026-06-09,Sprockets,LATAM,5,69.27,346.35,false,
+ORD-1945,2026-06-26,Doohickeys,AMER,5,79.23,396.15,false,bulk discount
+ORD-1946,2026-09-11,Doohickeys,LATAM,13,51.47,669.11,false,
+ORD-1947,2026-09-28,Gadgets,LATAM,12,70.49,845.88,false,bulk discount
+ORD-1948,2026-09-26,Gizmos,EMEA,40,102.77,4110.8,false,
+ORD-1949,2026-08-05,Doohickeys,LATAM,16,20.61,329.76,false,
+ORD-1950,2026-02-21,Doohickeys,AMER,14,101.98,1427.72,false,
+ORD-1951,2026-04-13,Gadgets,EMEA,16,16.29,260.64,false,repeat customer
+ORD-1952,2026-05-15,Gizmos,LATAM,32,68.5,2192.0,true,
+ORD-1953,2026-03-09,Doohickeys,APAC,9,6.41,57.69,true,bulk discount
+ORD-1954,2026-08-26,Widgets,AMER,2,9.47,18.94,false,repeat customer
+ORD-1955,2026-02-14,Widgets,LATAM,24,81.59,1958.16,false,
+ORD-1956,2026-02-19,Sprockets,AMER,33,112.15,3700.95,false,
+ORD-1957,2026-04-20,Doohickeys,AMER,8,93.46,747.68,false,repeat customer
+ORD-1958,2026-04-14,Gadgets,APAC,14,19.88,278.32,false,rush order
+ORD-1959,2026-07-09,Sprockets,AMER,38,9.54,362.52,true,
+ORD-1960,2026-09-14,Doohickeys,APAC,31,82.88,2569.28,false,rush order
+ORD-1961,2026-06-27,Sprockets,EMEA,20,5.47,109.4,true,bulk discount
+ORD-1962,2026-04-09,Doohickeys,EMEA,36,48.01,1728.36,false,repeat customer
+ORD-1963,2026-08-13,Gizmos,AMER,1,109.45,109.45,false,
+ORD-1964,2026-04-10,Gadgets,LATAM,14,103.55,1449.7,false,repeat customer
+ORD-1965,2026-07-26,Widgets,LATAM,3,35.06,105.18,false,bulk discount
+ORD-1966,2026-07-27,Widgets,APAC,22,86.93,1912.46,false,gift wrap
+ORD-1967,2026-02-12,Sprockets,AMER,27,73.45,1983.15,false,bulk discount
+ORD-1968,2026-01-25,Gadgets,LATAM,4,78.04,312.16,false,
+ORD-1969,2026-07-07,Widgets,EMEA,20,39.71,794.2,false,
+ORD-1970,2026-09-23,Gizmos,AMER,9,102.09,918.81,false,rush order
+ORD-1971,2026-03-09,Doohickeys,AMER,12,83.43,1001.16,false,
+ORD-1972,2026-07-12,Gizmos,APAC,12,49.04,588.48,true,
+ORD-1973,2026-09-21,Widgets,LATAM,40,76.32,3052.8,false,
+ORD-1974,2026-03-02,Sprockets,AMER,26,75.31,1958.06,false,
+ORD-1975,2026-06-06,Sprockets,LATAM,37,16.73,619.01,false,repeat customer
+ORD-1976,2026-08-04,Gadgets,AMER,15,86.49,1297.35,false,bulk discount
+ORD-1977,2026-08-13,Gadgets,APAC,9,53.46,481.14,false,bulk discount
+ORD-1978,2026-04-14,Gadgets,EMEA,12,50.8,609.6,false,
+ORD-1979,2026-04-20,Doohickeys,LATAM,29,109.16,3165.64,true,
+ORD-1980,2026-08-05,Gizmos,APAC,21,117.0,2457.0,false,bulk discount
+ORD-1981,2026-07-24,Widgets,EMEA,39,32.98,1286.22,true,
+ORD-1982,2026-04-16,Sprockets,EMEA,23,119.62,2751.26,true,
+ORD-1983,2026-09-20,Gizmos,AMER,25,38.39,959.75,false,gift wrap
+ORD-1984,2026-01-19,Sprockets,LATAM,12,33.45,401.4,false,rush order
+ORD-1985,2026-03-03,Gizmos,APAC,21,86.1,1808.1,false,
+ORD-1986,2026-06-02,Doohickeys,AMER,9,61.41,552.69,false,
+ORD-1987,2026-05-20,Gizmos,APAC,17,63.49,1079.33,false,bulk discount
+ORD-1988,2026-08-25,Gizmos,EMEA,10,68.01,680.1,false,
+ORD-1989,2026-01-08,Doohickeys,APAC,12,7.2,86.4,false,rush order
+ORD-1990,2026-02-16,Sprockets,LATAM,3,54.66,163.98,false,rush order
+ORD-1991,2026-02-28,Widgets,APAC,10,17.47,174.7,false,
+ORD-1992,2026-03-24,Sprockets,APAC,33,99.24,3274.92,true,gift wrap
+ORD-1993,2026-03-14,Gizmos,EMEA,5,31.8,159.0,false,
+ORD-1994,2026-05-22,Sprockets,EMEA,8,49.12,392.96,false,
+ORD-1995,2026-01-03,Gizmos,LATAM,30,100.19,3005.7,false,gift wrap
+ORD-1996,2026-01-11,Gizmos,AMER,3,79.77,239.31,false,
+ORD-1997,2026-01-26,Widgets,EMEA,19,40.81,775.39,false,
+ORD-1998,2026-07-09,Gizmos,EMEA,12,31.09,373.08,true,repeat customer
+ORD-1999,2026-04-06,Doohickeys,APAC,25,94.2,2355.0,true,
+ORD-2000,2026-08-26,Doohickeys,APAC,28,89.1,2494.8,false,bulk discount
+ORD-2001,2026-02-27,Gizmos,LATAM,24,62.98,1511.52,false,rush order
+ORD-2002,2026-05-19,Gizmos,AMER,39,52.5,2047.5,false,rush order
+ORD-2003,2026-07-03,Gizmos,APAC,3,63.06,189.18,false,rush order
+ORD-2004,2026-09-21,Gizmos,LATAM,34,12.82,435.88,true,repeat customer
+ORD-2005,2026-08-10,Doohickeys,APAC,10,118.15,1181.5,false,
+ORD-2006,2026-01-18,Sprockets,EMEA,5,110.32,551.6,false,rush order
+ORD-2007,2026-02-15,Doohickeys,AMER,37,98.1,3629.7,true,repeat customer
+ORD-2008,2026-09-01,Gizmos,APAC,8,89.64,717.12,false,repeat customer
+ORD-2009,2026-07-02,Doohickeys,AMER,6,51.7,310.2,false,repeat customer
+ORD-2010,2026-08-20,Gadgets,APAC,17,42.94,729.98,false,
+ORD-2011,2026-05-28,Widgets,EMEA,7,53.75,376.25,false,
+ORD-2012,2026-01-06,Gizmos,LATAM,31,56.84,1762.04,false,gift wrap
+ORD-2013,2026-06-23,Widgets,APAC,26,97.14,2525.64,false,
+ORD-2014,2026-04-04,Gadgets,EMEA,2,84.44,168.88,false,rush order
+ORD-2015,2026-03-21,Sprockets,APAC,16,53.99,863.84,true,
+ORD-2016,2026-08-05,Widgets,APAC,31,52.36,1623.16,false,bulk discount
+ORD-2017,2026-08-16,Gizmos,APAC,31,5.3,164.3,false,
+ORD-2018,2026-07-02,Gizmos,LATAM,22,3.92,86.24,false,bulk discount
+ORD-2019,2026-09-10,Gizmos,LATAM,3,60.04,180.12,false,bulk discount
+ORD-2020,2026-01-17,Doohickeys,EMEA,2,52.37,104.74,false,bulk discount
+ORD-2021,2026-07-16,Doohickeys,LATAM,8,60.89,487.12,false,
+ORD-2022,2026-03-10,Gizmos,APAC,13,57.9,752.7,false,gift wrap
+ORD-2023,2026-06-20,Doohickeys,LATAM,30,18.35,550.5,false,repeat customer
+ORD-2024,2026-06-26,Gadgets,APAC,31,96.57,2993.67,false,bulk discount
+ORD-2025,2026-02-22,Gadgets,APAC,31,18.1,561.1,false,
+ORD-2026,2026-07-16,Sprockets,EMEA,20,30.46,609.2,true,
+ORD-2027,2026-05-12,Sprockets,EMEA,11,23.44,257.84,true,
+ORD-2028,2026-07-04,Sprockets,APAC,40,29.52,1180.8,false,
+ORD-2029,2026-06-26,Sprockets,AMER,23,93.02,2139.46,false,repeat customer
+ORD-2030,2026-09-20,Gizmos,LATAM,7,85.65,599.55,true,
+ORD-2031,2026-02-27,Widgets,APAC,36,7.91,284.76,true,repeat customer
+ORD-2032,2026-04-12,Gizmos,LATAM,11,88.22,970.42,true,
+ORD-2033,2026-06-11,Gadgets,LATAM,9,17.39,156.51,false,repeat customer
+ORD-2034,2026-01-08,Sprockets,APAC,31,42.93,1330.83,true,
+ORD-2035,2026-06-23,Gadgets,APAC,27,45.2,1220.4,false,repeat customer
+ORD-2036,2026-04-05,Gizmos,LATAM,28,51.37,1438.36,false,
+ORD-2037,2026-08-05,Sprockets,EMEA,1,86.96,86.96,true,
+ORD-2038,2026-06-13,Gizmos,EMEA,11,53.79,591.69,false,gift wrap
+ORD-2039,2026-01-21,Gizmos,LATAM,34,116.8,3971.2,false,bulk discount
+ORD-2040,2026-06-12,Sprockets,APAC,1,99.76,99.76,false,rush order
+ORD-2041,2026-04-18,Gizmos,AMER,40,95.24,3809.6,false,repeat customer
+ORD-2042,2026-04-10,Doohickeys,LATAM,6,7.33,43.98,false,gift wrap
+ORD-2043,2026-09-10,Sprockets,AMER,14,13.86,194.04,false,repeat customer
+ORD-2044,2026-03-01,Sprockets,AMER,2,107.17,214.34,false,repeat customer
+ORD-2045,2026-05-24,Widgets,EMEA,28,118.47,3317.16,false,
+ORD-2046,2026-09-12,Widgets,LATAM,8,8.58,68.64,false,gift wrap
+ORD-2047,2026-01-15,Sprockets,APAC,22,118.01,2596.22,false,
+ORD-2048,2026-05-22,Gizmos,APAC,37,81.67,3021.79,true,
+ORD-2049,2026-09-19,Doohickeys,LATAM,13,99.27,1290.51,true,
+ORD-2050,2026-07-27,Widgets,LATAM,27,12.59,339.93,false,rush order
+ORD-2051,2026-04-15,Sprockets,LATAM,5,46.21,231.05,false,repeat customer
+ORD-2052,2026-05-19,Gizmos,LATAM,32,77.47,2479.04,false,repeat customer
+ORD-2053,2026-03-05,Gizmos,APAC,33,17.87,589.71,true,bulk discount
+ORD-2054,2026-04-15,Gadgets,AMER,31,6.82,211.42,true,gift wrap
+ORD-2055,2026-07-04,Doohickeys,EMEA,8,46.24,369.92,false,
+ORD-2056,2026-06-10,Gizmos,EMEA,24,38.48,923.52,false,
+ORD-2057,2026-07-02,Gadgets,APAC,20,107.02,2140.4,false,
+ORD-2058,2026-02-18,Widgets,LATAM,23,10.91,250.93,false,gift wrap
+ORD-2059,2026-05-19,Gizmos,LATAM,29,108.33,3141.57,false,repeat customer
+ORD-2060,2026-03-17,Gizmos,APAC,30,92.12,2763.6,false,
+ORD-2061,2026-07-13,Doohickeys,EMEA,15,108.33,1624.95,false,bulk discount
+ORD-2062,2026-05-21,Widgets,AMER,6,104.32,625.92,true,bulk discount
+ORD-2063,2026-09-03,Sprockets,EMEA,13,114.75,1491.75,false,repeat customer
+ORD-2064,2026-08-17,Sprockets,APAC,2,17.07,34.14,true,
+ORD-2065,2026-04-08,Sprockets,AMER,38,54.97,2088.86,false,gift wrap
+ORD-2066,2026-01-16,Gadgets,LATAM,2,42.77,85.54,true,repeat customer
+ORD-2067,2026-09-11,Widgets,EMEA,25,33.09,827.25,false,
+ORD-2068,2026-03-06,Gadgets,AMER,17,92.89,1579.13,false,bulk discount
+ORD-2069,2026-03-02,Gadgets,EMEA,40,115.45,4618.0,true,
+ORD-2070,2026-07-04,Doohickeys,AMER,21,19.67,413.07,false,repeat customer
+ORD-2071,2026-02-02,Sprockets,APAC,13,31.04,403.52,false,gift wrap
+ORD-2072,2026-09-13,Doohickeys,LATAM,8,34.51,276.08,false,
+ORD-2073,2026-08-01,Widgets,AMER,27,77.12,2082.24,true,
+ORD-2074,2026-09-21,Gizmos,LATAM,9,38.64,347.76,true,repeat customer
+ORD-2075,2026-09-07,Gadgets,APAC,10,46.68,466.8,false,gift wrap
+ORD-2076,2026-08-02,Sprockets,AMER,1,98.08,98.08,false,
+ORD-2077,2026-01-16,Gizmos,AMER,18,72.95,1313.1,false,gift wrap
+ORD-2078,2026-09-10,Sprockets,EMEA,3,21.89,65.67,false,
+ORD-2079,2026-07-23,Sprockets,AMER,8,100.17,801.36,false,
+ORD-2080,2026-09-26,Doohickeys,AMER,21,106.42,2234.82,false,
+ORD-2081,2026-04-22,Gizmos,AMER,21,42.97,902.37,true,bulk discount
+ORD-2082,2026-03-21,Widgets,EMEA,1,74.23,74.23,false,rush order
+ORD-2083,2026-09-23,Sprockets,EMEA,32,92.21,2950.72,true,gift wrap
+ORD-2084,2026-01-27,Doohickeys,LATAM,29,81.65,2367.85,false,rush order
+ORD-2085,2026-03-27,Doohickeys,APAC,1,17.6,17.6,false,
+ORD-2086,2026-04-24,Doohickeys,APAC,2,91.74,183.48,true,repeat customer
+ORD-2087,2026-05-26,Gizmos,AMER,15,30.41,456.15,true,
+ORD-2088,2026-08-23,Gadgets,LATAM,39,27.46,1070.94,true,repeat customer
+ORD-2089,2026-05-19,Sprockets,APAC,33,60.8,2006.4,false,
+ORD-2090,2026-03-24,Sprockets,APAC,5,17.91,89.55,false,
+ORD-2091,2026-01-23,Sprockets,LATAM,35,74.89,2621.15,true,rush order
+ORD-2092,2026-01-28,Gizmos,AMER,21,53.61,1125.81,true,bulk discount
+ORD-2093,2026-09-15,Widgets,APAC,32,45.29,1449.28,true,
+ORD-2094,2026-07-18,Gizmos,APAC,29,40.0,1160.0,false,
+ORD-2095,2026-01-24,Gizmos,EMEA,15,117.44,1761.6,false,
+ORD-2096,2026-03-11,Widgets,EMEA,20,10.35,207.0,false,rush order
+ORD-2097,2026-01-19,Gadgets,EMEA,22,101.34,2229.48,false,
+ORD-2098,2026-06-27,Sprockets,APAC,4,99.13,396.52,true,repeat customer
+ORD-2099,2026-08-25,Sprockets,EMEA,7,76.17,533.19,true,
+ORD-2100,2026-01-13,Widgets,APAC,21,107.14,2249.94,true,repeat customer
+ORD-2101,2026-08-02,Gizmos,EMEA,20,74.46,1489.2,true,bulk discount
+ORD-2102,2026-01-18,Gizmos,LATAM,4,37.51,150.04,true,gift wrap
+ORD-2103,2026-07-08,Sprockets,EMEA,39,95.13,3710.07,false,rush order
+ORD-2104,2026-08-26,Sprockets,EMEA,28,105.95,2966.6,false,bulk discount
+ORD-2105,2026-01-15,Gadgets,EMEA,34,41.4,1407.6,true,
+ORD-2106,2026-02-19,Gadgets,AMER,13,108.81,1414.53,false,rush order
+ORD-2107,2026-08-24,Gadgets,APAC,40,55.02,2200.8,true,
+ORD-2108,2026-03-10,Doohickeys,AMER,38,53.99,2051.62,false,
+ORD-2109,2026-08-10,Doohickeys,EMEA,39,43.12,1681.68,false,
+ORD-2110,2026-04-17,Gizmos,AMER,36,103.47,3724.92,false,
+ORD-2111,2026-04-26,Gizmos,LATAM,5,42.96,214.8,false,repeat customer
+ORD-2112,2026-06-20,Gadgets,EMEA,20,51.99,1039.8,false,repeat customer
+ORD-2113,2026-01-16,Gadgets,APAC,15,110.63,1659.45,false,gift wrap
+ORD-2114,2026-04-08,Doohickeys,LATAM,31,88.95,2757.45,false,rush order
+ORD-2115,2026-03-27,Widgets,AMER,1,45.45,45.45,true,gift wrap
+ORD-2116,2026-02-05,Sprockets,AMER,19,54.53,1036.07,true,
+ORD-2117,2026-04-07,Doohickeys,APAC,19,23.38,444.22,false,repeat customer
+ORD-2118,2026-09-08,Gadgets,AMER,12,25.93,311.16,true,
+ORD-2119,2026-03-13,Gadgets,AMER,8,42.59,340.72,false,
+ORD-2120,2026-06-26,Sprockets,LATAM,24,80.33,1927.92,true,
+ORD-2121,2026-03-05,Gizmos,AMER,13,25.43,330.59,false,gift wrap
+ORD-2122,2026-07-21,Sprockets,APAC,16,110.76,1772.16,false,repeat customer
+ORD-2123,2026-03-11,Doohickeys,APAC,16,9.23,147.68,false,
+ORD-2124,2026-02-26,Sprockets,EMEA,31,95.55,2962.05,false,gift wrap
+ORD-2125,2026-07-25,Sprockets,LATAM,33,46.79,1544.07,false,
+ORD-2126,2026-06-17,Gizmos,LATAM,31,86.73,2688.63,false,gift wrap
+ORD-2127,2026-07-21,Gadgets,APAC,38,79.02,3002.76,false,rush order
+ORD-2128,2026-04-13,Gizmos,APAC,14,38.8,543.2,false,
+ORD-2129,2026-09-03,Doohickeys,LATAM,9,90.94,818.46,false,
+ORD-2130,2026-01-15,Gizmos,LATAM,33,75.67,2497.11,false,rush order
+ORD-2131,2026-07-12,Gizmos,EMEA,32,40.09,1282.88,false,rush order
+ORD-2132,2026-04-09,Widgets,AMER,5,45.01,225.05,true,repeat customer
+ORD-2133,2026-05-08,Doohickeys,EMEA,7,16.87,118.09,false,
+ORD-2134,2026-04-22,Doohickeys,APAC,22,32.25,709.5,false,repeat customer
+ORD-2135,2026-09-09,Doohickeys,AMER,1,93.1,93.1,false,rush order
+ORD-2136,2026-01-16,Gadgets,LATAM,33,118.75,3918.75,false,
+ORD-2137,2026-04-16,Sprockets,LATAM,15,63.35,950.25,false,
+ORD-2138,2026-02-11,Gizmos,APAC,13,53.17,691.21,false,rush order
+ORD-2139,2026-09-01,Gadgets,AMER,24,19.26,462.24,true,rush order
+ORD-2140,2026-06-11,Gizmos,AMER,15,52.04,780.6,false,gift wrap
+ORD-2141,2026-01-19,Gadgets,AMER,3,110.89,332.67,false,rush order
+ORD-2142,2026-04-13,Gadgets,LATAM,5,65.54,327.7,true,
+ORD-2143,2026-08-21,Widgets,APAC,20,13.91,278.2,true,repeat customer
+ORD-2144,2026-08-01,Gizmos,AMER,12,26.28,315.36,false,
+ORD-2145,2026-05-22,Widgets,AMER,34,11.19,380.46,true,
+ORD-2146,2026-06-28,Widgets,APAC,27,48.76,1316.52,false,rush order
+ORD-2147,2026-02-13,Gadgets,AMER,14,18.2,254.8,false,repeat customer
+ORD-2148,2026-08-06,Doohickeys,APAC,39,70.29,2741.31,false,
+ORD-2149,2026-04-01,Gizmos,APAC,10,55.15,551.5,false,gift wrap
+ORD-2150,2026-08-15,Widgets,AMER,30,70.41,2112.3,false,
+ORD-2151,2026-05-13,Gadgets,LATAM,40,99.34,3973.6,false,
+ORD-2152,2026-07-15,Gadgets,EMEA,25,109.57,2739.25,false,bulk discount
+ORD-2153,2026-01-08,Sprockets,AMER,11,35.03,385.33,true,bulk discount
+ORD-2154,2026-04-16,Sprockets,EMEA,27,119.11,3215.97,false,
+ORD-2155,2026-02-17,Gadgets,AMER,21,50.98,1070.58,false,gift wrap
+ORD-2156,2026-01-15,Gizmos,LATAM,2,11.56,23.12,false,bulk discount
+ORD-2157,2026-07-28,Widgets,AMER,13,49.41,642.33,true,bulk discount
+ORD-2158,2026-03-11,Widgets,EMEA,30,59.72,1791.6,false,bulk discount
+ORD-2159,2026-08-05,Gadgets,APAC,31,98.99,3068.69,true,gift wrap
+ORD-2160,2026-02-06,Gizmos,APAC,19,17.53,333.07,true,bulk discount
+ORD-2161,2026-01-22,Doohickeys,APAC,18,20.96,377.28,false,bulk discount
+ORD-2162,2026-01-22,Widgets,EMEA,35,28.29,990.15,false,bulk discount
+ORD-2163,2026-05-15,Widgets,LATAM,4,72.99,291.96,false,
+ORD-2164,2026-06-08,Gizmos,EMEA,13,13.69,177.97,true,
+ORD-2165,2026-04-22,Widgets,APAC,5,28.81,144.05,false,
+ORD-2166,2026-07-17,Doohickeys,APAC,7,98.43,689.01,false,gift wrap
+ORD-2167,2026-07-14,Widgets,AMER,8,30.19,241.52,false,
+ORD-2168,2026-01-13,Gadgets,LATAM,21,4.4,92.4,false,
+ORD-2169,2026-05-21,Widgets,APAC,40,46.17,1846.8,false,
+ORD-2170,2026-08-04,Sprockets,APAC,35,95.58,3345.3,false,
+ORD-2171,2026-06-21,Gadgets,AMER,25,82.31,2057.75,false,bulk discount
+ORD-2172,2026-06-28,Widgets,LATAM,31,10.9,337.9,false,gift wrap
+ORD-2173,2026-04-17,Widgets,APAC,38,85.44,3246.72,true,gift wrap
+ORD-2174,2026-02-10,Gadgets,EMEA,16,89.34,1429.44,true,
+ORD-2175,2026-06-16,Gizmos,APAC,19,26.64,506.16,true,
+ORD-2176,2026-08-24,Doohickeys,EMEA,22,18.71,411.62,false,bulk discount
+ORD-2177,2026-05-25,Doohickeys,AMER,2,29.79,59.58,false,
+ORD-2178,2026-09-02,Gadgets,LATAM,16,96.77,1548.32,false,
+ORD-2179,2026-08-21,Gizmos,EMEA,1,10.56,10.56,false,
+ORD-2180,2026-03-07,Sprockets,APAC,9,13.74,123.66,false,gift wrap
+ORD-2181,2026-02-14,Gadgets,APAC,30,39.44,1183.2,false,
+ORD-2182,2026-04-10,Gadgets,AMER,19,70.44,1338.36,false,
+ORD-2183,2026-06-13,Gizmos,LATAM,25,22.63,565.75,false,repeat customer
+ORD-2184,2026-03-27,Gizmos,LATAM,31,5.32,164.92,true,repeat customer
+ORD-2185,2026-05-20,Gadgets,AMER,35,20.88,730.8,false,rush order
+ORD-2186,2026-05-15,Sprockets,LATAM,19,46.89,890.91,true,
+ORD-2187,2026-03-23,Gadgets,EMEA,31,25.9,802.9,true,repeat customer
+ORD-2188,2026-09-24,Gizmos,LATAM,24,60.5,1452.0,false,rush order
+ORD-2189,2026-08-10,Widgets,EMEA,38,11.33,430.54,false,gift wrap
+ORD-2190,2026-03-07,Doohickeys,LATAM,28,114.98,3219.44,false,bulk discount
+ORD-2191,2026-01-21,Gadgets,APAC,25,111.4,2785.0,false,
+ORD-2192,2026-06-21,Gadgets,AMER,2,84.6,169.2,false,bulk discount
+ORD-2193,2026-03-09,Gadgets,EMEA,16,73.45,1175.2,true,repeat customer
+ORD-2194,2026-02-21,Sprockets,EMEA,25,49.53,1238.25,false,rush order
+ORD-2195,2026-03-27,Doohickeys,LATAM,28,32.59,912.52,false,bulk discount
+ORD-2196,2026-07-25,Sprockets,AMER,6,15.79,94.74,false,
+ORD-2197,2026-04-24,Widgets,APAC,26,84.78,2204.28,false,
+ORD-2198,2026-02-03,Doohickeys,LATAM,27,64.42,1739.34,false,
+ORD-2199,2026-06-06,Gadgets,EMEA,9,26.17,235.53,false,gift wrap
