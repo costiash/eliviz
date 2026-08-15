@@ -146,7 +146,12 @@ its `level` and respect that level's `density_ceiling`.
 - **Numbers**: computed only by `lib/parse_input.py`; the brief copies them
   verbatim; every rendered number is byte-traceable to the brief (standard
   display formatting excepted). The director selects and arranges numbers —
-  it never computes them.
+  it never computes them. Display formatting means: thousands separators,
+  `$1.49M`-style abbreviation, whole-unit rounding, and everyday ratio
+  framing ("1 in 4" for a 25.4% rate) — ratio framing is allowed ONLY when
+  the exact brief value also appears on the canvas (in the fact text,
+  caption, or annotation), the way the validated exemplars pair "1 came
+  back" with "the 25.4% that returned".
 - **Color semantics**: green=pass, amber=caution, red=risk, blue=info,
   purple=meta. Packs tune hues, never meanings.
 - **One icon dialect per canvas** (emoji-glyph OR line OR solid).

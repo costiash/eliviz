@@ -61,6 +61,13 @@ what the parser emitted. If the story you want needs a number the parser
 didn't emit, change the story. Cite where each fact came from so the skill can
 validate byte-identity.
 
+One framing carve-out, so eli5 stories stay tellable: everyday ratio framing
+of a parser percentage ("1 in 4 boxes came back" for a 25.4% rate) counts as
+display formatting, not a derivation — but only when the exact parser value
+also appears in the same section's text or caption AND in `facts`. That is
+how the validated exemplars do it ("1 came back" paired with "the 25.4% that
+returned"). Never invent a ratio the percentage doesn't plainly round to.
+
 **Output contract — the brief.** Return (and, if the caller gave you an
 output path, Write) a single JSON object:
 
@@ -87,6 +94,7 @@ output path, Write) a single JSON object:
       "annotation": "…" }               // optional callout, must point at a real feature
   ],
   "takeaway": ["…", "…"],               // 2-3 plain-words conclusions
+  "source_strip": "…",                  // file · date range · honesty line
   "facts": { }                          // flat dict of ALL cited values, verbatim
                                         // (see exemplar shape: orders, revenue,
                                         //  orders_by_month, revenue_by_product, …)
