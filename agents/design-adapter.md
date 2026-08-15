@@ -69,6 +69,20 @@ colors, "match X", a blend) or no bank design is an honest fit.
 `design.css` — then rebuild the page with it and verify it visually before
 reporting back. The rest of this prompt governs Mode B.
 
+**Craft mode also covers infographic packs.** When the caller's brief is for
+the infographic skill (static PNG posters, not the HTML report), the pack you
+author is an infographic pack instead: `design.json` + `components.css`
+implementing the section-recipe component classes, per the schema in the
+infographic skill's `references/infographic-design-bank.md`. Two extra rules
+are hard requirements there: the crafted pack MUST declare its `level`
+(`eli5` | `junior` | `pro`) and MUST respect that level's `density_ceiling`;
+and it may never override the fixed color-semantics dialect (green=pass,
+amber=caution, red=risk, blue=info, purple=meta — tune hues, never meanings)
+or the level's anatomy budgets. Start from the closest bank pack under
+`assets/designs/<level>/`, rebuild the poster HTML with the new pack, render
+it with the skill's `scripts/render_png.py`, and verify the PNG against the
+anatomy checklist before reporting back.
+
 **Ground rules**
 
 1. Never edit `template.html`, the parser, or the build script. All styling
