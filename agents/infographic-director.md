@@ -69,7 +69,11 @@ formatting, not derivation, under strict conditions:
   Never invent a ratio the percentage doesn't plainly round to.
 - **Pictogram scale**: "1 box = U orders" — only when U × icon-count exactly
   equals a parser total that is shown on the canvas and cited in `facts`,
-  and the caption states the unit.
+  and the caption states the unit. Declare U and the icon count in the
+  section's `device_scale` field, NEVER inside `facts` — `facts` holds
+  parser-verbatim values only, and `device_scale` is validated by the
+  arithmetic identity (unit × icons == facts[total_from]), not by pool
+  membership.
 "Per day"-style glosses are neither: take them from
 `aggregates.by_time.per_day` (e.g. "about $5.5k every single day" from
 `per_day.sums.total` = 5490.36), never from your own arithmetic.
@@ -97,6 +101,9 @@ output path, Write) a single JSON object:
       "facts": { "busiest_month_orders": 153 },   // verbatim values used
       "from": ["aggregates.by_time.counts"],      // parser provenance
       "device": "annotated-bars",       // micro-visual: one per section
+      "device_scale": { "unit": 300,    // pictogram devices ONLY: scale declaration
+                        "icons": 4,     //   unit x icons MUST equal facts[total_from]
+                        "total_from": "orders" },  // exempt from pool-tracing; validated arithmetically
       "annotation": "…" }               // optional callout, must point at a real feature
   ],
   "takeaway": ["…", "…"],               // 2-3 plain-words conclusions

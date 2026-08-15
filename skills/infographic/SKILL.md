@@ -76,8 +76,10 @@ style choice. Selection order is always: **level → template → style pack**.
 3. **Validate the brief** against the anatomy checklist
    (`references/infographic-anatomy.md`): one hero stat, 3–5 evidence facts
    within the level's budget, every fact value byte-identical to a parser
-   value, a takeaway, a source line. Reject and re-brief rather than patch
-   silently.
+   value, a takeaway, a source line. Pictogram sections declare their scale
+   in `device_scale` (never in `facts`); validate those arithmetically:
+   `unit × icons` must equal the `facts` total they point at. Reject and
+   re-brief rather than patch silently.
 
 4. **Compose** the poster HTML: template skeleton + the chosen pack's
    `components.css` inlined at `/*__PACK_COMPONENTS_CSS__*/` + your markup.
