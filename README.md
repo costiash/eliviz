@@ -23,6 +23,17 @@ You have a CSV, a log file, a SQLite database, a Markdown report. Someone needs 
 
 New in 1.1: a second output path — **static infographics**. Ask for "an infographic" or "an image I can share" and eliviz composes a real data story (hero stat, numbered reading path, pictograms, annotations, takeaway) and renders it to a PNG, with the editable HTML source alongside. Three complexity levels — `eli5`, `junior`, `pro` — because a poster for your kid and a briefing for your board are different artifacts.
 
+## 📦 Installation
+
+Run these two commands in Claude Code:
+
+```
+/plugin marketplace add costiash/eliviz
+/plugin install eliviz@eliviz
+```
+
+That's it — no other setup. Python's standard library handles parsing; see [Requirements & license](#-requirements--license) for the two optional extras (Excel input, infographic PNG rendering).
+
 ## 💬 Usage
 
 Just ask. Examples:
