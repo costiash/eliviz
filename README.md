@@ -6,8 +6,9 @@
 <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license">
 <img src="https://img.shields.io/badge/version-1.1.0-blue" alt="Version 1.1.0">
 <a href="https://code.claude.com/docs/en/plugins"><img src="https://img.shields.io/badge/Claude%20Code-plugin-D97757" alt="Claude Code plugin"></a>
-<a href="https://www.claudepluginhub.com/plugins/costiash-eliviz?ref=badge"><img src="https://www.claudepluginhub.com/badge/costiash-eliviz" alt="Listed on ClaudePluginHub"></a>
 </p>
+
+[![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/costiash-eliviz)](https://www.claudepluginhub.com/plugins/costiash-eliviz?ref=badge)
 
 <p><b>Install in Claude Code — two commands:</b></p>
 
