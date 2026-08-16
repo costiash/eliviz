@@ -33,13 +33,18 @@
   .foot a { color:var(--accent2); }
   code { font-family:ui-monospace,monospace; font-size:.85em; background:rgba(124,108,255,.14);
        border:1px solid rgba(124,108,255,.25); border-radius:6px; padding:.1em .4em; }
+  .sect { font-family:'Space Grotesk',sans-serif; font-size:1.35rem; margin:40px 0 18px;
+       color:rgba(230,230,240,.85); }
+  .sect:first-of-type { margin-top:8px; }
+  a.card img[src*="infographic-"] { aspect-ratio:1/1; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1><span class="grad">eliviz</span> live demos</h1>
-  <p class="sub">One sales file. Five completely different pages. Each demo below is a real eliviz output — click one and poke around: sort the table, search it, open a column card.</p>
+  <p class="sub">One sales file, every kind of output. Each demo below is a real eliviz artifact — the interactive pages let you sort, search, and open column cards; the infographics are the exact HTML masters the PNGs render from.</p>
   <p class="hint">Every page is a single HTML file. No server behind any of this.</p>
+  <h2 class="sect">📄 Interactive report — five designs</h2>
   <div class="grid">
     <a class="card" href="demos/aurora.html">
       <img src="shots/aurora.webp" alt="Aurora design — dark glass with a particle-wave hero" loading="lazy">
@@ -60,6 +65,25 @@
     <a class="card" href="demos/neon.html">
       <img src="shots/neon.webp" alt="Neon design — cyberpunk glow with synthwave-grid hero" loading="lazy">
       <div class="meta"><b>🌆 neon</b><span>Cyberpunk glow, synthwave-grid hero. The showpiece.</span></div>
+    </a>
+  </div>
+  <h2 class="sect">🖼️ Infographics — three levels + one template showcase</h2>
+  <div class="grid">
+    <a class="card" href="demos/infographics/sunshine.html">
+      <img src="shots/infographic-sunshine-card.webp" alt="eli5-level infographic, sunshine pack — cream ground, podium and pictograms" loading="lazy">
+      <div class="meta"><b>🧒 sunshine · eli5</b><span>Pictograms, one idea per card. For beginners and kids.</span></div>
+    </a>
+    <a class="card" href="demos/infographics/nightglass.html">
+      <img src="shots/infographic-nightglass-card.webp" alt="junior-level infographic, nightglass pack — dark glass, numbered spine" loading="lazy">
+      <div class="meta"><b>🌃 nightglass · junior</b><span>Numbered story spine, annotated charts. The default.</span></div>
+    </a>
+    <a class="card" href="demos/infographics/broadsheet.html">
+      <img src="shots/infographic-broadsheet-card.webp" alt="pro-level infographic, broadsheet pack — KPI strip, dense modules, findings" loading="lazy">
+      <div class="meta"><b>📊 broadsheet · pro</b><span>Data-journalism briefing with a findings block.</span></div>
+    </a>
+    <a class="card" href="demos/infographics/verdict-card.html">
+      <img src="shots/infographic-verdict-card.webp" alt="verdict-card template — KPI badges, process flow, findings grid, verdict strip" loading="lazy">
+      <div class="meta"><b>🛡️ verdict-card</b><span>The "report-card" grid: badges, flow, verdict strip.</span></div>
     </a>
   </div>
   <p class="foot">
