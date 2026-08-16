@@ -94,22 +94,26 @@ The complexity **level** is chosen first, because a 10-year-old's explainer and 
 
 <table>
   <tr>
-    <th width="50%" align="center">🧒 eli5 · sunshine — pictograms, one idea per card</th>
-    <th width="50%" align="center">🌃 junior · nightglass — the clean-modern default</th>
+    <th width="25%" align="center">🧒 eli5 · sunshine</th>
+    <th width="25%" align="center">🌃 junior · nightglass</th>
+    <th width="25%" align="center">📊 pro · broadsheet</th>
+    <th width="25%" align="center">🛡️ verdict-card</th>
   </tr>
   <tr>
-    <td align="center"><img src="docs/shots/infographic-sunshine.webp" width="100%" alt="eli5-level infographic in the sunshine pack — cream ground, podium and pictogram devices"></td>
-    <td align="center"><img src="docs/shots/infographic-nightglass.webp" width="100%" alt="junior-level infographic in the nightglass pack — dark glass, numbered spine, annotated charts"></td>
+    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/sunshine.html"><img src="docs/shots/infographic-sunshine-card.webp" width="100%" alt="eli5-level infographic in the sunshine pack — cream ground, podium and pictogram devices"></a></td>
+    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/nightglass.html"><img src="docs/shots/infographic-nightglass-card.webp" width="100%" alt="junior-level infographic in the nightglass pack — dark glass, numbered spine, annotated charts"></a></td>
+    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/broadsheet.html"><img src="docs/shots/infographic-broadsheet-card.webp" width="100%" alt="pro-level infographic in the broadsheet pack — KPI strip, dense modules, findings block"></a></td>
+    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/verdict-card.html"><img src="docs/shots/infographic-verdict-card.webp" width="100%" alt="verdict-card template — KPI badges, process flow, findings grid, verdict strip"></a></td>
   </tr>
   <tr>
-    <th align="center">📊 pro · broadsheet — data-journalism briefing</th>
-    <th align="center">🛡️ verdict-card — the "report-card" grid template</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/shots/infographic-broadsheet.webp" width="100%" alt="pro-level infographic in the broadsheet pack — KPI strip, dense modules, findings block"></td>
-    <td align="center"><img src="docs/shots/infographic-verdict.webp" width="100%" alt="verdict-card template — KPI badges, process flow, findings grid, verdict strip"></td>
+    <td align="center"><sub>pictograms, one idea per card</sub></td>
+    <td align="center"><sub>the clean-modern default</sub></td>
+    <td align="center"><sub>data-journalism briefing</sub></td>
+    <td align="center"><sub>the "report-card" grid</sub></td>
   </tr>
 </table>
+
+<p align="center"><i>Click any card to open the full live version — each one is the real, self-contained HTML the PNG is rendered from.</i></p>
 
 Under the hood: six layout templates (journey-spine, verdict-card, broadsheet-brief, bento-grid, badge-map, neon-blueprint), a level-keyed design bank, and an `infographic-director` agent that writes the story brief from the parser's numbers. Rules that never bend: one hero stat, a single numbered reading path, fixed color semantics (green=pass, amber=caution, red=risk), a source strip on every canvas — and you always get **both** the PNG and its editable HTML source.
 
@@ -135,11 +139,19 @@ One bundled Python parser (stdlib only, shared by both skills) reads your file d
 
 ## ▶️ Live demos
 
-**Click, don't clone:** all five designs rendered on the same demo dataset, live on GitHub Pages —
+**Click, don't clone:** everything below is live on GitHub Pages, rendered from the same demo dataset.
+
+Interactive report, five designs:
 
 | | | | | |
 |---|---|---|---|---|
 | [🌌 aurora](https://costiash.github.io/eliviz/demos/aurora.html) | [📰 editorial](https://costiash.github.io/eliviz/demos/editorial.html) | [⬛ brutalist](https://costiash.github.io/eliviz/demos/brutalist.html) | [🖥️ terminal](https://costiash.github.io/eliviz/demos/terminal.html) | [🌆 neon](https://costiash.github.io/eliviz/demos/neon.html) |
+
+Infographics, three levels + one template showcase:
+
+| | | | |
+|---|---|---|---|
+| [🧒 sunshine (eli5)](https://costiash.github.io/eliviz/demos/infographics/sunshine.html) | [🌃 nightglass (junior)](https://costiash.github.io/eliviz/demos/infographics/nightglass.html) | [📊 broadsheet (pro)](https://costiash.github.io/eliviz/demos/infographics/broadsheet.html) | [🛡️ verdict-card](https://costiash.github.io/eliviz/demos/infographics/verdict-card.html) |
 
 or browse them from the [demo gallery](https://costiash.github.io/eliviz/). Prefer the fully-offline single-file versions (all libraries inlined, ~1.6 MB each)? They're attached to the [latest release](https://github.com/costiash/eliviz/releases/latest) — download one, open it anywhere, no internet needed.
 

@@ -22,7 +22,7 @@ SOFTWARE.
 
 ---
 
-Bundled third-party libraries in skills/eliviz/assets/vendor/ are distributed
+Bundled third-party libraries in skills/html-report/assets/vendor/ are distributed
 under their own licenses:
 - gsap.min.js, ScrollTrigger.min.js — GSAP standard license (gsap.com/licensing)
 - three.min.js — MIT License (three.js authors)
