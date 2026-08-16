@@ -100,10 +100,10 @@ The complexity **level** is chosen first, because a 10-year-old's explainer and 
     <th width="25%" align="center">🛡️ verdict-card</th>
   </tr>
   <tr>
-    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/sunshine.html"><img src="docs/shots/infographic-sunshine-card.webp" width="100%" alt="eli5-level infographic in the sunshine pack — cream ground, podium and pictogram devices"></a></td>
-    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/nightglass.html"><img src="docs/shots/infographic-nightglass-card.webp" width="100%" alt="junior-level infographic in the nightglass pack — dark glass, numbered spine, annotated charts"></a></td>
-    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/broadsheet.html"><img src="docs/shots/infographic-broadsheet-card.webp" width="100%" alt="pro-level infographic in the broadsheet pack — KPI strip, dense modules, findings block"></a></td>
-    <td align="center"><a href="https://costiash.github.io/eliviz/demos/infographics/verdict-card.html"><img src="docs/shots/infographic-verdict-card.webp" width="100%" alt="verdict-card template — KPI badges, process flow, findings grid, verdict strip"></a></td>
+    <td align="center"><a href="docs/shots/infographic-sunshine.webp"><img src="docs/shots/infographic-sunshine-card.webp" width="100%" alt="eli5-level infographic in the sunshine pack — cream ground, podium and pictogram devices"></a></td>
+    <td align="center"><a href="docs/shots/infographic-nightglass.webp"><img src="docs/shots/infographic-nightglass-card.webp" width="100%" alt="junior-level infographic in the nightglass pack — dark glass, numbered spine, annotated charts"></a></td>
+    <td align="center"><a href="docs/shots/infographic-broadsheet.webp"><img src="docs/shots/infographic-broadsheet-card.webp" width="100%" alt="pro-level infographic in the broadsheet pack — KPI strip, dense modules, findings block"></a></td>
+    <td align="center"><a href="docs/shots/infographic-verdict.webp"><img src="docs/shots/infographic-verdict-card.webp" width="100%" alt="verdict-card template — KPI badges, process flow, findings grid, verdict strip"></a></td>
   </tr>
   <tr>
     <td align="center"><sub>pictograms, one idea per card</sub></td>
